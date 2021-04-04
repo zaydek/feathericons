@@ -1,0 +1,56 @@
+@use "str-utils";
+@use "tokens";
+
+@mixin -theme-property($property, $light, $dark) {
+	#{$property}: #{$light};
+	@if $dark {
+		@at-root {
+			$ampersand: if("" + & == ":root", "", &);
+			:root[data-theme="dark"] #{$ampersand} {
+				#{$property}: #{$dark};
+			}
+		}
+	}
+}
+
+@mixin background-color($light, $dark) {
+	@include -theme-property("background-color", $light, $dark);
+}
+@mixin border-color($light, $dark) {
+	@include -theme-property("border-color", $light, $dark);
+}
+@mixin box-shadow($light, $dark) {
+	@include -theme-property("box-shadow", $light, $dark);
+}
+@mixin color($light, $dark) {
+	@include -theme-property("color", $light, $dark);
+}
+@mixin fill($light, $dark) {
+	@include -theme-property("fill", $light, $dark);
+}
+@mixin opacity($light, $dark) {
+	@include -theme-property("opacity", $light, $dark);
+}
+@mixin stroke($light, $dark) {
+	@include -theme-property("stroke", $light, $dark);
+}
+
+@mixin responsive {
+	@at-root {
+		#{str-utils.str-replace("" + &, " .", "\\#{tokens.$delimiter}")} {
+			@content;
+		}
+	}
+}
+
+@mixin variants($variants...) {
+	@each $variant in $variants {
+		@if $variant == top {
+			@content;
+		} @else if $variant == responsive {
+			@include responsive {
+				@content;
+			}
+		}
+	}
+}

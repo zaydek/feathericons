@@ -1,0 +1,35 @@
+@use "sass:list";
+@use "sass:math";
+@use "sass:meta";
+
+@function limit($range, $min, $max) {
+	$out: ();
+	@each $v in $range {
+		@if meta.type-of($v) == number and math.is-unitless($v) {
+			// Number
+			@if $v >= $min and $v <= $max {
+				$out: list.append($out, $v);
+			}
+		} @else {
+			// Any
+			$out: list.append($out, $v);
+		}
+	}
+	@return $out;
+}
+
+@function merge($entries...) {
+	$out: ();
+	@each $entry in $entries {
+		@if meta.type-of($entry) == list or meta.type-of($entry) == arglist {
+			// Add many
+			@each $v in $entry {
+				$out: append($out, $v);
+			}
+		} @else {
+			// Add one
+			$out: append($out, $entry);
+		}
+	}
+	@return $out;
+}

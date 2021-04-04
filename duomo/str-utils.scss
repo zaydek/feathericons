@@ -1,0 +1,68 @@
+@use "sass:list";
+@use "sass:string";
+
+@function str-starts-with($str, $cmp) {
+	@return string.slice($str, 1, string.length($cmp)) == $cmp;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+@function str-replace($str, $s1, $s2) {
+	$res: string.index($str, $s1);
+	@if not $res {
+		@return $str; // Passthrough
+	}
+	@return string.slice($str, 1, $res - 1) + $s2 + string.slice($str, $res + string.length($s1));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// https://mothereff.in/css-escapes
+$-escape-chars: (
+	"\!",
+	'"',
+	"\#",
+	"\$",
+	"\%",
+	"\&",
+	"'",
+	"\(",
+	"\)",
+	"\*",
+	"\+",
+	"\,",
+	"\-",
+	"\.",
+	"\/",
+	"\:",
+	"\;",
+	"\<",
+	"\=",
+	"\>",
+	"\?",
+	"\@",
+	"\[",
+	"\\",
+	"\]",
+	"\^",
+	"\`",
+	"\{",
+	"\|",
+	"\}",
+	"\~"
+);
+
+@function str-escape($str) {
+	$out: "";
+	@for $x from 1 through string.length($str) {
+		$ch: string.slice($str, $x, $x);
+		@if list.index($-escape-chars, $ch) {
+			// Escape
+			$out: $out + "\\"+ $ch;
+		} @else {
+			// No escape
+			$out: $out + $ch;
+		}
+	}
+	@return $out;
+}

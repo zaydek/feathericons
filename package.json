@@ -1,0 +1,21 @@
+{
+	"scripts": {
+		"duomo-dev": "sass duomo.config.scss tmp/duomo.css --no-source-map && esbuild tmp/duomo.css --log-level=warning --outfile=www/duomo.css && rm -rf tmp",
+		"duomo-build": "sass duomo.config.scss tmp/duomo.css --no-source-map && esbuild tmp/duomo.css --log-level=warning --minify --outfile=www/duomo.css && rm -rf tmp",
+		"dev": "npm run duomo-dev && retro dev",
+		"build": "npm run duomo-build && retro build",
+		"serve": "retro serve"
+	},
+	"dependencies": {
+		"react": "v17.0.2",
+		"react-dom": "v17.0.2"
+	},
+	"devDependencies": {
+		"@mdx-js/mdx": "^1.6.22",
+		"@mdx-js/react": "^1.6.22",
+		"@zaydek/retro": "v0.0.39",
+		"esbuild": "v0.10.2",
+		"prismjs": "^1.23.0",
+		"sass": "^1.32.8"
+	}
+}

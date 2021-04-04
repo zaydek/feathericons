@@ -1,0 +1,75 @@
+@use "mixins";
+
+$range: (
+	 0,
+	 1,
+	 2,
+	 3,
+	 4,
+	 5,
+	 6,
+	 7,
+	 8,
+	 9,
+	10,
+	11,
+	12,
+	13,
+	14,
+	15,
+	16,
+);
+
+// This implementation is inspired by https://github.com/tailwindlabs/tailwindcss-aspect-ratio.
+@mixin aspect-ratio($variants...) {
+	@if not & {
+		.aspect {
+			--dm-aspect-w: 1;
+			--dm-aspect-h: 1;
+
+			position: relative;
+			padding-bottom: calc(var(--dm-aspect-h) / var(--dm-aspect-w) * 100%);
+		}
+
+		.aspect > * {
+			position: absolute;
+			top:      0;
+			right:    0;
+			bottom:   0;
+			left:     0;
+			width:    100%;
+			height:   100%;
+		}
+
+		.aspect-none {
+			position: revert;
+			padding-bottom: revert;
+		}
+
+		.aspect-none > * {
+			position: revert;
+			top:      revert;
+			right:    revert;
+			bottom:   revert;
+			left:     revert;
+			width:    revert;
+			height:   revert;
+		}
+	}
+
+	@each $v in $range {
+		.aspect-w-#{$v} {
+			@include mixins.variants($variants...) {
+				--dm-aspect-w: #{$v};
+			}
+		}
+	}
+
+	@each $v in $range {
+		.aspect-h-#{$v} {
+			@include mixins.variants($variants...) {
+				--dm-aspect-h: #{$v};
+			}
+		}
+	}
+}

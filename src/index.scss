@@ -1,0 +1,52 @@
+@use "../duomo" as *;
+
+////////////////////////////////////////////////////////////////////////////////
+
+.color-black {
+  color: $black;
+}
+
+hr { width: 100%; }
+
+.w-stagger-1 { width: 50%;   }
+.w-stagger-2 { width: 75%;   }
+.w-stagger-3 { width: 87.5%; }
+.w-stagger-4 { width: 62.5%; }
+
+////////////////////////////////////////////////////////////////////////////////
+
+:root {
+  background-color: $cool-gray-50;
+}
+
+.bg-white {
+  background-color: $white;
+}
+@each $k, $v in $cool-grays {
+  .bg-cool-gray-#{$k} {
+    background-color: $v;
+  }
+}
+.bg-black {
+  background-color: $black;
+}
+
+.bg-red {
+  background-color: $red-500;
+}
+
+.border-white {
+  border-color: $white;
+}
+@each $k, $v in $cool-grays {
+  .border-cool-gray-#{$k} {
+    border-color: $v;
+  }
+}
+.border-black {
+  border-color: $black;
+}
+
+.shadow {
+  box-shadow: $shadow-px, $shadow-lg;
+}

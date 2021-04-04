@@ -1,0 +1,45 @@
+@use "sass:math";
+@use "sass:meta";
+
+@function rem($any) {
+	@if not(meta.type-of($any) == number and math.is-unitless($any)) {
+		@return $any; // Passthrough
+	}
+	$num: $any;
+	@if $num == 0 {
+		@return 0;
+	}
+	@return $num / 16 + rem;
+}
+
+@function em($any) {
+	@if not(meta.type-of($any) == number and math.is-unitless($any)) {
+		@return $any; // Passthrough
+	}
+	$num: $any;
+	@if $num == 0 {
+		@return 0;
+	}
+	@return $num / 16 + em;
+}
+
+@function px($any) {
+	@if not(meta.type-of($any) == number and math.is-unitless($any)) {
+		@return $any; // Passthrough
+	}
+	$num: $any;
+	@if $num == 0 {
+		@return 0;
+	}
+	@return $num + px;
+}
+
+@function resolve-unit($v, $unit) {
+	@if $unit != rem and $unit != em and $unit != px and $unit != none {
+		@error "Internal error";
+	}
+	@if $unit == none {
+		@return $v; // Passthrough
+	}
+	@return meta.call(meta.get-function($unit), $v);
+}

@@ -1,0 +1,36 @@
+@use "list-utils";
+@use "mixins";
+@use "ranges";
+@use "unit-utils";
+
+@mixin grid($variants...) {
+	@if not & {
+		.grid {
+			display: grid;
+		}
+	}
+
+	@for $v from 0 through 12 {
+		.grid-rows-#{$v} {
+			@include mixins.variants($variants...) {
+				grid-template-rows: repeat($v, minmax(0, 1fr));
+			}
+		}
+	}
+
+	@for $v from 0 through 12 {
+		.grid-cols-#{$v} {
+			@include mixins.variants($variants...) {
+				grid-template-columns: repeat($v, minmax(0, 1fr));
+			}
+		}
+	}
+
+	@each $v in list-utils.limit(ranges.$range, 0, 128) {
+		.gap-#{$v} {
+			@include mixins.variants($variants...) {
+				gap: unit-utils.rem($v);
+			}
+		}
+	}
+}

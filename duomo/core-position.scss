@@ -1,0 +1,128 @@
+@use "mixins";
+
+$-position-opts: (
+	static,
+	relative,
+	absolute,
+	fixed,
+	sticky,
+);
+
+$-placement-opts: (
+	all: (
+		top: 0,
+		right: 0,
+		bottom: 0,
+		left: 0,
+	),
+	top-all: (
+		top: 0,
+		right: 0,
+		bottom: revert,
+		left: 0,
+	),
+	right-all: (
+		top: 0,
+		right: 0,
+		bottom: 0,
+		left: revert,
+	),
+	bottom-all: (
+		top: revert,
+		right: 0,
+		bottom: 0,
+		left: 0,
+	),
+	left-all: (
+		top: 0,
+		right: revert,
+		bottom: 0,
+		left: 0,
+	),
+	top-right: (
+		top: 0,
+		right: 0,
+		bottom: revert,
+		left: revert,
+	),
+	bottom-right: (
+		top: revert,
+		right: 0,
+		bottom: 0,
+		left: revert,
+	),
+	bottom-left: (
+		top: revert,
+		right: revert,
+		bottom: 0,
+		left: 0,
+	),
+	top-left: (
+		top: 0,
+		right: revert,
+		bottom: revert,
+		left: 0,
+	),
+	top: (
+		top: 0,
+		right: revert,
+		bottom: revert,
+		left: revert,
+	),
+	right: (
+		top: revert,
+		right: 0,
+		bottom: revert,
+		left: revert,
+	),
+	bottom: (
+		top: revert,
+		right: revert,
+		bottom: 0,
+		left: revert,
+	),
+	left: (
+		top: revert,
+		right: revert,
+		bottom: revert,
+		left: 0,
+	),
+);
+
+// Add '[class]' to make API order-independent
+@mixin position($variants...) {
+	// @each $v in $-position-opts {
+	// 	.#{$v} {
+	// 		@include mixins.variants($variants...) {
+	// 			position: $v;
+	// 		}
+	// 	}
+	// }
+
+	@each $v in $-position-opts {
+		.#{$v} { // [class] {
+			@include mixins.variants($variants...) {
+				@if $v == sticky {
+					position: -webkit-sticky;
+				}
+				position: $v;
+
+				// @if $v == static {
+				// 	z-index: revert;
+				// } @else {
+				// 	z-index: 10;
+				// }
+			}
+		}
+	}
+
+	@each $k, $v in $-placement-opts {
+		.#{$k} {
+			@include mixins.variants($variants...) {
+				@each $k2, $v2 in $v {
+					#{$k2}: $v2;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,36 @@
+@use "mixins";
+
+@mixin overflow($variants...) {
+	@each $v in (scroll, hidden) {
+		.overflow-#{$v} {
+			@include mixins.variants($variants...) {
+				@if $v == scroll {
+					-webkit-overflow-scrolling: touch;
+				}
+				overflow: $v;
+			}
+		}
+	}
+
+	@each $v in (scroll, hidden) {
+		.overflow-x-#{$v} {
+			@include mixins.variants($variants...) {
+				@if $v == scroll {
+					-webkit-overflow-scrolling: touch;
+				}
+				overflow-x: $v;
+			}
+		}
+	}
+
+	@each $v in (scroll, hidden) {
+		.overflow-y-#{$v} {
+			@include mixins.variants($variants...) {
+				@if $v == scroll {
+					-webkit-overflow-scrolling: touch;
+				}
+				overflow-y: $v;
+			}
+		}
+	}
+}
