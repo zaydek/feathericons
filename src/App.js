@@ -188,34 +188,34 @@ export default function App() {
 
 						{/* Sidebar (RHS) */}
 						<div className={`hide md:show w-320 bg-cool-gray-50 rounded-right-${rounded} border-left-1`}>
-							<div className="sticky top-all">
+							<div className="xl:-mt-16 xl:pt-16 sticky top-all">
 								{/* COMPAT: In Safari, when scrolling to the bottom of the page,
 								the double-sticky effect does not work perfectly. That being
 								said, users will likely never notice the difference. */}
-								<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
-									<div className="relative">
-										<div className={`flex-row center h-320 bg-white rounded-top-right-${rounded} border-bottom-1`}>
-											{/* Center */}
-											<div className="w-64 h-64 bg-cool-gray-200 rounded-full"></div>
-											{/* Top */}
-											<div className="absolute top-all">
-												<div className="p-24 flex-row align-center h-full">
-													<div className="flex-grow"></div>
-													<div className="w-24 h-24 bg-cool-gray-200 rounded-full"></div>
-												</div>
+								{/* <div className="xl:-mt-16 xl:pt-16 sticky top-all"> */}
+								<div className="relative">
+									<div className={`flex-row center h-320 bg-white rounded-top-right-${rounded} border-bottom-1`}>
+										{/* Center */}
+										<div className="w-64 h-64 bg-cool-gray-200 rounded-full"></div>
+										{/* Top */}
+										<div className="absolute top-all">
+											<div className="p-24 flex-row align-center h-full">
+												<div className="flex-grow"></div>
+												<div className="w-24 h-24 bg-cool-gray-200 rounded-full"></div>
 											</div>
-											{/* Bottom */}
-											<div className="absolute bottom-all">
-												<div className="p-24 flex-row align-center m-gap-16 h-full">
-													<div className="flex-grow">
-														<div className="h-8 bg-cool-gray-200 rounded-full"></div>
-													</div>
-													<div className="w-64 h-24 bg-cool-gray-200 rounded-full"></div>
+										</div>
+										{/* Bottom */}
+										<div className="absolute bottom-all">
+											<div className="p-24 flex-row align-center m-gap-16 h-full">
+												<div className="flex-grow">
+													<div className="h-8 bg-cool-gray-200 rounded-full"></div>
 												</div>
+												<div className="w-64 h-24 bg-cool-gray-200 rounded-full"></div>
 											</div>
 										</div>
 									</div>
 								</div>
+								{/* </div> */}
 
 								{/* Body */}
 								{iota(2).map(key => (
@@ -256,7 +256,7 @@ export default function App() {
 									</div>
 								</div>
 
-								<hr />
+								{/* <hr /> */}
 
 							</div>
 						</div>
@@ -265,7 +265,7 @@ export default function App() {
 				</div>
 			</div>
 
-			<div className="hide xl:show h-256"></div>
+			<div className="hide xl:show h-64"></div>
 		</>
 	)
 }

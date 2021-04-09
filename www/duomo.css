@@ -297,8 +297,8 @@ video {
   position: fixed;
 }
 .sticky {
-  position: sticky;
   position: -webkit-sticky;
+  position: sticky;
 }
 .all {
   top: 0;
@@ -3636,8 +3636,8 @@ video {
     position: fixed;
   }
   .sm\:sticky {
-    position: sticky;
     position: -webkit-sticky;
+    position: sticky;
   }
   .sm\:all {
     top: 0;
@@ -6924,8 +6924,8 @@ video {
     position: fixed;
   }
   .md\:sticky {
-    position: sticky;
     position: -webkit-sticky;
+    position: sticky;
   }
   .md\:all {
     top: 0;
@@ -10212,8 +10212,8 @@ video {
     position: fixed;
   }
   .lg\:sticky {
-    position: sticky;
     position: -webkit-sticky;
+    position: sticky;
   }
   .lg\:all {
     top: 0;
@@ -13500,8 +13500,8 @@ video {
     position: fixed;
   }
   .xl\:sticky {
-    position: sticky;
     position: -webkit-sticky;
+    position: sticky;
   }
   .xl\:all {
     top: 0;
