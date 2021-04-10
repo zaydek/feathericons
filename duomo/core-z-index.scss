@@ -3,14 +3,6 @@
 
 @use "mixins";
 
-// $-position-opts: (
-// 	static,
-// 	relative,
-// 	absolute,
-// 	fixed,
-// 	sticky,
-// );
-
 $-range: (
 	-10,
 	  0,
@@ -21,24 +13,10 @@ $-range: (
 	 50,
 );
 
-// Add '[class]' to make API order-independent
 @mixin z-index($variants...) {
-	// @each $v in $-position-opts {
-	// 	.#{$v}[class] {
-	// 		@include mixins.variants($variants...) {
-	// 			@if $v == static {
-	// 				z-index: revert;
-	// 			} @else {
-	// 				z-index: 10;
-	// 			}
-	// 		}
-	// 	}
-	// }
-
 	@each $v in $-range {
 		$n: if(meta.type-of($v) == number and $v < 0, "-", "");
 		$abs: if(meta.type-of($v) == number, math.abs($v), $v);
-		// .#{$n}z-#{$abs}[class] {
 		.#{$n}z-#{$abs} {
 			@include mixins.variants($variants...) {
 				z-index: $v;

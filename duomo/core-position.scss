@@ -89,29 +89,14 @@ $-placement-opts: (
 	),
 );
 
-// Add '[class]' to make API order-independent
 @mixin position($variants...) {
-	// @each $v in $-position-opts {
-	// 	.#{$v} {
-	// 		@include mixins.variants($variants...) {
-	// 			position: $v;
-	// 		}
-	// 	}
-	// }
-
 	@each $v in $-position-opts {
-		.#{$v} { // [class] {
+		.#{$v} {
 			@include mixins.variants($variants...) {
 				@if $v == sticky {
 					position: -webkit-sticky;
 				}
 				position: $v;
-
-				// @if $v == static {
-				// 	z-index: revert;
-				// } @else {
-				// 	z-index: 10;
-				// }
 			}
 		}
 	}

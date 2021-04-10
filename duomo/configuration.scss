@@ -1,0 +1,970 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:meta";
+
+$delimiter:        null;
+$nrange:           null;
+$range:            null;
+$colors:           null;
+$transparent:      null;
+$current:          null;
+$black:            null;
+$white:            null;
+$roses:            null;
+$rose-50:          null;
+$rose-100:         null;
+$rose-200:         null;
+$rose-300:         null;
+$rose-400:         null;
+$rose-500:         null;
+$rose-600:         null;
+$rose-700:         null;
+$rose-800:         null;
+$rose-900:         null;
+$pinks:            null;
+$pink-50:          null;
+$pink-100:         null;
+$pink-200:         null;
+$pink-300:         null;
+$pink-400:         null;
+$pink-500:         null;
+$pink-600:         null;
+$pink-700:         null;
+$pink-800:         null;
+$pink-900:         null;
+$fuchsias:         null;
+$fuchsia-50:       null;
+$fuchsia-100:      null;
+$fuchsia-200:      null;
+$fuchsia-300:      null;
+$fuchsia-400:      null;
+$fuchsia-500:      null;
+$fuchsia-600:      null;
+$fuchsia-700:      null;
+$fuchsia-800:      null;
+$fuchsia-900:      null;
+$purples:          null;
+$purple-50:        null;
+$purple-100:       null;
+$purple-200:       null;
+$purple-300:       null;
+$purple-400:       null;
+$purple-500:       null;
+$purple-600:       null;
+$purple-700:       null;
+$purple-800:       null;
+$purple-900:       null;
+$violets:          null;
+$violet-50:        null;
+$violet-100:       null;
+$violet-200:       null;
+$violet-300:       null;
+$violet-400:       null;
+$violet-500:       null;
+$violet-600:       null;
+$violet-700:       null;
+$violet-800:       null;
+$violet-900:       null;
+$indigos:          null;
+$indigo-50:        null;
+$indigo-100:       null;
+$indigo-200:       null;
+$indigo-300:       null;
+$indigo-400:       null;
+$indigo-500:       null;
+$indigo-600:       null;
+$indigo-700:       null;
+$indigo-800:       null;
+$indigo-900:       null;
+$blues:            null;
+$blue-50:          null;
+$blue-100:         null;
+$blue-200:         null;
+$blue-300:         null;
+$blue-400:         null;
+$blue-500:         null;
+$blue-600:         null;
+$blue-700:         null;
+$blue-800:         null;
+$blue-900:         null;
+$light-blues:      null;
+$light-blue-50:    null;
+$light-blue-100:   null;
+$light-blue-200:   null;
+$light-blue-300:   null;
+$light-blue-400:   null;
+$light-blue-500:   null;
+$light-blue-600:   null;
+$light-blue-700:   null;
+$light-blue-800:   null;
+$light-blue-900:   null;
+$cyans:            null;
+$cyan-50:          null;
+$cyan-100:         null;
+$cyan-200:         null;
+$cyan-300:         null;
+$cyan-400:         null;
+$cyan-500:         null;
+$cyan-600:         null;
+$cyan-700:         null;
+$cyan-800:         null;
+$cyan-900:         null;
+$teals:            null;
+$teal-50:          null;
+$teal-100:         null;
+$teal-200:         null;
+$teal-300:         null;
+$teal-400:         null;
+$teal-500:         null;
+$teal-600:         null;
+$teal-700:         null;
+$teal-800:         null;
+$teal-900:         null;
+$emeralds:         null;
+$emerald-50:       null;
+$emerald-100:      null;
+$emerald-200:      null;
+$emerald-300:      null;
+$emerald-400:      null;
+$emerald-500:      null;
+$emerald-600:      null;
+$emerald-700:      null;
+$emerald-800:      null;
+$emerald-900:      null;
+$greens:           null;
+$green-50:         null;
+$green-100:        null;
+$green-200:        null;
+$green-300:        null;
+$green-400:        null;
+$green-500:        null;
+$green-600:        null;
+$green-700:        null;
+$green-800:        null;
+$green-900:        null;
+$limes:            null;
+$lime-50:          null;
+$lime-100:         null;
+$lime-200:         null;
+$lime-300:         null;
+$lime-400:         null;
+$lime-500:         null;
+$lime-600:         null;
+$lime-700:         null;
+$lime-800:         null;
+$lime-900:         null;
+$yellows:          null;
+$yellow-50:        null;
+$yellow-100:       null;
+$yellow-200:       null;
+$yellow-300:       null;
+$yellow-400:       null;
+$yellow-500:       null;
+$yellow-600:       null;
+$yellow-700:       null;
+$yellow-800:       null;
+$yellow-900:       null;
+$ambers:           null;
+$amber-50:         null;
+$amber-100:        null;
+$amber-200:        null;
+$amber-300:        null;
+$amber-400:        null;
+$amber-500:        null;
+$amber-600:        null;
+$amber-700:        null;
+$amber-800:        null;
+$amber-900:        null;
+$oranges:          null;
+$orange-50:        null;
+$orange-100:       null;
+$orange-200:       null;
+$orange-300:       null;
+$orange-400:       null;
+$orange-500:       null;
+$orange-600:       null;
+$orange-700:       null;
+$orange-800:       null;
+$orange-900:       null;
+$reds:             null;
+$red-50:           null;
+$red-100:          null;
+$red-200:          null;
+$red-300:          null;
+$red-400:          null;
+$red-500:          null;
+$red-600:          null;
+$red-700:          null;
+$red-800:          null;
+$red-900:          null;
+$warm-grays:       null;
+$warm-gray-50:     null;
+$warm-gray-100:    null;
+$warm-gray-200:    null;
+$warm-gray-300:    null;
+$warm-gray-400:    null;
+$warm-gray-500:    null;
+$warm-gray-600:    null;
+$warm-gray-700:    null;
+$warm-gray-800:    null;
+$warm-gray-900:    null;
+$true-grays:       null;
+$true-gray-50:     null;
+$true-gray-100:    null;
+$true-gray-200:    null;
+$true-gray-300:    null;
+$true-gray-400:    null;
+$true-gray-500:    null;
+$true-gray-600:    null;
+$true-gray-700:    null;
+$true-gray-800:    null;
+$true-gray-900:    null;
+$grays:            null;
+$gray-50:          null;
+$gray-100:         null;
+$gray-200:         null;
+$gray-300:         null;
+$gray-400:         null;
+$gray-500:         null;
+$gray-600:         null;
+$gray-700:         null;
+$gray-800:         null;
+$gray-900:         null;
+$cool-grays:       null;
+$cool-gray-50:     null;
+$cool-gray-100:    null;
+$cool-gray-200:    null;
+$cool-gray-300:    null;
+$cool-gray-400:    null;
+$cool-gray-500:    null;
+$cool-gray-600:    null;
+$cool-gray-700:    null;
+$cool-gray-800:    null;
+$cool-gray-900:    null;
+$blue-grays:       null;
+$blue-gray-50:     null;
+$blue-gray-100:    null;
+$blue-gray-200:    null;
+$blue-gray-300:    null;
+$blue-gray-400:    null;
+$blue-gray-500:    null;
+$blue-gray-600:    null;
+$blue-gray-700:    null;
+$blue-gray-800:    null;
+$blue-gray-900:    null;
+$shadows:          null;
+$shadow-inner:     null;
+$shadow-px:        null;
+$shadow-xs:        null;
+$shadow-sm:        null;
+$shadow-md:        null;
+$shadow-lg:        null;
+$shadow-xl:        null;
+$shadow-2xl:       null;
+$timing-functions: null;
+$linear:           null;
+$ease-in:          null;
+$ease-out:         null;
+$ease-in-out:      null;
+$breakpoints:      null;
+$sm:               null;
+$md:               null;
+$lg:               null;
+$xl:               null;
+
+$-configuration: (
+	delimiter: ":",
+	ranges: (
+		negative: (
+					// <- Decrement by 2
+			-1, // Add 1
+			-2,
+			-4,
+			-6,
+			-8,
+			-10,
+			-12,
+			-14,
+			-16,
+			-18,
+			-20, // <- Decrement by 4
+			-24,
+			-28,
+			-32,
+			-36,
+			-40, // <- Decrement by 8
+			-48,
+			-56,
+			-64,
+			-72,
+			-80, // <- Decrement by 16
+			-96,
+			-112,
+			-128,
+			-144,
+			-160, // <- Decrement by 32
+			-192,
+			-224,
+			-256,
+			-288,
+			-320, // <- Decrement by 64
+			-384,
+			-448,
+			-512,
+			-576,
+			-640,
+		),
+		positive: (
+			0, // <- Increment by 2
+			1, // Add 1
+			2,
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16,
+			18,
+			20, // <- Increment by 4
+			24,
+			28,
+			32,
+			36,
+			40, // <- Increment by 8
+			48,
+			56,
+			64,
+			72,
+			80, // <- Increment by 16
+			96,
+			112,
+			128,
+			144,
+			160, // <- Increment by 32
+			192,
+			224,
+			256,
+			288,
+			320, // <- Increment by 64
+			384,
+			448,
+			512,
+			576,
+			640,
+		),
+	),
+	colors: (
+		transparent: transparent,
+		current: currentColor,
+		black: #000,
+		white: #fff,
+
+		rose: (
+			50:  #fff1f2,
+			100: #ffe4e6,
+			200: #fecdd3,
+			300: #fda4af,
+			400: #fb7185,
+			500: #f43f5e,
+			600: #e11d48,
+			700: #be123c,
+			800: #9f1239,
+			900: #881337,
+			950: color.mix(#881337, #000),
+		),
+		pink: (
+			50:  #fdf2f8,
+			100: #fce7f3,
+			200: #fbcfe8,
+			300: #f9a8d4,
+			400: #f472b6,
+			500: #ec4899,
+			600: #db2777,
+			700: #be185d,
+			800: #9d174d,
+			900: #831843,
+			950: color.mix(#831843, #000),
+		),
+		fuchsia: (
+			50:  #fdf4ff,
+			100: #fae8ff,
+			200: #f5d0fe,
+			300: #f0abfc,
+			400: #e879f9,
+			500: #d946ef,
+			600: #c026d3,
+			700: #a21caf,
+			800: #86198f,
+			900: #701a75,
+			950: color.mix(#701a75, #000),
+		),
+		purple: (
+			50:  #faf5ff,
+			100: #f3e8ff,
+			200: #e9d5ff,
+			300: #d8b4fe,
+			400: #c084fc,
+			500: #a855f7,
+			600: #9333ea,
+			700: #7e22ce,
+			800: #6b21a8,
+			900: #581c87,
+			950: color.mix(#581c87, #000),
+		),
+		violet: (
+			50:  #f5f3ff,
+			100: #ede9fe,
+			200: #ddd6fe,
+			300: #c4b5fd,
+			400: #a78bfa,
+			500: #8b5cf6,
+			600: #7c3aed,
+			700: #6d28d9,
+			800: #5b21b6,
+			900: #4c1d95,
+			950: color.mix(#4c1d95, #000),
+		),
+		indigo: (
+			50:  #eef2ff,
+			100: #e0e7ff,
+			200: #c7d2fe,
+			300: #a5b4fc,
+			400: #818cf8,
+			500: #6366f1,
+			600: #4f46e5,
+			700: #4338ca,
+			800: #3730a3,
+			900: #312e81,
+			950: color.mix(#312e81, #000),
+		),
+		blue: (
+			50:  #eff6ff,
+			100: #dbeafe,
+			200: #bfdbfe,
+			300: #93c5fd,
+			400: #60a5fa,
+			500: #3b82f6,
+			600: #2563eb,
+			700: #1d4ed8,
+			800: #1e40af,
+			900: #1e3a8a,
+			950: color.mix(#1e3a8a, #000),
+		),
+		light-blue: (
+			50:  #f0f9ff,
+			100: #e0f2fe,
+			200: #bae6fd,
+			300: #7dd3fc,
+			400: #38bdf8,
+			500: #0ea5e9,
+			600: #0284c7,
+			700: #0369a1,
+			800: #075985,
+			900: #0c4a6e,
+			950: color.mix(#0c4a6e, #000),
+		),
+		cyan: (
+			50:  #ecfeff,
+			100: #cffafe,
+			200: #a5f3fc,
+			300: #67e8f9,
+			400: #22d3ee,
+			500: #06b6d4,
+			600: #0891b2,
+			700: #0e7490,
+			800: #155e75,
+			900: #164e63,
+			950: color.mix(#164e63, #000),
+		),
+		teal: (
+			50:  #f0fdfa,
+			100: #ccfbf1,
+			200: #99f6e4,
+			300: #5eead4,
+			400: #2dd4bf,
+			500: #14b8a6,
+			600: #0d9488,
+			700: #0f766e,
+			800: #115e59,
+			900: #134e4a,
+			950: color.mix(#134e4a, #000),
+		),
+		emerald: (
+			50:  #ecfdf5,
+			100: #d1fae5,
+			200: #a7f3d0,
+			300: #6ee7b7,
+			400: #34d399,
+			500: #10b981,
+			600: #059669,
+			700: #047857,
+			800: #065f46,
+			900: #064e3b,
+			950: color.mix(#064e3b, #000),
+		),
+		green: (
+			50:  #f0fdf4,
+			100: #dcfce7,
+			200: #bbf7d0,
+			300: #86efac,
+			400: #4ade80,
+			500: #22c55e,
+			600: #16a34a,
+			700: #15803d,
+			800: #166534,
+			900: #14532d,
+			950: color.mix(#14532d, #000),
+		),
+		lime: (
+			50:  #f7fee7,
+			100: #ecfccb,
+			200: #d9f99d,
+			300: #bef264,
+			400: #a3e635,
+			500: #84cc16,
+			600: #65a30d,
+			700: #4d7c0f,
+			800: #3f6212,
+			900: #365314,
+			950: color.mix(#365314, #000),
+		),
+		yellow: (
+			50:  #fefce8,
+			100: #fef9c3,
+			200: #fef08a,
+			300: #fde047,
+			400: #facc15,
+			500: #eab308,
+			600: #ca8a04,
+			700: #a16207,
+			800: #854d0e,
+			900: #713f12,
+			950: color.mix(#713f12, #000),
+		),
+		amber: (
+			50:  #fffbeb,
+			100: #fef3c7,
+			200: #fde68a,
+			300: #fcd34d,
+			400: #fbbf24,
+			500: #f59e0b,
+			600: #d97706,
+			700: #b45309,
+			800: #92400e,
+			900: #78350f,
+			950: color.mix(#78350f, #000),
+		),
+		orange: (
+			50:  #fff7ed,
+			100: #ffedd5,
+			200: #fed7aa,
+			300: #fdba74,
+			400: #fb923c,
+			500: #f97316,
+			600: #ea580c,
+			700: #c2410c,
+			800: #9a3412,
+			900: #7c2d12,
+			950: color.mix(#7c2d12, #000),
+		),
+		red: (
+			50:  #fef2f2,
+			100: #fee2e2,
+			200: #fecaca,
+			300: #fca5a5,
+			400: #f87171,
+			500: #ef4444,
+			600: #dc2626,
+			700: #b91c1c,
+			800: #991b1b,
+			900: #7f1d1d,
+			950: color.mix(#7f1d1d, #000),
+		),
+		warm-gray: (
+			50:  #fafaf9,
+			100: #f5f5f4,
+			200: #e7e5e4,
+			300: #d6d3d1,
+			400: #a8a29e,
+			500: #78716c,
+			600: #57534e,
+			700: #44403c,
+			800: #292524,
+			900: #1c1917,
+			950: color.mix(#1c1917, #000),
+		),
+		true-gray: (
+			50:  #fafafa,
+			100: #f5f5f5,
+			200: #e5e5e5,
+			300: #d4d4d4,
+			400: #a3a3a3,
+			500: #737373,
+			600: #525252,
+			700: #404040,
+			800: #262626,
+			900: #171717,
+			950: color.mix(#171717, #000),
+		),
+		gray: (
+			50:  #fafafa,
+			100: #f4f4f5,
+			200: #e4e4e7,
+			300: #d4d4d8,
+			400: #a1a1aa,
+			500: #71717a,
+			600: #52525b,
+			700: #3f3f46,
+			800: #27272a,
+			900: #18181b,
+			950: color.mix(#18181b, #000),
+		),
+		cool-gray: (
+			50:  #f9fafb,
+			100: #f3f4f6,
+			200: #e5e7eb,
+			300: #d1d5db,
+			400: #9ca3af,
+			500: #6b7280,
+			600: #4b5563,
+			700: #374151,
+			800: #1f2937,
+			900: #111827,
+			950: color.mix(#111827, #000),
+		),
+		blue-gray: (
+			50:  #f8fafc,
+			100: #f1f5f9,
+			200: #e2e8f0,
+			300: #cbd5e1,
+			400: #94a3b8,
+			500: #64748b,
+			600: #475569,
+			700: #334155,
+			800: #1e293b,
+			900: #0f172a,
+			950: color.mix(#0f172a, #000),
+		),
+	),
+	box-shadows: (
+		inner: (inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)),
+		px:    (0 0 0 1px rgba(0, 0, 0, 0.05)),
+		xs:    (0 1px 2px 0 rgba(0, 0, 0, 0.05)),
+		sm:    (0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)),
+		md:    (0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)),
+		lg:    (0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)),
+		xl:    (0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)),
+		2xl:   (0 25px 50px -12px rgba(0, 0, 0, 0.25)),
+	),
+	timing-functions: (
+		linear:      linear,
+		ease-in:     cubic-bezier(0.4, 0, 1, 1),
+		ease-out:    cubic-bezier(0, 0, 0.2, 1),
+		ease-in-out: cubic-bezier(0.4, 0, 0.2, 1),
+	),
+	breakpoints: (
+		sm: 640px,
+		md: 768px,
+		lg: 1024px,
+		xl: 1280px,
+	),
+);
+
+
+// Use deep-merge because map.deep-merge because changes key order
+@function deep-merge($m1, $m2) {
+	@each $k, $v in $m2 {
+		@if map.has-key($m1, $k) {
+			@if meta.type-of($v) == map {
+				// Recurse
+				$m1: map.set($m1, $k, deep-merge(map.get($m1, $k), $v));
+			} @else {
+				// Set
+				$m1: map.set($m1, $k, $v);
+			}
+		} @else {
+			// Add
+			$m1: map.set($m1, $k, $v);
+		}
+	}
+	@return $m1;
+}
+
+@mixin configure($user-configuration) {
+	@if $user-configuration {
+		$-configuration: deep-merge($-configuration, $user-configuration) !global;
+	}
+
+	$delimiter:        map.get($-configuration, delimiter)                     !global;
+	$nrange:           map.get($-configuration, ranges, negative)              !global;
+	$range:            map.get($-configuration, ranges, positive)              !global;
+	$colors:           map.get($-configuration, colors)                        !global;
+	$transparent:      map.get($-configuration, colors, transparent)           !global;
+	$current:          map.get($-configuration, colors, current)               !global;
+	$black:            map.get($-configuration, colors, black)                 !global;
+	$white:            map.get($-configuration, colors, white)                 !global;
+	$roses:            map.get($-configuration, colors, rose)                  !global;
+	$rose-50:          map.get($-configuration, colors, rose, 50)              !global;
+	$rose-100:         map.get($-configuration, colors, rose, 100)             !global;
+	$rose-200:         map.get($-configuration, colors, rose, 200)             !global;
+	$rose-300:         map.get($-configuration, colors, rose, 300)             !global;
+	$rose-400:         map.get($-configuration, colors, rose, 400)             !global;
+	$rose-500:         map.get($-configuration, colors, rose, 500)             !global;
+	$rose-600:         map.get($-configuration, colors, rose, 600)             !global;
+	$rose-700:         map.get($-configuration, colors, rose, 700)             !global;
+	$rose-800:         map.get($-configuration, colors, rose, 800)             !global;
+	$rose-900:         map.get($-configuration, colors, rose, 900)             !global;
+	$pinks:            map.get($-configuration, colors, pink)                  !global;
+	$pink-50:          map.get($-configuration, colors, pink, 50)              !global;
+	$pink-100:         map.get($-configuration, colors, pink, 100)             !global;
+	$pink-200:         map.get($-configuration, colors, pink, 200)             !global;
+	$pink-300:         map.get($-configuration, colors, pink, 300)             !global;
+	$pink-400:         map.get($-configuration, colors, pink, 400)             !global;
+	$pink-500:         map.get($-configuration, colors, pink, 500)             !global;
+	$pink-600:         map.get($-configuration, colors, pink, 600)             !global;
+	$pink-700:         map.get($-configuration, colors, pink, 700)             !global;
+	$pink-800:         map.get($-configuration, colors, pink, 800)             !global;
+	$pink-900:         map.get($-configuration, colors, pink, 900)             !global;
+	$fuchsias:         map.get($-configuration, colors, fuchsia)               !global;
+	$fuchsia-50:       map.get($-configuration, colors, fuchsia, 50)           !global;
+	$fuchsia-100:      map.get($-configuration, colors, fuchsia, 100)          !global;
+	$fuchsia-200:      map.get($-configuration, colors, fuchsia, 200)          !global;
+	$fuchsia-300:      map.get($-configuration, colors, fuchsia, 300)          !global;
+	$fuchsia-400:      map.get($-configuration, colors, fuchsia, 400)          !global;
+	$fuchsia-500:      map.get($-configuration, colors, fuchsia, 500)          !global;
+	$fuchsia-600:      map.get($-configuration, colors, fuchsia, 600)          !global;
+	$fuchsia-700:      map.get($-configuration, colors, fuchsia, 700)          !global;
+	$fuchsia-800:      map.get($-configuration, colors, fuchsia, 800)          !global;
+	$fuchsia-900:      map.get($-configuration, colors, fuchsia, 900)          !global;
+	$purples:          map.get($-configuration, colors, purple)                !global;
+	$purple-50:        map.get($-configuration, colors, purple, 50)            !global;
+	$purple-100:       map.get($-configuration, colors, purple, 100)           !global;
+	$purple-200:       map.get($-configuration, colors, purple, 200)           !global;
+	$purple-300:       map.get($-configuration, colors, purple, 300)           !global;
+	$purple-400:       map.get($-configuration, colors, purple, 400)           !global;
+	$purple-500:       map.get($-configuration, colors, purple, 500)           !global;
+	$purple-600:       map.get($-configuration, colors, purple, 600)           !global;
+	$purple-700:       map.get($-configuration, colors, purple, 700)           !global;
+	$purple-800:       map.get($-configuration, colors, purple, 800)           !global;
+	$purple-900:       map.get($-configuration, colors, purple, 900)           !global;
+	$violets:          map.get($-configuration, colors, violet)                !global;
+	$violet-50:        map.get($-configuration, colors, violet, 50)            !global;
+	$violet-100:       map.get($-configuration, colors, violet, 100)           !global;
+	$violet-200:       map.get($-configuration, colors, violet, 200)           !global;
+	$violet-300:       map.get($-configuration, colors, violet, 300)           !global;
+	$violet-400:       map.get($-configuration, colors, violet, 400)           !global;
+	$violet-500:       map.get($-configuration, colors, violet, 500)           !global;
+	$violet-600:       map.get($-configuration, colors, violet, 600)           !global;
+	$violet-700:       map.get($-configuration, colors, violet, 700)           !global;
+	$violet-800:       map.get($-configuration, colors, violet, 800)           !global;
+	$violet-900:       map.get($-configuration, colors, violet, 900)           !global;
+	$indigos:          map.get($-configuration, colors, indigo)                !global;
+	$indigo-50:        map.get($-configuration, colors, indigo, 50)            !global;
+	$indigo-100:       map.get($-configuration, colors, indigo, 100)           !global;
+	$indigo-200:       map.get($-configuration, colors, indigo, 200)           !global;
+	$indigo-300:       map.get($-configuration, colors, indigo, 300)           !global;
+	$indigo-400:       map.get($-configuration, colors, indigo, 400)           !global;
+	$indigo-500:       map.get($-configuration, colors, indigo, 500)           !global;
+	$indigo-600:       map.get($-configuration, colors, indigo, 600)           !global;
+	$indigo-700:       map.get($-configuration, colors, indigo, 700)           !global;
+	$indigo-800:       map.get($-configuration, colors, indigo, 800)           !global;
+	$indigo-900:       map.get($-configuration, colors, indigo, 900)           !global;
+	$blues:            map.get($-configuration, colors, blue)                  !global;
+	$blue-50:          map.get($-configuration, colors, blue, 50)              !global;
+	$blue-100:         map.get($-configuration, colors, blue, 100)             !global;
+	$blue-200:         map.get($-configuration, colors, blue, 200)             !global;
+	$blue-300:         map.get($-configuration, colors, blue, 300)             !global;
+	$blue-400:         map.get($-configuration, colors, blue, 400)             !global;
+	$blue-500:         map.get($-configuration, colors, blue, 500)             !global;
+	$blue-600:         map.get($-configuration, colors, blue, 600)             !global;
+	$blue-700:         map.get($-configuration, colors, blue, 700)             !global;
+	$blue-800:         map.get($-configuration, colors, blue, 800)             !global;
+	$blue-900:         map.get($-configuration, colors, blue, 900)             !global;
+	$light-blues:      map.get($-configuration, colors, light-blue)            !global;
+	$light-blue-50:    map.get($-configuration, colors, light-blue, 50)        !global;
+	$light-blue-100:   map.get($-configuration, colors, light-blue, 100)       !global;
+	$light-blue-200:   map.get($-configuration, colors, light-blue, 200)       !global;
+	$light-blue-300:   map.get($-configuration, colors, light-blue, 300)       !global;
+	$light-blue-400:   map.get($-configuration, colors, light-blue, 400)       !global;
+	$light-blue-500:   map.get($-configuration, colors, light-blue, 500)       !global;
+	$light-blue-600:   map.get($-configuration, colors, light-blue, 600)       !global;
+	$light-blue-700:   map.get($-configuration, colors, light-blue, 700)       !global;
+	$light-blue-800:   map.get($-configuration, colors, light-blue, 800)       !global;
+	$light-blue-900:   map.get($-configuration, colors, light-blue, 900)       !global;
+	$cyans:            map.get($-configuration, colors, cyan)                  !global;
+	$cyan-50:          map.get($-configuration, colors, cyan, 50)              !global;
+	$cyan-100:         map.get($-configuration, colors, cyan, 100)             !global;
+	$cyan-200:         map.get($-configuration, colors, cyan, 200)             !global;
+	$cyan-300:         map.get($-configuration, colors, cyan, 300)             !global;
+	$cyan-400:         map.get($-configuration, colors, cyan, 400)             !global;
+	$cyan-500:         map.get($-configuration, colors, cyan, 500)             !global;
+	$cyan-600:         map.get($-configuration, colors, cyan, 600)             !global;
+	$cyan-700:         map.get($-configuration, colors, cyan, 700)             !global;
+	$cyan-800:         map.get($-configuration, colors, cyan, 800)             !global;
+	$cyan-900:         map.get($-configuration, colors, cyan, 900)             !global;
+	$teals:            map.get($-configuration, colors, teal)                  !global;
+	$teal-50:          map.get($-configuration, colors, teal, 50)              !global;
+	$teal-100:         map.get($-configuration, colors, teal, 100)             !global;
+	$teal-200:         map.get($-configuration, colors, teal, 200)             !global;
+	$teal-300:         map.get($-configuration, colors, teal, 300)             !global;
+	$teal-400:         map.get($-configuration, colors, teal, 400)             !global;
+	$teal-500:         map.get($-configuration, colors, teal, 500)             !global;
+	$teal-600:         map.get($-configuration, colors, teal, 600)             !global;
+	$teal-700:         map.get($-configuration, colors, teal, 700)             !global;
+	$teal-800:         map.get($-configuration, colors, teal, 800)             !global;
+	$teal-900:         map.get($-configuration, colors, teal, 900)             !global;
+	$emeralds:         map.get($-configuration, colors, emerald)               !global;
+	$emerald-50:       map.get($-configuration, colors, emerald, 50)           !global;
+	$emerald-100:      map.get($-configuration, colors, emerald, 100)          !global;
+	$emerald-200:      map.get($-configuration, colors, emerald, 200)          !global;
+	$emerald-300:      map.get($-configuration, colors, emerald, 300)          !global;
+	$emerald-400:      map.get($-configuration, colors, emerald, 400)          !global;
+	$emerald-500:      map.get($-configuration, colors, emerald, 500)          !global;
+	$emerald-600:      map.get($-configuration, colors, emerald, 600)          !global;
+	$emerald-700:      map.get($-configuration, colors, emerald, 700)          !global;
+	$emerald-800:      map.get($-configuration, colors, emerald, 800)          !global;
+	$emerald-900:      map.get($-configuration, colors, emerald, 900)          !global;
+	$greens:           map.get($-configuration, colors, green)                 !global;
+	$green-50:         map.get($-configuration, colors, green, 50)             !global;
+	$green-100:        map.get($-configuration, colors, green, 100)            !global;
+	$green-200:        map.get($-configuration, colors, green, 200)            !global;
+	$green-300:        map.get($-configuration, colors, green, 300)            !global;
+	$green-400:        map.get($-configuration, colors, green, 400)            !global;
+	$green-500:        map.get($-configuration, colors, green, 500)            !global;
+	$green-600:        map.get($-configuration, colors, green, 600)            !global;
+	$green-700:        map.get($-configuration, colors, green, 700)            !global;
+	$green-800:        map.get($-configuration, colors, green, 800)            !global;
+	$green-900:        map.get($-configuration, colors, green, 900)            !global;
+	$limes:            map.get($-configuration, colors, lime)                  !global;
+	$lime-50:          map.get($-configuration, colors, lime, 50)              !global;
+	$lime-100:         map.get($-configuration, colors, lime, 100)             !global;
+	$lime-200:         map.get($-configuration, colors, lime, 200)             !global;
+	$lime-300:         map.get($-configuration, colors, lime, 300)             !global;
+	$lime-400:         map.get($-configuration, colors, lime, 400)             !global;
+	$lime-500:         map.get($-configuration, colors, lime, 500)             !global;
+	$lime-600:         map.get($-configuration, colors, lime, 600)             !global;
+	$lime-700:         map.get($-configuration, colors, lime, 700)             !global;
+	$lime-800:         map.get($-configuration, colors, lime, 800)             !global;
+	$lime-900:         map.get($-configuration, colors, lime, 900)             !global;
+	$yellows:          map.get($-configuration, colors, yellow)                !global;
+	$yellow-50:        map.get($-configuration, colors, yellow, 50)            !global;
+	$yellow-100:       map.get($-configuration, colors, yellow, 100)           !global;
+	$yellow-200:       map.get($-configuration, colors, yellow, 200)           !global;
+	$yellow-300:       map.get($-configuration, colors, yellow, 300)           !global;
+	$yellow-400:       map.get($-configuration, colors, yellow, 400)           !global;
+	$yellow-500:       map.get($-configuration, colors, yellow, 500)           !global;
+	$yellow-600:       map.get($-configuration, colors, yellow, 600)           !global;
+	$yellow-700:       map.get($-configuration, colors, yellow, 700)           !global;
+	$yellow-800:       map.get($-configuration, colors, yellow, 800)           !global;
+	$yellow-900:       map.get($-configuration, colors, yellow, 900)           !global;
+	$ambers:           map.get($-configuration, colors, amber)                 !global;
+	$amber-50:         map.get($-configuration, colors, amber, 50)             !global;
+	$amber-100:        map.get($-configuration, colors, amber, 100)            !global;
+	$amber-200:        map.get($-configuration, colors, amber, 200)            !global;
+	$amber-300:        map.get($-configuration, colors, amber, 300)            !global;
+	$amber-400:        map.get($-configuration, colors, amber, 400)            !global;
+	$amber-500:        map.get($-configuration, colors, amber, 500)            !global;
+	$amber-600:        map.get($-configuration, colors, amber, 600)            !global;
+	$amber-700:        map.get($-configuration, colors, amber, 700)            !global;
+	$amber-800:        map.get($-configuration, colors, amber, 800)            !global;
+	$amber-900:        map.get($-configuration, colors, amber, 900)            !global;
+	$oranges:          map.get($-configuration, colors, orange)                !global;
+	$orange-50:        map.get($-configuration, colors, orange, 50)            !global;
+	$orange-100:       map.get($-configuration, colors, orange, 100)           !global;
+	$orange-200:       map.get($-configuration, colors, orange, 200)           !global;
+	$orange-300:       map.get($-configuration, colors, orange, 300)           !global;
+	$orange-400:       map.get($-configuration, colors, orange, 400)           !global;
+	$orange-500:       map.get($-configuration, colors, orange, 500)           !global;
+	$orange-600:       map.get($-configuration, colors, orange, 600)           !global;
+	$orange-700:       map.get($-configuration, colors, orange, 700)           !global;
+	$orange-800:       map.get($-configuration, colors, orange, 800)           !global;
+	$orange-900:       map.get($-configuration, colors, orange, 900)           !global;
+	$reds:             map.get($-configuration, colors, red)                   !global;
+	$red-50:           map.get($-configuration, colors, red, 50)               !global;
+	$red-100:          map.get($-configuration, colors, red, 100)              !global;
+	$red-200:          map.get($-configuration, colors, red, 200)              !global;
+	$red-300:          map.get($-configuration, colors, red, 300)              !global;
+	$red-400:          map.get($-configuration, colors, red, 400)              !global;
+	$red-500:          map.get($-configuration, colors, red, 500)              !global;
+	$red-600:          map.get($-configuration, colors, red, 600)              !global;
+	$red-700:          map.get($-configuration, colors, red, 700)              !global;
+	$red-800:          map.get($-configuration, colors, red, 800)              !global;
+	$red-900:          map.get($-configuration, colors, red, 900)              !global;
+	$warm-grays:       map.get($-configuration, colors, warm-gray)             !global;
+	$warm-gray-50:     map.get($-configuration, colors, warm-gray, 50)         !global;
+	$warm-gray-100:    map.get($-configuration, colors, warm-gray, 100)        !global;
+	$warm-gray-200:    map.get($-configuration, colors, warm-gray, 200)        !global;
+	$warm-gray-300:    map.get($-configuration, colors, warm-gray, 300)        !global;
+	$warm-gray-400:    map.get($-configuration, colors, warm-gray, 400)        !global;
+	$warm-gray-500:    map.get($-configuration, colors, warm-gray, 500)        !global;
+	$warm-gray-600:    map.get($-configuration, colors, warm-gray, 600)        !global;
+	$warm-gray-700:    map.get($-configuration, colors, warm-gray, 700)        !global;
+	$warm-gray-800:    map.get($-configuration, colors, warm-gray, 800)        !global;
+	$warm-gray-900:    map.get($-configuration, colors, warm-gray, 900)        !global;
+	$true-grays:       map.get($-configuration, colors, true-gray)             !global;
+	$true-gray-50:     map.get($-configuration, colors, true-gray, 50)         !global;
+	$true-gray-100:    map.get($-configuration, colors, true-gray, 100)        !global;
+	$true-gray-200:    map.get($-configuration, colors, true-gray, 200)        !global;
+	$true-gray-300:    map.get($-configuration, colors, true-gray, 300)        !global;
+	$true-gray-400:    map.get($-configuration, colors, true-gray, 400)        !global;
+	$true-gray-500:    map.get($-configuration, colors, true-gray, 500)        !global;
+	$true-gray-600:    map.get($-configuration, colors, true-gray, 600)        !global;
+	$true-gray-700:    map.get($-configuration, colors, true-gray, 700)        !global;
+	$true-gray-800:    map.get($-configuration, colors, true-gray, 800)        !global;
+	$true-gray-900:    map.get($-configuration, colors, true-gray, 900)        !global;
+	$grays:            map.get($-configuration, colors, gray)                  !global;
+	$gray-50:          map.get($-configuration, colors, gray, 50)              !global;
+	$gray-100:         map.get($-configuration, colors, gray, 100)             !global;
+	$gray-200:         map.get($-configuration, colors, gray, 200)             !global;
+	$gray-300:         map.get($-configuration, colors, gray, 300)             !global;
+	$gray-400:         map.get($-configuration, colors, gray, 400)             !global;
+	$gray-500:         map.get($-configuration, colors, gray, 500)             !global;
+	$gray-600:         map.get($-configuration, colors, gray, 600)             !global;
+	$gray-700:         map.get($-configuration, colors, gray, 700)             !global;
+	$gray-800:         map.get($-configuration, colors, gray, 800)             !global;
+	$gray-900:         map.get($-configuration, colors, gray, 900)             !global;
+	$cool-grays:       map.get($-configuration, colors, cool-gray)             !global;
+	$cool-gray-50:     map.get($-configuration, colors, cool-gray, 50)         !global;
+	$cool-gray-100:    map.get($-configuration, colors, cool-gray, 100)        !global;
+	$cool-gray-200:    map.get($-configuration, colors, cool-gray, 200)        !global;
+	$cool-gray-300:    map.get($-configuration, colors, cool-gray, 300)        !global;
+	$cool-gray-400:    map.get($-configuration, colors, cool-gray, 400)        !global;
+	$cool-gray-500:    map.get($-configuration, colors, cool-gray, 500)        !global;
+	$cool-gray-600:    map.get($-configuration, colors, cool-gray, 600)        !global;
+	$cool-gray-700:    map.get($-configuration, colors, cool-gray, 700)        !global;
+	$cool-gray-800:    map.get($-configuration, colors, cool-gray, 800)        !global;
+	$cool-gray-900:    map.get($-configuration, colors, cool-gray, 900)        !global;
+	$blue-grays:       map.get($-configuration, colors, blue-gray)             !global;
+	$blue-gray-50:     map.get($-configuration, colors, blue-gray, 50)         !global;
+	$blue-gray-100:    map.get($-configuration, colors, blue-gray, 100)        !global;
+	$blue-gray-200:    map.get($-configuration, colors, blue-gray, 200)        !global;
+	$blue-gray-300:    map.get($-configuration, colors, blue-gray, 300)        !global;
+	$blue-gray-400:    map.get($-configuration, colors, blue-gray, 400)        !global;
+	$blue-gray-500:    map.get($-configuration, colors, blue-gray, 500)        !global;
+	$blue-gray-600:    map.get($-configuration, colors, blue-gray, 600)        !global;
+	$blue-gray-700:    map.get($-configuration, colors, blue-gray, 700)        !global;
+	$blue-gray-800:    map.get($-configuration, colors, blue-gray, 800)        !global;
+	$blue-gray-900:    map.get($-configuration, colors, blue-gray, 900)        !global;
+	$shadows:          map.get($-configuration, box-shadows)                   !global;
+	$shadow-inner:     map.get($-configuration, box-shadows, inner)            !global;
+	$shadow-px:        map.get($-configuration, box-shadows, px)               !global;
+	$shadow-xs:        map.get($-configuration, box-shadows, xs)               !global;
+	$shadow-sm:        map.get($-configuration, box-shadows, sm)               !global;
+	$shadow-md:        map.get($-configuration, box-shadows, md)               !global;
+	$shadow-lg:        map.get($-configuration, box-shadows, lg)               !global;
+	$shadow-xl:        map.get($-configuration, box-shadows, xl)               !global;
+	$shadow-2xl:       map.get($-configuration, box-shadows, 2xl)              !global;
+	$timing-functions: map.get($-configuration, timing-functions, linear)      !global;
+	$linear:           map.get($-configuration, timing-functions, linear)      !global;
+	$ease-in:          map.get($-configuration, timing-functions, ease-in)     !global;
+	$ease-out:         map.get($-configuration, timing-functions, ease-out)    !global;
+	$ease-in-out:      map.get($-configuration, timing-functions, ease-in-out) !global;
+	$breakpoints:      map.get($-configuration, breakpoints)                   !global;
+	$sm:               map.get($-configuration, breakpoints, sm)               !global;
+	$md:               map.get($-configuration, breakpoints, md)               !global;
+	$lg:               map.get($-configuration, breakpoints, lg)               !global;
+	$xl:               map.get($-configuration, breakpoints, xl)               !global;
+}
+
+@include configure(null);

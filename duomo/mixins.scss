@@ -1,5 +1,5 @@
+@use "configuration";
 @use "str-utils";
-@use "tokens";
 
 @mixin -theme-property($property, $light, $dark) {
 	#{$property}: #{$light};
@@ -37,7 +37,7 @@
 
 @mixin responsive {
 	@at-root {
-		#{str-utils.str-replace("" + &, " .", "\\#{tokens.$delimiter}")} {
+		#{str-utils.str-replace("" + &, " .", "\\#{configuration.$delimiter}")} {
 			@content;
 		}
 	}

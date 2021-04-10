@@ -3,10 +3,10 @@
 @use "sass:math";
 @use "sass:meta";
 
+@use "configuration";
 @use "list-utils";
 @use "mixins";
 @use "str-utils";
-@use "tokens";
 @use "unit-utils";
 
 @use "core-aspect-ratio" as *;
@@ -73,29 +73,29 @@ $-aliases: (
 
 	@include position($variants...);
 
-	@include -define((margin), m, -range((-128, 128), tokens.$nrange, auto, tokens.$range), rem, $variants...);
-	@include -define((margin-left, margin-right), mx, -range((-128, 128), tokens.$nrange, auto, tokens.$range), rem, $variants...);
-	@include -define((margin-top, margin-bottom), my, -range((-128, 128), tokens.$nrange, auto, tokens.$range), rem, $variants...);
-	@include -define((margin-top), mt, -range((-128, 128), tokens.$nrange, auto, tokens.$range), rem, $variants...);
-	@include -define((margin-right), mr, -range((-128, 128), tokens.$nrange, auto, tokens.$range), rem, $variants...);
-	@include -define((margin-bottom), mb, -range((-128, 128), tokens.$nrange, auto, tokens.$range), rem, $variants...);
-	@include -define((margin-left), ml, -range((-128, 128), tokens.$nrange, auto, tokens.$range), rem, $variants...);
+	@include -define((margin), m, -range((-128, 128), configuration.$nrange, auto, configuration.$range), rem, $variants...);
+	@include -define((margin-left, margin-right), mx, -range((-128, 128), configuration.$nrange, auto, configuration.$range), rem, $variants...);
+	@include -define((margin-top, margin-bottom), my, -range((-128, 128), configuration.$nrange, auto, configuration.$range), rem, $variants...);
+	@include -define((margin-top), mt, -range((-128, 128), configuration.$nrange, auto, configuration.$range), rem, $variants...);
+	@include -define((margin-right), mr, -range((-128, 128), configuration.$nrange, auto, configuration.$range), rem, $variants...);
+	@include -define((margin-bottom), mb, -range((-128, 128), configuration.$nrange, auto, configuration.$range), rem, $variants...);
+	@include -define((margin-left), ml, -range((-128, 128), configuration.$nrange, auto, configuration.$range), rem, $variants...);
 
-	@include -define((padding), p, -range((0, 128), auto, tokens.$range), rem, $variants...);
-	@include -define((padding-left, padding-right), px, -range((0, 128), auto, tokens.$range), rem, $variants...);
-	@include -define((padding-top, padding-bottom), py, -range((0, 128), auto, tokens.$range), rem, $variants...);
-	@include -define((padding-top), pt, -range((0, 128), auto, tokens.$range), rem, $variants...);
-	@include -define((padding-right), pr, -range((0, 128), auto, tokens.$range), rem, $variants...);
-	@include -define((padding-bottom), pb, -range((0, 128), auto, tokens.$range), rem, $variants...);
-	@include -define((padding-left), pl, -range((0, 128), auto, tokens.$range), rem, $variants...);
+	@include -define((padding), p, -range((0, 128), auto, configuration.$range), rem, $variants...);
+	@include -define((padding-left, padding-right), px, -range((0, 128), auto, configuration.$range), rem, $variants...);
+	@include -define((padding-top, padding-bottom), py, -range((0, 128), auto, configuration.$range), rem, $variants...);
+	@include -define((padding-top), pt, -range((0, 128), auto, configuration.$range), rem, $variants...);
+	@include -define((padding-right), pr, -range((0, 128), auto, configuration.$range), rem, $variants...);
+	@include -define((padding-bottom), pb, -range((0, 128), auto, configuration.$range), rem, $variants...);
+	@include -define((padding-left), pl, -range((0, 128), auto, configuration.$range), rem, $variants...);
 
 	@include flex($variants...);
 	@include grid($variants...);
 	@include hide($variants...);
 
-	@include -define((width), w, -range((0, 640), auto, tokens.$range, min-content, max-content, 100%, 100vw), rem, $variants...);
+	@include -define((width), w, -range((0, 640), auto, configuration.$range, min-content, max-content, 100%, 100vw), rem, $variants...);
 
-	@each $k, $v in tokens.$breakpoints {
+	@each $k, $v in configuration.$breakpoints {
 		.w-#{$k} {
 			@include mixins.variants($variants...) {
 				width: 100%;
@@ -104,27 +104,27 @@ $-aliases: (
 		}
 	}
 
-	@include -define((height), h, -range((0, 640), auto, tokens.$range, min-content, max-content, 100%, 100vh), rem, $variants...);
+	@include -define((height), h, -range((0, 640), auto, configuration.$range, min-content, max-content, 100%, 100vh), rem, $variants...);
 
 	@include aspect-ratio($variants...);
 
-	@include -define((border-width), border, -range((0, 8), tokens.$range), rem, $variants...);
-	@include -define((border-left-width, border-right-width), border-x, -range((0, 8), tokens.$range), rem, $variants...);
-	@include -define((border-top-width, border-bottom-width), border-y, -range((0, 8), tokens.$range), rem, $variants...);
-	@include -define((border-top-width), border-top, -range((0, 8), tokens.$range), rem, $variants...);
-	@include -define((border-right-width), border-right, -range((0, 8), tokens.$range), rem, $variants...);
-	@include -define((border-bottom-width), border-bottom, -range((0, 8), tokens.$range), rem, $variants...);
-	@include -define((border-left-width), border-left, -range((0, 8), tokens.$range), rem, $variants...);
+	@include -define((border-width), border, -range((0, 8), configuration.$range), rem, $variants...);
+	@include -define((border-left-width, border-right-width), border-x, -range((0, 8), configuration.$range), rem, $variants...);
+	@include -define((border-top-width, border-bottom-width), border-y, -range((0, 8), configuration.$range), rem, $variants...);
+	@include -define((border-top-width), border-top, -range((0, 8), configuration.$range), rem, $variants...);
+	@include -define((border-right-width), border-right, -range((0, 8), configuration.$range), rem, $variants...);
+	@include -define((border-bottom-width), border-bottom, -range((0, 8), configuration.$range), rem, $variants...);
+	@include -define((border-left-width), border-left, -range((0, 8), configuration.$range), rem, $variants...);
 
-	@include -define((border-radius), rounded, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-top-left-radius, border-top-right-radius), rounded-top, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-top-right-radius, border-bottom-right-radius), rounded-right, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-bottom-left-radius, border-bottom-right-radius), rounded-bottom, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-top-left-radius, border-bottom-left-radius), rounded-left, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-top-right-radius), rounded-top-right, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-bottom-right-radius), rounded-bottom-right, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-bottom-left-radius), rounded-bottom-left, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
-	@include -define((border-top-left-radius), rounded-top-left, -range((0, 32), tokens.$range, 9999px), rem, $variants...);
+	@include -define((border-radius), rounded, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-top-left-radius, border-top-right-radius), rounded-top, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-top-right-radius, border-bottom-right-radius), rounded-right, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-bottom-left-radius, border-bottom-right-radius), rounded-bottom, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-top-left-radius, border-bottom-left-radius), rounded-left, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-top-right-radius), rounded-top-right, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-bottom-right-radius), rounded-bottom-right, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-bottom-left-radius), rounded-bottom-left, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
+	@include -define((border-top-left-radius), rounded-top-left, -range((0, 32), configuration.$range, 9999px), rem, $variants...);
 
 	@include overflow($variants...);
 
@@ -157,7 +157,7 @@ $-aliases: (
 	}
 
 	@include -classes(null, null, top);
-	@each $k, $v in tokens.$breakpoints {
+	@each $k, $v in configuration.$breakpoints {
 		@media (min-width: $v) {
 			.#{$k} {
 				@include -classes($k, $v, responsive);
