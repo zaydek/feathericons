@@ -2249,6 +2249,21 @@ video {
 .justify-baseline {
   justify-content: baseline;
 }
+.justify-items-stretch {
+  justify-items: stretch;
+}
+.justify-items-start {
+  justify-items: flex-start;
+}
+.justify-items-center {
+  justify-items: center;
+}
+.justify-items-end {
+  justify-items: flex-end;
+}
+.justify-items-baseline {
+  justify-items: baseline;
+}
 .align-stretch {
   align-items: stretch;
 }
@@ -2263,6 +2278,21 @@ video {
 }
 .align-baseline {
   align-items: baseline;
+}
+.align-content-stretch {
+  align-content: stretch;
+}
+.align-content-start {
+  align-content: flex-start;
+}
+.align-content-center {
+  align-content: center;
+}
+.align-content-end {
+  align-content: flex-end;
+}
+.align-content-baseline {
+  align-content: baseline;
 }
 .wrap {
   flex-wrap: wrap;
@@ -5580,6 +5610,21 @@ video {
   .sm\:justify-baseline {
     justify-content: baseline;
   }
+  .sm\:justify-items-stretch {
+    justify-items: stretch;
+  }
+  .sm\:justify-items-start {
+    justify-items: flex-start;
+  }
+  .sm\:justify-items-center {
+    justify-items: center;
+  }
+  .sm\:justify-items-end {
+    justify-items: flex-end;
+  }
+  .sm\:justify-items-baseline {
+    justify-items: baseline;
+  }
   .sm\:align-stretch {
     align-items: stretch;
   }
@@ -5594,6 +5639,21 @@ video {
   }
   .sm\:align-baseline {
     align-items: baseline;
+  }
+  .sm\:align-content-stretch {
+    align-content: stretch;
+  }
+  .sm\:align-content-start {
+    align-content: flex-start;
+  }
+  .sm\:align-content-center {
+    align-content: center;
+  }
+  .sm\:align-content-end {
+    align-content: flex-end;
+  }
+  .sm\:align-content-baseline {
+    align-content: baseline;
   }
   .sm\:wrap {
     flex-wrap: wrap;
@@ -8868,6 +8928,21 @@ video {
   .md\:justify-baseline {
     justify-content: baseline;
   }
+  .md\:justify-items-stretch {
+    justify-items: stretch;
+  }
+  .md\:justify-items-start {
+    justify-items: flex-start;
+  }
+  .md\:justify-items-center {
+    justify-items: center;
+  }
+  .md\:justify-items-end {
+    justify-items: flex-end;
+  }
+  .md\:justify-items-baseline {
+    justify-items: baseline;
+  }
   .md\:align-stretch {
     align-items: stretch;
   }
@@ -8882,6 +8957,21 @@ video {
   }
   .md\:align-baseline {
     align-items: baseline;
+  }
+  .md\:align-content-stretch {
+    align-content: stretch;
+  }
+  .md\:align-content-start {
+    align-content: flex-start;
+  }
+  .md\:align-content-center {
+    align-content: center;
+  }
+  .md\:align-content-end {
+    align-content: flex-end;
+  }
+  .md\:align-content-baseline {
+    align-content: baseline;
   }
   .md\:wrap {
     flex-wrap: wrap;
@@ -12156,6 +12246,21 @@ video {
   .lg\:justify-baseline {
     justify-content: baseline;
   }
+  .lg\:justify-items-stretch {
+    justify-items: stretch;
+  }
+  .lg\:justify-items-start {
+    justify-items: flex-start;
+  }
+  .lg\:justify-items-center {
+    justify-items: center;
+  }
+  .lg\:justify-items-end {
+    justify-items: flex-end;
+  }
+  .lg\:justify-items-baseline {
+    justify-items: baseline;
+  }
   .lg\:align-stretch {
     align-items: stretch;
   }
@@ -12170,6 +12275,21 @@ video {
   }
   .lg\:align-baseline {
     align-items: baseline;
+  }
+  .lg\:align-content-stretch {
+    align-content: stretch;
+  }
+  .lg\:align-content-start {
+    align-content: flex-start;
+  }
+  .lg\:align-content-center {
+    align-content: center;
+  }
+  .lg\:align-content-end {
+    align-content: flex-end;
+  }
+  .lg\:align-content-baseline {
+    align-content: baseline;
   }
   .lg\:wrap {
     flex-wrap: wrap;
@@ -15444,6 +15564,21 @@ video {
   .xl\:justify-baseline {
     justify-content: baseline;
   }
+  .xl\:justify-items-stretch {
+    justify-items: stretch;
+  }
+  .xl\:justify-items-start {
+    justify-items: flex-start;
+  }
+  .xl\:justify-items-center {
+    justify-items: center;
+  }
+  .xl\:justify-items-end {
+    justify-items: flex-end;
+  }
+  .xl\:justify-items-baseline {
+    justify-items: baseline;
+  }
   .xl\:align-stretch {
     align-items: stretch;
   }
@@ -15458,6 +15593,21 @@ video {
   }
   .xl\:align-baseline {
     align-items: baseline;
+  }
+  .xl\:align-content-stretch {
+    align-content: stretch;
+  }
+  .xl\:align-content-start {
+    align-content: flex-start;
+  }
+  .xl\:align-content-center {
+    align-content: center;
+  }
+  .xl\:align-content-end {
+    align-content: flex-end;
+  }
+  .xl\:align-content-baseline {
+    align-content: baseline;
   }
   .xl\:wrap {
     flex-wrap: wrap;

@@ -1,4 +1,4 @@
-import * as cases from "./cases"
+import * as cases from "../lib/cases"
 import * as Feather from "react-feather"
 
 import _tags from "./tags.json"

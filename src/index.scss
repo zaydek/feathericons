@@ -1,21 +1,42 @@
+@use "sass:color";
+
 @use "../duomo" as *;
+
+$sans:
+	system-ui,
+	-apple-system,
+	"Segoe UI",
+	Roboto,
+	Helvetica,
+	Arial,
+	sans-serif,
+	"Apple Color Emoji",
+	"Segoe UI Emoji";
+
+$code:
+	ui-monospace,
+	SFMono-Regular,
+	Consolas,
+	"Liberation Mono",
+	Menlo,
+	monospace;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 @mixin colors($property, $shorthand, $colors) {
-  @each $k, $v in $colors {
-    .#{$shorthand}-white {
-      #{$property}: $white;
-    }
-    @each $k2, $v2 in $v {
-      .#{$shorthand}-#{$k}-#{$k2} {
-        #{$property}: $v2;
-      }
-    }
-    .#{$shorthand}-black {
-      #{$property}: $black;
-    }
-  }
+	@each $k, $v in $colors {
+		.#{$shorthand}-white {
+			#{$property}: $white;
+		}
+		@each $k2, $v2 in $v {
+			.#{$shorthand}-#{$k}-#{$k2} {
+				#{$property}: $v2;
+			}
+		}
+		.#{$shorthand}-black {
+			#{$property}: $black;
+		}
+	}
 }
 
 hr { width: 100%; }
@@ -28,19 +49,78 @@ hr { width: 100%; }
 ////////////////////////////////////////////////////////////////////////////////
 
 :root {
-  background-color: $cool-gray-50;
+	background-color: $cool-gray-50;
 }
 
 @include colors(color, color, (cool-gray: $cool-grays));
 @include colors(background-color, bg, (cool-gray: $cool-grays));
 @include colors(border-color, border, (cool-gray: $cool-grays));
 
-.custom-grid {
+@mixin size($size) {
+	width: $size;
+	height: $size;
+}
+
+.searchResultGrid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(rem(128), 1fr));
-	gap: rem(16);
+	grid-template-columns: repeat(auto-fill, minmax(rem(144), 1fr));
+	// gap: rem(16);
+}
+
+$full: 9999px;
+
+.searchResultGridItem {
+	position: relative;
+}
+.searchResultGridItem::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	content: "";
+	background-color: color.adjust($blue-400, $alpha: -0.75);
+	border-radius: $full;
+	opacity: 0;
+	transform: scale(0);
+	transition: 300ms $ease-out;
+}
+.searchResultGridItem:hover::before {
+	opacity: 1;
+	transform: scale(0.618);
+}
+.searchResultGridItem:hover .searchResultGridIcon {
+	color: $blue-600;
+}
+
+.searchResultText {
+	text-align: center;
+	font: rem(13) / 1.125 $code;
+	color: $cool-gray-800;
+	transform: translateX(rem(13 * 1.125));
+	transition: 400ms $ease-out;
+}
+.searchResultTextWrapper:hover .searchResultText {
+	text-decoration: underline;
+	color: $blue-600;
+	transform: translateX(0);
+	opacity: 1;
+	transition: 200ms $ease-out;
+}
+.searchResultTextSVG {
+	@include size(rem(13 * 1.125));
+	color: $cool-gray-400;
+	opacity: 0;
+	transform: translateX(rem(-1 * 13 * 1.125));
+	transition: 400ms $ease-out;
+}
+.searchResultTextWrapper:hover .searchResultTextSVG {
+	color: $blue-600;
+	transform: translateX(0);
+	opacity: 1;
+	transition: 200ms $ease-out;
 }
 
 .shadow {
-  box-shadow: $shadow-px, $shadow-lg;
+	box-shadow: $shadow-px, $shadow-lg;
 }

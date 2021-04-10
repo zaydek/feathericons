@@ -147,6 +147,13 @@ $-flex-wrap-opts: (
 			}
 		}
 	}
+	// @each $k, $v in $-flex-opts {
+	// 	.justify-items-#{$k} {
+	// 		@include mixins.variants($variants...) {
+	// 			justify-items: $v;
+	// 		}
+	// 	}
+	// }
 	@each $k, $v in $-flex-opts {
 		.align-#{$k} {
 			@include mixins.variants($variants...) {
@@ -154,6 +161,13 @@ $-flex-wrap-opts: (
 			}
 		}
 	}
+	// @each $k, $v in $-flex-opts {
+	// 	.align-content-#{$k} {
+	// 		@include mixins.variants($variants...) {
+	// 			align-content: $v;
+	// 		}
+	// 	}
+	// }
 	@each $k, $v in $-flex-wrap-opts {
 		.#{$k} {
 			@include mixins.variants($variants...) {

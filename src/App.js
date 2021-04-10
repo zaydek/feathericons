@@ -1,3 +1,7 @@
+import * as cases from "./lib/cases"
+import * as Feather from "react-feather"
+import dataset from "./data/dataset.generated.json"
+
 function iota(max) {
 	return Array.from(new Array(max), (_, x) => x);
 }
@@ -186,18 +190,26 @@ export default function App() {
 							</div>
 
 							{/* Body */}
-							<div className="px-16 xl:p-64 custom-grid">
-								{iota(64).map(key => (
-									<div key={key} className="aspect aspect-w-1 aspect-h-1 bg-cool-gray-100">
+							<div className="px-16 xl:p-64 xl:pb-96 searchResultGrid">
+								{Object.entries(dataset).map(([k, v]) => (
+									<div key={v.name} className="aspect aspect-w-1 aspect-h-1 searchResultGridItem">
 										<div className="flex-row center">
-											<div className="w-64 h-64 bg-black rounded-full"></div>
+											{React.createElement(Feather[cases.titleCase(k)], {
+												className: "w-32 h-32 searchResultGridIcon",
+												// TODO
+												// style: {
+												// 	width: "var(--icon-size)",
+												// 	height: "var(--icon-size)",
+												// },
+											})}
 										</div>
 
 										<div className="relative">
 											<div className="absolute bottom-all">
-												<div className="px-8 py-4 flex-row justify-center h-full">
-													<div>Hello, world!</div>
-												</div>
+												<a href={`/${k}`} className="py-8 flex-row center m-gap-8 pointer searchResultTextWrapper">
+													<div className="searchResultText">{k}</div>
+													<Feather.ExternalLink className="searchResultTextSVG" />
+												</a>
 											</div>
 										</div>
 									</div>
