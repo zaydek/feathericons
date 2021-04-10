@@ -52,7 +52,7 @@ $-aliases: (
 @function -range($bounds, $entries...) {
 	$min: list.nth($bounds, 1);
 	$max: list.nth($bounds, 2);
-	@return list-utils.limit(list-utils.merge($entries...), $min, $max);
+	@return list-utils.list-limit(list-utils.list-merge($entries...), $min, $max);
 }
 
 @mixin -classes($breakpoint-k, $breakpoint-v, $variants...) {

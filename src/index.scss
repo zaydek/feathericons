@@ -2,8 +2,20 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-.color-black {
-  color: $black;
+@mixin colors($property, $shorthand, $colors) {
+  @each $k, $v in $colors {
+    .#{$shorthand}-white {
+      #{$property}: $white;
+    }
+    @each $k2, $v2 in $v {
+      .#{$shorthand}-#{$k}-#{$k2} {
+        #{$property}: $v2;
+      }
+    }
+    .#{$shorthand}-black {
+      #{$property}: $black;
+    }
+  }
 }
 
 hr { width: 100%; }
@@ -19,32 +31,14 @@ hr { width: 100%; }
   background-color: $cool-gray-50;
 }
 
-.bg-white {
-  background-color: $white;
-}
-@each $k, $v in $cool-grays {
-  .bg-cool-gray-#{$k} {
-    background-color: $v;
-  }
-}
-.bg-black {
-  background-color: $black;
-}
+@include colors(color, color, (cool-gray: $cool-grays));
+@include colors(background-color, bg, (cool-gray: $cool-grays));
+@include colors(border-color, border, (cool-gray: $cool-grays));
 
-.bg-red {
-  background-color: $red-500;
-}
-
-.border-white {
-  border-color: $white;
-}
-@each $k, $v in $cool-grays {
-  .border-cool-gray-#{$k} {
-    border-color: $v;
-  }
-}
-.border-black {
-  border-color: $black;
+.custom-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(rem(128), 1fr));
+	gap: rem(16);
 }
 
 .shadow {

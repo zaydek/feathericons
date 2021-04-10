@@ -1,14 +1,18 @@
 {
 	"scripts": {
+		"build-dataset": "esbuild src/data/build.ts --bundle | node > src/data/dataset.generated.json",
 		"duomo-dev": "sass duomo.config.scss tmp/duomo.css --no-source-map && esbuild tmp/duomo.css --log-level=warning --outfile=www/duomo.css && rm -rf tmp",
 		"duomo-build": "sass duomo.config.scss tmp/duomo.css --no-source-map && esbuild tmp/duomo.css --log-level=warning --minify --outfile=www/duomo.css && rm -rf tmp",
-		"dev": "npm run duomo-dev && retro dev",
-		"build": "npm run duomo-build && retro build",
+		"predev": "npm run build-dataset && npm run duomo-dev",
+		"dev": "retro dev",
+		"prebuild": "npm run build-dataset && npm run duomo-build",
+		"build": "retro build",
 		"serve": "retro serve"
 	},
 	"dependencies": {
 		"react": "v17.0.2",
-		"react-dom": "v17.0.2"
+		"react-dom": "v17.0.2",
+		"react-feather": "^2.0.9"
 	},
 	"devDependencies": {
 		"@mdx-js/mdx": "^1.6.22",

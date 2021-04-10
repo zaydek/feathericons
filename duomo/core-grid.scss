@@ -26,7 +26,7 @@
 		}
 	}
 
-	@each $v in list-utils.limit(configuration.$range, 0, 128) {
+	@each $v in list-utils.list-limit(configuration.$range, 0, 128) {
 		.gap-#{$v} {
 			@include mixins.variants($variants...) {
 				gap: unit-utils.rem($v);

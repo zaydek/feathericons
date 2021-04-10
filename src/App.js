@@ -1,9 +1,3 @@
-import StickyObscureEffect from "./StickyObscureEffect"
-
-// window.Duomo.toggleDebugMode()
-
-////////////////////////////////////////////////////////////////////////////////
-
 function iota(max) {
 	return Array.from(new Array(max), (_, x) => x);
 }
@@ -42,8 +36,6 @@ function ItemRTL({ children }) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-const rounded = 24
 
 function Header() {
 
@@ -150,21 +142,35 @@ export default function App() {
 
 			{/* App */}
 			<div className="flex-row justify-center">
-				<div className={`w-xl bg-white xl:rounded-${rounded} shadow`} style={{ maxWidth: 1344 }}>
+				<div className="w-xl bg-white xl:rounded-24 shadow">
 
-					<StickyObscureEffect />
+					{/* <StickyObscureEffect> */}
+					{/* TODO: May need to add -my to cover shadow */}
+					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20">
+						<div className="flex-row">
+							<div className="w-8 h-40 bg-cool-gray-100"></div>
+							<svg className="w-24 h-40 color-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+								<path clipRule="evenodd" fillRule="evenodd" d="M24 0H0V40C0 26.7451 10.7451 16 24 16V0Z" />
+							</svg>
+							<div className="flex-grow h-16 bg-cool-gray-100"></div>
+							<svg className="w-24 h-40 color-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+								<path clipRule="evenodd" fillRule="evenodd" d="M0 0H24V40C24 26.7451 13.2549 16 0 16V0Z" />
+							</svg>
+							<div className="w-8 h-40 bg-cool-gray-100"></div>
+						</div>
+					</div >
 
-					{/* Defer flex-row to here not w-xl because of <StickyObscureEffect> */}
+					{/* Defer flex-row to here not w-xl because of <<StickyObscureEffect>> */}
 					<div className="flex-row">
 
-						{/* Content (LHS) */}
+						{/* LHS */}
 						<div className="flex-grow">
 
 							{/* Search bar */}
-							<div className="xl:-mt-16 xl:pt-16 sticky top-all">
+							<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
 								<div className="relative">
 									{/* Buttons */}
-									<div className={`px-16 sm:px-24 flex-row align-center m-gap-16 h-80 sm:h-96 bg-white rounded-top-left-${rounded} border-bottom-1`}>
+									<div className="px-16 sm:px-24 flex-row align-center m-gap-16 h-80 sm:h-96 bg-white rounded-top-left-24 border-bottom-1">
 										<div className="w-32 h-32 bg-cool-gray-200 rounded-full"></div>
 										<div className="flex-grow"></div>
 										<div className="w-32 h-32 bg-cool-gray-200 rounded-full"></div>
@@ -180,31 +186,40 @@ export default function App() {
 							</div>
 
 							{/* Body */}
-							{iota(64).map(key => (
-								<div key={key} style={{ visibility: "hidden" }}>x</div>
-							))}
+							<div className="px-16 xl:p-64 custom-grid">
+								{iota(64).map(key => (
+									<div key={key} className="aspect aspect-w-1 aspect-h-1 bg-cool-gray-100">
+										<div className="flex-row center">
+											<div className="w-64 h-64 bg-black rounded-full"></div>
+										</div>
+
+										<div className="relative">
+											<div className="absolute bottom-all">
+												<div className="px-8 py-4 flex-row justify-center h-full">
+													<div>Hello, world!</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
 
 						</div>
 
-						{/* Sidebar (RHS) */}
-						<div className={`hide md:show w-320 bg-cool-gray-50 rounded-right-${rounded} border-left-1`}>
+						{/* RHS */}
+						<div className="hide md:show w-320 bg-cool-gray-50 rounded-right-24 border-left-1">
 							<div className="xl:-mt-16 xl:pt-16 sticky top-all">
-								{/* COMPAT: In Safari, when scrolling to the bottom of the page,
-								the double-sticky effect does not work perfectly. That being
-								said, users will likely never notice the difference. */}
-								{/* <div className="xl:-mt-16 xl:pt-16 sticky top-all"> */}
+
+								{/* Top */}
 								<div className="relative">
-									<div className={`flex-row center h-320 bg-white rounded-top-right-${rounded} border-bottom-1`}>
-										{/* Center */}
+									<div className="flex-row center h-320 bg-white rounded-top-right-24 border-bottom-1">
 										<div className="w-64 h-64 bg-cool-gray-200 rounded-full"></div>
-										{/* Top */}
 										<div className="absolute top-all">
 											<div className="p-24 flex-row align-center h-full">
 												<div className="flex-grow"></div>
 												<div className="w-24 h-24 bg-cool-gray-200 rounded-full"></div>
 											</div>
 										</div>
-										{/* Bottom */}
 										<div className="absolute bottom-all">
 											<div className="p-24 flex-row align-center m-gap-16 h-full">
 												<div className="flex-grow">
@@ -215,7 +230,6 @@ export default function App() {
 										</div>
 									</div>
 								</div>
-								{/* </div> */}
 
 								{/* Body */}
 								{iota(2).map(key => (
