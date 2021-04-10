@@ -57,9 +57,9 @@ function Header() {
 	}
 
 	return (
-		// Use 'pb-112' to compensate for '<TopNav> h-48'
+		// Use pb-112 to compensate for <TopNav className="h-48 ...">
 		<div className="px-16 sm:px-24 py-64 pb-112 flex-row justify-center">
-			<div className="flex-col xl:flex-row xl:align-center m-gap-48 w-lg" style={{ maxWidth: 1088 /* Bump from 1024 to 1088 */ }}>
+			<div className="flex-col xl:flex-row xl:align-center m-gap-48 w-lg">
 
 				{/* CTA */}
 				<div className="flex-col align-center m-gap-32">
@@ -68,8 +68,8 @@ function Header() {
 						<div className="w-160 h-16 bg-cool-gray-300 rounded-full"></div>
 						<div className="w-256 h-8 bg-cool-gray-300 rounded-full"></div>
 					</div>
-					{/* Use a custom <Button> because of 'self-stretch', 'sm:w-192', and
-					'rounded-12 sm:rounded-full' */}
+					{/* Use a custom <Button> because of self-stretch, sm:w-192, and
+					rounded-12 sm:rounded-full */}
 					<div className="self-stretch sm:self-center flex-col sm:flex-row m-gap-16">
 						<div className="flex-row justify-center sm:w-192 h-48 bg-cool-gray-200 rounded-12 sm:rounded-full">
 							<ItemLTR />
@@ -105,7 +105,7 @@ function Header() {
 						<ItemLTRSmall />
 						<ItemLTRSmall />
 					</div>
-					{/* Add a wrapper '<div>' for '-mx-8' and '-my-12' */}
+					{/* Add a wrapper <div> for -mx-8 and -my-12 */}
 					<div>
 						<div className="-mx-8 -my-12 flex-row justify-center flex-wrap">
 							<div className="px-8 py-12">
@@ -150,11 +150,11 @@ export default function App() {
 
 			{/* App */}
 			<div className="flex-row justify-center">
-				<div className={`w-xl bg-white xl:rounded-${rounded} shadow`}>
+				<div className={`w-xl bg-white xl:rounded-${rounded} shadow`} style={{ maxWidth: 1344 }}>
 
 					<StickyObscureEffect />
 
-					{/* Defer 'flex-row' to here not 'w-xl' because of '<StickyObscureEffect>' */}
+					{/* Defer flex-row to here not w-xl because of <StickyObscureEffect> */}
 					<div className="flex-row">
 
 						{/* Content (LHS) */}

@@ -1,0 +1,10 @@
+@use "sass:map";
+
+@use "configuration" as *;
+@use "helpers";
+
+@mixin func {
+  .a {
+    foo: helpers.do-something(map.get($configuration, b));
+  }
+}

@@ -13,7 +13,7 @@
 	"devDependencies": {
 		"@mdx-js/mdx": "^1.6.22",
 		"@mdx-js/react": "^1.6.22",
-		"@zaydek/retro": "^0.0.41",
+		"@zaydek/retro": "^0.0.42",
 		"esbuild": "^0.11.6",
 		"prismjs": "^1.23.0",
 		"sass": "^1.32.8"

@@ -19,9 +19,6 @@ interface Direction {
 	scale?: number
 }
 
-// buildStyleObject builds a style object from a directional object. Properties
-// such as 'x', 'y', and 'scale' are transformed to a 'transform' string.
-// Transforms concatenate 'translateZ(0)'.
 function buildStyleObject(dir: Direction): Record<string, number | string> {
 	const {
 		durMS: _1,   // No-op
@@ -125,7 +122,7 @@ export default function Transition({ from, to, durMS, func, delayMS, children }:
 	const [computedDelayMS, setComputedDelayMS] = React.useState(from.delayMS ?? delayMS ?? 0)
 	const [computedChildren, setComputedChildren] = React.useState(children)
 
-	// Layout effect to compute 'computedChildren' from 'children'
+	// Layout effect to compute computedChildren from children
 	useIsomorphicLayoutEffect(() => {
 		if (truthy(children)) {
 			setComputedChildren(children)
@@ -139,8 +136,7 @@ export default function Transition({ from, to, durMS, func, delayMS, children }:
 		}
 	}, [(computedDelayMS + computedDurMS), children])
 
-	// Debounced effect to compute 'computedStyles', 'comptuedDurMS', and
-	// 'computedFunc'
+	// Debounced effect to compute computedStyles, computedDurMS, and computedFunc
 	React.useEffect(() => {
 		// Debounce by one frame
 		const timeoutID = setTimeout(() => {

@@ -5,8 +5,6 @@
 	@return string.slice($str, 1, string.length($cmp)) == $cmp;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 @function str-replace($str, $s1, $s2) {
 	$res: string.index($str, $s1);
 	@if not $res {
@@ -14,8 +12,6 @@
 	}
 	@return string.slice($str, 1, $res - 1) + $s2 + string.slice($str, $res + string.length($s1));
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 // https://mothereff.in/css-escapes
 $-escape-chars: (

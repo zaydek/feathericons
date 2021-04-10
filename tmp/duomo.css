@@ -1,0 +1,33 @@
+/* Error: This module was already loaded, so it can't be configured using "with".
+ *   ,--> duomo/_index.scss
+ * 2 |   @forward "list-utils";
+ *   |   ^^^^^^^^^^^^^^^^^^^^^ new load
+ *   '
+ *   ,--> duomo/duomo.scss
+ * 6 |   @use "list-utils";
+ *   |   ================= original load
+ *   '
+ *   ,--> duomo.config.scss
+ * 1 | / @use "duomo" as * with (
+ * 2 | |   $breakpoints: (
+ * 3 | |     sm: 640px,
+ * 4 | |     md: 768px,
+ * 5 | |     lg: 1024px,
+ * 6 | |     xl: 1344px,
+ * 7 | |   ),
+ * 8 | | );
+ *   | '-^ configuration
+ *   '
+ *   duomo/_index.scss 2:1  @use
+ *   duomo.config.scss 1:1  root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: This module was already loaded, so it can't be configured using \"with\".\a   \250c \2500 \2500 > duomo/_index.scss\a 2 \2502    @forward \"list-utils\";\a   \2502    ^^^^^^^^^^^^^^^^^^^^^ new load\a   \2575 \a   \250c \2500 \2500 > duomo/duomo.scss\a 6 \2502    @use \"list-utils\";\a   \2502    \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501  original load\a   \2575 \a   \250c \2500 \2500 > duomo.config.scss\a 1 \2502  \250c  @use \"duomo\" as * with (\a 2 \2502  \2502    $breakpoints: (\a 3 \2502  \2502      sm: 640px,\a 4 \2502  \2502      md: 768px,\a 5 \2502  \2502      lg: 1024px,\a 6 \2502  \2502      xl: 1344px,\a 7 \2502  \2502    ),\a 8 \2502  \2502  );\a   \2502  \2514 \2500 ^ configuration\a   \2575 \a   duomo/_index.scss 2:1  @use\a   duomo.config.scss 1:1  root stylesheet";
+}
