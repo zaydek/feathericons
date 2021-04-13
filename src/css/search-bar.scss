@@ -1,19 +1,20 @@
 @use "../../duomo" as *;
+@use "../../duomo/tailwind" as *;
 @use "vars" as *;
 
 .css-search-bar-input {
-	font: rem(20) / 1 $ui-sans;
-	color: $gray-800;
+	font: rem(20) / 1 tw(sans);
+	color: tw(cool-gray, 800);
 	&:focus {
 		outline: none;
 	}
 }
 
 .css-search-bar-svg {
-	color: $gray-800;
-	transition: $leave-ms $ease-out;
+	color: tw(cool-gray, 800);
+	transition: $leave-ms /* TODO: Add property */ tw(ease, out);
 	.css-search-bar:focus-within & {
-		color: $blue-600;
-		transition: $enter-ms $ease-out;
+		color: tw(blue, 600);
+		transition: $enter-ms /* TODO: Add property */ tw(ease, out);
 	}
 }

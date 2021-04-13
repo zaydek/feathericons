@@ -1,6 +1,8 @@
 @use "sass:color";
 
 @use "../../duomo" as *;
+@use "../../duomo/mixins" as *;
+@use "../../duomo/tailwind" as *;
 @use "vars" as *;
 
 .css-search-results-grid {
@@ -12,55 +14,56 @@
 	position: relative;
 	&::after {
 		@include zero-out { content: ""; }
-		background-color: color.adjust($blue-400, $alpha: -0.75);
+		// TODO: Change to color.scale
+		background-color: color.adjust(tw(blue, 400), $alpha: -0.75);
 		border-radius: 9999px;
 		opacity: 0;
 		transform: scale(0);
-		transition: $leave-ms $ease-out;
+		transition: $leave-ms /* TODO: Add property */ tw(ease, out);
 	}
 	// Cannot use &::after { &:hover { ... } }
 	// so use &:hover::after { ... }
 	&:hover::after {
 		opacity: 1;
 		transform: scale(0.618);
-		transition: $enter-ms $ease-out;
+		transition: $enter-ms /* TODO: Add property */ tw(ease, out);
 	}
 }
 
 .css-search-results-grid-item-svg {
-	color: $gray-800;
-	transition: $leave-ms $ease-out;
+	color: tw(cool-gray, 800);
+	transition: $leave-ms tw(ease, out);
 	.css-search-results-grid-item:hover & {
-		color: $blue-600;
-		transition: $enter-ms $ease-out;
+		color: tw(blue, 600);
+		transition: $enter-ms /* TODO: Add property */ tw(ease, out);
 	}
 }
 
 .css-search-results-text {
 	text-align: center;
-	font: rem(13) / 1.125 $ui-mono;
+	font: rem(13) / 1.125 tw(mono);
 
-	color: $cool-gray-800;
+	color: tw(cool-gray, 800);
 	transform: translateX(rem(13 * 1.125));
-	transition: $leave-ms $ease-out;
+	transition: $leave-ms tw(ease, out);
 	.css-search-results-text-box:hover & {
-		color: $blue-600;
+		color: tw(blue, 600);
 		transform: translateX(0);
-		transition: $enter-ms $ease-out 100ms;
+		transition: $enter-ms transform, tw(ease, out) 100ms;
 	}
 }
 
 .css-search-results-text-svg {
 	@include size(rem(13 * 1.125));
 
-	color: $cool-gray-400;
+	color: tw(cool-gray, 400);
 	opacity: 0;
 	transform: translateX(rem(-1 * 13 * 1.125));
-	transition: $leave-ms $ease-out;
+	transition: $leave-ms tw(ease, out);
 	.css-search-results-text-box:hover & {
-		color: $blue-600;
+		color: tw(blue, 600);
 		opacity: 1;
 		transform: translateX(0);
-		transition: $enter-ms $ease-out 100ms;
+		transition: $enter-ms transform, tw(ease, out) 100ms;
 	}
 }

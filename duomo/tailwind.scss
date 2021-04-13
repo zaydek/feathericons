@@ -6,11 +6,7 @@ $-configuration: (
 	//
 	// https://tailwindcss.com/docs/font-family
 	//
-	sans:  (),
-	serif: (),
-	mono:  (),
-
-	ui-sans: (
+	sans: (
 		ui-sans-serif,
 		system-ui,
 		-apple-system,
@@ -26,7 +22,7 @@ $-configuration: (
 		"Segoe UI Symbol",
 		"Noto Color Emoji",
 	),
-	ui-serif: (
+	serif: (
 		ui-serif,
 		Georgia,
 		Cambria,
@@ -34,7 +30,7 @@ $-configuration: (
 		Times,
 		serif,
 	),
-	ui-mono: (
+	mono: (
 		ui-monospace,
 		SFMono-Regular,
 		Menlo,
@@ -335,11 +331,10 @@ $-configuration: (
 	//
 	// https://tailwindcss.com/docs/transition-timing-function
 	//
-	timing: (
-		linear:      linear,
-		ease-in:     cubic-bezier(0.4, 0, 1, 1),
-		ease-out:    cubic-bezier(0, 0, 0.2, 1),
-		ease-in-out: cubic-bezier(0.4, 0, 0.2, 1),
+	ease: (
+		in:     cubic-bezier(0.4, 0, 1, 1),
+		out:    cubic-bezier(0, 0, 0.2, 1),
+		in-out: cubic-bezier(0.4, 0, 0.2, 1),
 	),
 );
 

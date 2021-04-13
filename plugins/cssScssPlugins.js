@@ -1,10 +1,10 @@
-// Scans css`/* CSS code */`
+// Scans for css`/* CSS code */`
 const cssRe = /(?!\/\/\s*)css`((?:\n.*?)+)`/gm
 
-// Scans scss.global`/* Sass code */`
+// Scans for scss.global`/* Sass code */`
 const scssGlobalRe = /(?!\/\/\s*)scss\.global`((?:\n.*?)+)`/gm
 
-// Scans scss`/* Sass code */`
+// Scans for scss`/* Sass code */`
 const scssInlineRe = /(?!\/\/\s*)scss(?!\.global)`((?:\n.*?)+)`/gm
 
 function scanCSSMatches(contents) {
