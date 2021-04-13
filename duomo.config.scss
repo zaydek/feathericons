@@ -1,7 +1,7 @@
 @use "duomo" as *;
 
 @include configure((
-	breakpoints: (
+	breakpoints: ( // TODO
 		xl: 1344px,
 	),
 ));

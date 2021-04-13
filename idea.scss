@@ -1,0 +1,18 @@
+@use "duomo" as *;
+@use "duomo/mixins" as *;
+@use "duomo/tailwind" as *;
+
+// @include duomo-core;
+
+@media (max-width: duomo(breakpoint, xl)) {
+  .foo {
+    @include background-color(tw(red, 50),
+      tailwind(red, 900));
+  }
+}
+
+@each $k, $v in tailwind(red) {
+  .bg-red-#{$k} {
+    background-color: $v;
+  }
+}

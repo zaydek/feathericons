@@ -1,0 +1,111 @@
+@use "sass:map";
+
+@use "utils";
+
+$-configuration: (
+	delimiter: ":",
+
+	nrange: (
+			-1, // <- Decrement by 1
+			-2, // <- Decrement by 2
+			-4,
+			-6,
+			-8,
+		 -10,
+		 -12,
+		 -14,
+		 -16,
+		 -18,
+		 -20, // <- Decrement by 4
+		 -24,
+		 -28,
+		 -32,
+		 -36,
+		 -40, // <- Decrement by 8
+		 -48,
+		 -56,
+		 -64,
+		 -72,
+		 -80, // <- Decrement by 16
+		 -96,
+		-112,
+		-128,
+		-144,
+		-160, // <- Decrement by 32
+		-192,
+		-224,
+		-256,
+		-288,
+		-320, // <- Decrement by 64
+		-384,
+		-448,
+		-512,
+		-576,
+		-640,
+	),
+
+	range: (
+			0, // <- Increment by 1
+			1,
+			2, // <- Increment by 2
+			4,
+			6,
+			8,
+		 10,
+		 12,
+		 14,
+		 16,
+		 18,
+		 20, // <- Increment by 4
+		 24,
+		 28,
+		 32,
+		 36,
+		 40, // <- Increment by 8
+		 48,
+		 56,
+		 64,
+		 72,
+		 80, // <- Increment by 16
+		 96,
+		112,
+		128,
+		144,
+		160, // <- Increment by 32
+		192,
+		224,
+		256,
+		288,
+		320, // <- Increment by 64
+		384,
+		448,
+		512,
+		576,
+		640,
+	),
+
+	breakpoint: (
+		sm:  640px,
+		md:  768px,
+		lg: 1024px,
+		xl: 1280px,
+	),
+);
+
+@mixin configure-duomo($user-configuration) {
+	$-configuration: utils.map-deep-merge($-configuration, $user-configuration) !global;
+}
+
+@function duomo($keys...) {
+	@if not map.has-key($-configuration, $keys...) {
+		@error "duomo(#{$keys}) == null";
+	}
+	@return map.get($-configuration, $keys...);
+}
+
+@function dm($keys...) {
+	@if not map.has-key($-configuration, $keys...) {
+		@error "dm(#{$keys}) == null";
+	}
+	@return map.get($-configuration, $keys...);
+}

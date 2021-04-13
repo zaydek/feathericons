@@ -128,7 +128,17 @@ function Header() {
 	)
 }
 
+// function Input(props) {
+// 	const [search, setSearch] = React.useState("")
+// 	return <input {...props} value={search} onChange={e => setSearch(e.target.value)} />
+// }
+
 export default function App() {
+	const [searchText, setSearchText] = React.useState("")
+
+	// // Group focus for SearchInputSVG does not work so use JavaScript
+	// const [searchBarHasFocus, setSearchBarHasFocus] = React.useState("")
+
 	return (
 		<>
 			{/* Top nav */}
@@ -162,7 +172,7 @@ export default function App() {
 							</svg>
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
 						</div>
-					</div >
+					</div>
 
 					{/* Defer flex-row to here not w-xl because of <<StickyObscureEffect>> */}
 					<div className="flex-row">
@@ -172,30 +182,44 @@ export default function App() {
 
 							{/* Search bar */}
 							<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
-								<div className="relative">
-									{/* Buttons */}
-									<div className="px-16 sm:px-24 flex-row align-center m-gap-16 h-80 sm:h-96 bg-white rounded-top-left-24 border-bottom-1">
-										<div className="w-32 h-32 bg-cool-gray-200 rounded-full"></div>
-										<div className="flex-grow"></div>
-										<div className="w-32 h-32 bg-cool-gray-200 rounded-full"></div>
-										<div className="w-32 h-32 bg-cool-gray-200 rounded-full"></div>
-									</div>
-									{/* Input */}
-									<div className="absolute left-all">
-										<div className="px-16 sm:px-24 pl-64 sm:pl-80 flex-row align-center h-full">
-											<div className="w-192 h-8 bg-cool-gray-200 rounded-full"></div>
+								<div className="relative css-search-bar">
+									<div className="absolute all pointer-none">
+										<div className="px-16 flex-row h-full">
+											<div className="p-8 flex-row align-center">
+												<Feather.Search
+													className="w-24 h-24 css-search-bar-svg"
+												// style={{ color: searchBarHasFocus && "#2563eb" }}
+												/>
+											</div>
+											<div className="flex-grow"></div>
+											<div className="p-8 flex-row align-center pointer-auto">
+												<Feather.Code className="w-24 h-24 color-cool-gray-800" />
+											</div>
+											<div className="p-8 flex-row align-center pointer-auto">
+												<Feather.Moon className="w-24 h-24 color-cool-gray-800" />
+											</div>
 										</div>
 									</div>
+									<input
+										type="text"
+										className="pl-64 pr-96 w-full h-80 bg-white rounded-top-left-24 border-bottom-1 css-search-bar-input"
+										placeholder="Search ..."
+										value={searchText}
+										onFocus={() => setSearchBarHasFocus(true)}
+										onBlur={() => setSearchBarHasFocus(false)}
+										onChange={e => setSearchText(e.target.value)}
+										spellCheck={false}
+									/>
 								</div>
 							</div>
 
 							{/* Body */}
-							<div className="px-16 xl:p-64 xl:pb-96 searchResultGrid">
-								{Object.entries(dataset).map(([k, v]) => (
-									<div key={v.name} className="aspect aspect-w-1 aspect-h-1 searchResultGridItem">
+							<div className="px-16 xl:p-64 xl:pb-96 css-search-results-grid">
+								{Object.keys(dataset).map(k => (
+									<div key={k} className="aspect aspect-w-1 aspect-h-1 css-search-results-grid-item">
 										<div className="flex-row center">
 											{React.createElement(Feather[cases.titleCase(k)], {
-												className: "w-32 h-32 searchResultGridIcon",
+												className: "w-32 h-32 css-search-results-grid-item-svg",
 												// TODO
 												// style: {
 												// 	width: "var(--icon-size)",
@@ -203,12 +227,11 @@ export default function App() {
 												// },
 											})}
 										</div>
-
 										<div className="relative">
 											<div className="absolute bottom-all">
-												<a href={`/${k}`} className="py-8 flex-row center m-gap-8 pointer searchResultTextWrapper">
-													<div className="searchResultText">{k}</div>
-													<Feather.ExternalLink className="searchResultTextSVG" />
+												<a href={`/${k}`} className="py-8 flex-row center m-gap-4 css-search-results-text-box">
+													<div className="css-search-results-text">{k}</div>
+													<Feather.ExternalLink className="css-search-results-text-svg" />
 												</a>
 											</div>
 										</div>

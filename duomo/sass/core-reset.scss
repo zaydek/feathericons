@@ -1,7 +1,9 @@
-// https://github.com/sindresorhus/modern-normalize/blob/main/modern-normalize.css
-// https://github.com/tailwindlabs/tailwindcss/blob/master/src/plugins/css/preflight.css
+@use "../tailwind" as *;
 
-@mixin reset {
+//
+// https://github.com/sindresorhus/modern-normalize/blob/main/modern-normalize.css
+//
+@mixin -modern-normalize {
 	*,
 	*::before,
 	*::after {
@@ -129,6 +131,12 @@
 	summary {
 		display: list-item;
 	}
+}
+
+//
+// https://github.com/tailwindlabs/tailwindcss/blob/master/src/plugins/css/preflight.css
+//
+@mixin -tailwind-base {
 	blockquote,
 	dl,
 	dd,
@@ -163,21 +171,7 @@
 		padding: 0;
 	}
 	html {
-		font-family:
-			ui-sans-serif,
-			system-ui,
-			-apple-system,
-			BlinkMacSystemFont,
-			"Segoe UI",
-			Roboto,
-			"Helvetica Neue",
-			Arial,
-			"Noto Sans",
-			sans-serif,
-			"Apple Color Emoji",
-			"Segoe UI Emoji",
-			"Segoe UI Symbol",
-			"Noto Color Emoji";
+		font-family: tw(sans), tw(ui-sans);
 		line-height: 1.5;
 	}
 	body {
@@ -239,15 +233,7 @@
 	code,
 	kbd,
 	samp {
-		font-family:
-			ui-monospace,
-			SFMono-Regular,
-			Menlo,
-			Monaco,
-			Consolas,
-			"Liberation Mono",
-			"Courier New",
-			monospace;
+		font-family: tw(mono), tw(ui-mono);
 	}
 	img,
 	svg,
@@ -265,4 +251,9 @@
 		max-width: 100%;
 		height: auto;
 	}
+}
+
+@mixin reset {
+	@include -modern-normalize;
+	@include -tailwind-base;
 }

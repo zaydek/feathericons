@@ -2,9 +2,9 @@
 @use "sass:meta";
 
 @use "configuration";
-@use "list-utils";
 @use "mixins";
-@use "unit-utils";
+@use "units";
+@use "utils";
 
 $-flex-opts: (
 	stretch: stretch,
@@ -176,12 +176,12 @@ $-flex-wrap-opts: (
 		}
 	}
 
-	@each $v in list-utils.list-limit(configuration.$range, 0, 128) {
+	@each $v in utils.list-limit(configuration.dm(range), 0, 128) {
 		$n: if(meta.type-of($v) == number and $v < 0, "-", "");
 		$abs: if(meta.type-of($v) == number, math.abs($v), $v);
 		.#{$n}m-gap-#{$abs} > * {
 			@include mixins.variants($variants...) {
-				--dm-m-gap: #{unit-utils.rem($v)};
+				--dm-m-gap: #{units.rem($v)};
 			}
 		}
 	}

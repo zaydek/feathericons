@@ -1,7 +1,7 @@
 @use "configuration";
-@use "list-utils";
 @use "mixins";
-@use "unit-utils";
+@use "units";
+@use "utils";
 
 @mixin grid($variants...) {
 	@if not & {
@@ -26,10 +26,10 @@
 		}
 	}
 
-	@each $v in list-utils.list-limit(configuration.$range, 0, 128) {
+	@each $v in utils.list-limit(configuration.dm(range), 0, 128) {
 		.gap-#{$v} {
 			@include mixins.variants($variants...) {
-				gap: unit-utils.rem($v);
+				gap: units.rem($v);
 			}
 		}
 	}

@@ -1,0 +1,18 @@
+// Use deep-merge because map.deep-merge because changes key order
+@function deep-merge($m1, $m2) {
+	@each $k, $v in $m2 {
+		@if map.has-key($m1, $k) {
+			@if meta.type-of($v) == map {
+				// Recurse
+				$m1: map.set($m1, $k, deep-merge(map.get($m1, $k), $v));
+			} @else {
+				// Set
+				$m1: map.set($m1, $k, $v);
+			}
+		} @else {
+			// Add
+			$m1: map.set($m1, $k, $v);
+		}
+	}
+	@return $m1;
+}

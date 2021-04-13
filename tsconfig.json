@@ -2,13 +2,13 @@
 
 {
 	"compilerOptions": {
-		"target": "es2017",
-		"module": "commonjs",
-		"lib": [
-			"dom",
-			"esnext"
-		],
-		"downlevelIteration": true,
+		// "target": "es2017",
+		// "module": "commonjs",
+		// "lib": [
+		// 	"dom",
+		// 	"esnext"
+		// ],
+		// "downlevelIteration": true,
 		"strict": true,
 		"noImplicitAny": true,
 		"strictNullChecks": true,

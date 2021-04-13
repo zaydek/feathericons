@@ -1,0 +1,34 @@
+@use "configuration";
+@use "utils";
+
+// .foo {
+//   @include responsive {
+//     // ...
+//   }
+// }
+//
+@mixin responsive {
+	@at-root {
+		#{utils.str-replace("" + &, " .", "\\#{configuration.dm(delimiter)}")} {
+			@content;
+		}
+	}
+}
+
+// .foo {
+//   @include variants {
+//     // ...
+//   }
+// }
+//
+@mixin variants($variants...) {
+	@each $variant in $variants {
+		@if $variant == root {
+			@content;
+		} @else if $variant == responsive {
+			@include responsive {
+				@content;
+			}
+		}
+	}
+}

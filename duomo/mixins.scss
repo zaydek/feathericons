@@ -1,6 +1,8 @@
-@use "configuration";
-@use "str-utils";
-
+// .foo {
+//   @include color(#000, #fff);
+//   @include background-color(#fff, #000);
+// }
+//
 @mixin -theme-property($property, $light, $dark) {
 	#{$property}: #{$light};
 	@if $dark {
@@ -35,22 +37,18 @@
 	@include -theme-property("stroke", $light, $dark);
 }
 
-@mixin responsive {
-	@at-root {
-		#{str-utils.str-replace("" + &, " .", "\\#{configuration.$delimiter}")} {
-			@content;
-		}
-	}
+@mixin size($v) {
+	width:  $v;
+	height: $v;
 }
 
-@mixin variants($variants...) {
-	@each $variant in $variants {
-		@if $variant == top {
-			@content;
-		} @else if $variant == responsive {
-			@include responsive {
-				@content;
-			}
-		}
-	}
+@mixin zero-out($inset: 0) {
+	position: absolute;
+
+	top:    $inset;
+	right:  $inset;
+	bottom: $inset;
+	left:   $inset;
+
+	@content;
 }

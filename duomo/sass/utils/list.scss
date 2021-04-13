@@ -2,7 +2,7 @@
 @use "sass:math";
 @use "sass:meta";
 
-@function list-limit($range, $min, $max) {
+@function limit($range, $min, $max) {
 	$out: ();
 	@each $v in $range {
 		@if meta.type-of($v) == number and math.is-unitless($v) {
@@ -18,7 +18,7 @@
 	@return $out;
 }
 
-@function list-merge($entries...) {
+@function merge($entries...) {
 	$out: ();
 	@each $entry in $entries {
 		@if meta.type-of($entry) == list or meta.type-of($entry) == arglist {
