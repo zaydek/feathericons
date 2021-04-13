@@ -6,9 +6,9 @@ $-configuration: (
 	//
 	// https://tailwindcss.com/docs/font-family
 	//
-	sans:  null,
-	serif: null,
-	mono:  null,
+	sans:  (),
+	serif: (),
+	mono:  (),
 
 	ui-sans: (
 		ui-sans-serif,
@@ -348,15 +348,17 @@ $-configuration: (
 }
 
 @function tailwind($keys...) {
-	@if not map.has-key($-configuration, $keys...) {
+	$got: map.get($-configuration, $keys...);
+	@if not $got {
 		@error "tailwind(#{$keys}) == null";
 	}
-	@return map.get($-configuration, $keys...);
+	@return $got;
 }
 
 @function tw($keys...) {
-	@if not map.has-key($-configuration, $keys...) {
+	$got: map.get($-configuration, $keys...);
+	@if not $got {
 		@error "tw(#{$keys}) == null";
 	}
-	@return map.get($-configuration, $keys...);
+	@return $got;
 }

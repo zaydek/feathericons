@@ -3,19 +3,19 @@
 @use "sass:math";
 @use "sass:meta";
 
-@use "configuration";
-@use "mixins";
-@use "units";
-@use "utils";
+@use "../configuration";
+@use "../mixins";
+@use "../units";
+@use "../utils";
 
-@use "core-aspect-ratio" as *;
-@use "core-flex" as *;
-@use "core-grid" as *;
-@use "core-hide" as *;
-@use "core-overflow" as *;
-@use "core-position" as *;
-@use "core-reset" as *;
-@use "core-z-index" as *;
+@use "aspect-ratio" as *;
+@use "base" as *;
+@use "flex" as *;
+@use "grid" as *;
+@use "hide" as *;
+@use "overflow" as *;
+@use "position" as *;
+@use "z-index" as *;
 
 $-aliases: (
 	min-content: min,
@@ -26,12 +26,12 @@ $-aliases: (
 	9999px: full,
 );
 
-@function -alias($any, $as-percent: false) {
+@function -alias($any) {
 	$got: map.get($-aliases, $any);
-	@if $got {
-		@return $got;
+	@if not $got {
+		@return utils.str-escape("" + $any);
 	}
-	@return utils.str-escape("" + $any);
+	@return $got;
 }
 
 @mixin -define($properties, $shorthand, $range, $unit, $variants...) {
@@ -54,7 +54,7 @@ $-aliases: (
 	@return utils.list-limit(utils.list-merge($entries...), $min, $max);
 }
 
-@mixin -classes($breakpoint-k, $breakpoint-v, $variants...) {
+@mixin -utils($breakpoint-k, $breakpoint-v, $variants...) {
 	@if not & {
 		.container {
 			margin-left:  auto; // Center x-axis
@@ -105,6 +105,14 @@ $-aliases: (
 
 	@include -define((height), h, -range((0, 640), auto, configuration.dm(range), min-content, max-content, 100%, 100vh), rem, $variants...);
 
+	@each $v in (0, 100%, 100vh) {
+		.min-h-#{-alias($v)} {
+			@include mixins.variants($variants...) {
+				min-height: $v;
+			}
+		}
+	}
+
 	@include aspect-ratio($variants...);
 
 	@include -define((border-width), border, -range((0, 8), configuration.dm(range)), rem, $variants...);
@@ -134,7 +142,7 @@ $-aliases: (
 
 @mixin duomo-core {
 	/*! Duomo | MIT | https://github.com/zaydek/duomo */
-	@include reset;
+	@include duomo-base;
 
 	[data-debug] * {
 		outline: 2px solid rgba(0, 128, 255, 0.5);
@@ -142,8 +150,8 @@ $-aliases: (
 	}
 	[data-debug] .flex-grow:empty {
 		position: relative;
-		align-self: stretch; // Stretch y-axis (cross-axis)
-		outline: revert; // No-op
+		align-self: stretch; // Stretch y-axis
+		outline: revert;     // Reset
 	}
 	[data-debug] .flex-grow:empty::before {
 		position: absolute;
@@ -155,11 +163,11 @@ $-aliases: (
 		background-color: rgba(0, 128, 255, 0.1);
 	}
 
-	@include -classes(null, null, root);
+	@include -utils(null, null, root);
 	@each $k, $v in configuration.dm(breakpoint) {
 		@media (min-width: $v) {
 			.#{$k} {
-				@include -classes($k, $v, responsive);
+				@include -utils($k, $v, responsive);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
-@use "configuration";
-@use "mixins";
-@use "units";
-@use "utils";
+@use "../configuration";
+@use "../mixins";
+@use "../units";
+@use "../utils";
 
 @mixin grid($variants...) {
 	@if not & {

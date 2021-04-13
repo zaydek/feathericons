@@ -1,9 +1,9 @@
 @use "duomo" as *;
 
-@include configure((
-	breakpoints: ( // TODO
+@include configure-duomo((
+	breakpoint: (
 		xl: 1344px,
 	),
 ));
 
-@include duomo;
+@include duomo-core;

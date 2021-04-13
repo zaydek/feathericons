@@ -84,6 +84,16 @@ $-configuration: (
 		640,
 	),
 
+	z-index: (
+		-10,
+		  0,
+		 10,
+		 20,
+		 30,
+		 40,
+		 50,
+	),
+
 	breakpoint: (
 		sm:  640px,
 		md:  768px,
@@ -97,15 +107,17 @@ $-configuration: (
 }
 
 @function duomo($keys...) {
-	@if not map.has-key($-configuration, $keys...) {
+	$got: map.get($-configuration, $keys...);
+	@if not $got {
 		@error "duomo(#{$keys}) == null";
 	}
-	@return map.get($-configuration, $keys...);
+	@return $got;
 }
 
 @function dm($keys...) {
-	@if not map.has-key($-configuration, $keys...) {
+	$got: map.get($-configuration, $keys...);
+	@if not $got {
 		@error "dm(#{$keys}) == null";
 	}
-	@return map.get($-configuration, $keys...);
+	@return $got;
 }

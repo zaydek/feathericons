@@ -1,3 +1,6 @@
+@use "sass:map";
+@use "sass:meta";
+
 // Use deep-merge because map.deep-merge because changes key order
 @function deep-merge($m1, $m2) {
 	@each $k, $v in $m2 {

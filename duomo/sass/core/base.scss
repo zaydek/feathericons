@@ -1,4 +1,4 @@
-@use "../tailwind" as *;
+@use "../../tailwind" as *;
 
 //
 // https://github.com/sindresorhus/modern-normalize/blob/main/modern-normalize.css
@@ -253,7 +253,7 @@
 	}
 }
 
-@mixin reset {
+@mixin duomo-base {
 	@include -modern-normalize;
 	@include -tailwind-base;
 }
