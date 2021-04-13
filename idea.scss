@@ -3,17 +3,16 @@
 @use "duomo/tailwind" as *;
 
 @include duomo-core;
-// @include duomo-base;
 
-// @media (max-width: dm(breakpoint, xl)) {
-//   .foo {
-//     @include background-color(tw(red, 50),
-//       tailwind(red, 900));
-//   }
-// }
-//
-// @each $k, $v in tw(red) {
-//   .bg-red-#{$k} {
-//     background-color: $v;
-//   }
-// }
+@media (max-width: dm(breakpoint, xl)) {
+  .foo {
+    @include background-color(tw(red, 50),
+      tailwind(red, 900));
+  }
+}
+
+@each $k, $v in tw(red) {
+  .bg-red-#{$k} {
+    background-color: $v;
+  }
+}
