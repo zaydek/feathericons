@@ -7,7 +7,6 @@ $-hide-opts: (
 	grid: grid,
 );
 
-// Add [class] to make API order-independent
 @mixin hide($variants...) {
 	@each $k, $v in $-hide-opts {
 		.show#{if(not $k, [class], "." + $k)} {
