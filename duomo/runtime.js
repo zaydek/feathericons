@@ -8,21 +8,6 @@ const Duomo = {
 	})(),
 }
 
-Duomo.getThemeDurationMS = function () {
-	const durStr = window.getComputedStyle(document.documentElement).getPropertyValue("--theme-dur").trim()
-	switch (true) {
-		case durStr.endsWith("ms"): // Takes precedence
-			return +durStr.slice(durStr, -"ms".length)
-		case durStr.endsWith("s"):
-			return +durStr.slice(durStr, -"s".length) * 1_000
-	}
-	return 0
-}
-
-Duomo.getThemeTiming = function () {
-	return window.getComputedStyle(document.documentElement).getPropertyValue("--theme-timing").trim()
-}
-
 Duomo.localStorageThemePreference = function () {
 	if (!("localStorage" in window)) {
 		return null
@@ -48,15 +33,7 @@ Duomo.toggleDebugMode = function () {
 	return dark
 }
 
-let timeoutID = 0
 Duomo.toggleDarkMode = function () {
-	if (timeoutID !== 0) clearTimeout(timeoutID)
-	document.documentElement.setAttribute("data-theme-effect", "true")
-	timeoutID = setTimeout(() => {
-		document.documentElement.removeAttribute("data-theme-effect")
-		timeoutID = 0 // Reset
-	}, Duomo.getThemeDurationMS())
-
 	let dark = false
 	if (!document.documentElement.hasAttribute("data-theme")) {
 		document.documentElement.setAttribute("data-theme", "dark")
