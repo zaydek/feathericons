@@ -7,6 +7,8 @@ hr { width: 100%; }
 .w-stagger-3 { width: 87.5%; }
 .w-stagger-4 { width: 62.5%; }
 
+////////////////////////////////////////////////////////////////////////////////
+
 @mixin colors($property, $shorthand, $colors) {
 	@each $k, $v in $colors {
 		.#{$shorthand}-transparent { #{$property}: tw(transparent); }
@@ -25,3 +27,13 @@ hr { width: 100%; }
 @include colors(color, text, (cool-gray: tw(cool-gray)));
 @include colors(background-color, bg, (cool-gray: tw(cool-gray)));
 @include colors(border-color, border, (cool-gray: tw(cool-gray)));
+
+////////////////////////////////////////////////////////////////////////////////
+
+.tooltip {
+	position: absolute;
+	&--top    { bottom: 100%; left:   50%; transform: translateX(-50%); }
+	&--right  { top:     50%; left:  100%; transform: translateY(-50%); }
+	&--bottom { top:    100%; left:   50%; transform: translateX(-50%); }
+	&--left   { top:     50%; right: 100%; transform: translateY(-50%); }
+}

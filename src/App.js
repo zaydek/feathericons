@@ -4,6 +4,7 @@ import * as cases from "./lib/cases"
 import * as Feather from "react-feather"
 
 import dataset from "./data/dataset.generated.json"
+import React from "react";
 
 function iota(max) {
 	return Array.from(new Array(max), (_, x) => x);
@@ -169,24 +170,32 @@ $leave-ms: 400ms;
 
 `
 
+function SVG({ svg: SVG_, ...props }) {
+	return <SVG_ {...props} />
+}
+
 function SearchBar() {
 	const [searchInputValue, setSearchInputValue] = React.useState("")
+	const [copyAsJSX, setCopyAsJSX] = React.useState(false)
+	const [enableDarkMode, setEnableDarkMode] = React.useState(false)
 
 	return (
-		<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
-			{sass`
-				.searchBar {
-					&SVG {
-						@include transition($leave-ms, (color), tw(ease, out)) {
-							color: tw(cool-gray, 800);
-						}
-						.searchBar:focus-within & {
-							@include transition($enter-ms, (color), tw(ease, out)) {
-								color: tw(blue, 600);
-							}
-						}
-					}
-					&Input {
+		// <div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
+		// Use z-20 not z-10 because the RHS uses z-10
+		<div className="xl:-mt-16 xl:pt-16 sticky top-all z-20">
+			<div className="relative">
+
+				{/* LHS */}
+				<div className="absolute left-all">
+					<div className="px-16 flex-row h-full">
+						<div className="p-8 flex-row align-center">
+							<Feather.Search className="searchBarSVG w-24 h-24" />
+						</div>
+					</div>
+				</div>
+
+				{sass`
+					.searchBarInput {
 						// Resets
 						width: 100%;
 						&:focus { outline: unset; }
@@ -194,93 +203,107 @@ function SearchBar() {
 						font: rem(20) / 1 tw(sans);
 						color: tw(cool-gray, 800);
 					}
-					&Tooltip {
-						// ...
-					}
-				}
-			`}
-			<div className="searchBar relative">
-				<div className="absolute all">
-					{sass`
-						.tooltip {
-							position: absolute;
-							&--top    { bottom: 100%; left:   50%; transform: translateX(-50%); }
-							&--right  { top:     50%; left:  100%; transform: translateY(-50%); }
-							&--bottom { top:    100%; left:   50%; transform: translateX(-50%); }
-							&--left   { top:     50%; right: 100%; transform: translateY(-50%); }
-						}
+				`}
 
-						.styledTooltip {
-							margin-top: rem(-16);
-							padding: rem(8) rem(16);
-
-							@include unantialiased;
-							white-space: pre;
-							font: rem(13) / 1.25 tw(mono);
-							color: hsla(0, 0%, 100%, 0.975);
-							background-color: tw(cool-gray, 800);
-							border-radius: rem(6);
-							box-shadow: tw(shadow, md),
-								tw(shadow, lg);
-
-							// @include transition(200ms, (opacity, transform), tw(ease, out)) {
-							opacity: 0;
-							// 	transform: scale(0.9);
-							// 	transform-origin: center;
-							// }
-							.group:hover & {
-							// 	@include transition(100ms, (opacity, transform), tw(ease, out)) {
-							opacity: 1;
-							// 		transform: scale(1);
-							// 		transform-origin: center;
-							// 	}
-							}
-						}
-					`}
-					<div className="px-16 flex-row h-full">
-
-						{/* Icon */}
-						<div className="p-8 flex-row align-center">
-							<Feather.Search className="searchBarSVG w-24 h-24" />
-						</div>
-
-						{/* Icon */}
-						<div className="flex-grow"></div>
-						<div className="group relative">
-							<div className="p-8 flex-row align-center h-full">
-								<Feather.Code className="w-24 h-24 text-cool-gray-800" />
-							</div>
-							<div className="tooltip tooltip--bottom pointer-events-none">
-								<div className="styledTooltip">
-									<div>Tap to Copy as JSX</div>
-								</div>
-							</div>
-						</div>
-
-						{/* Icons */}
-						<div className="group relative">
-							<div className="p-8 flex-row align-center h-full">
-								<Feather.Moon className="w-24 h-24 text-cool-gray-800" />
-							</div>
-							<div className="tooltip tooltip--bottom pointer-events-none">
-								<div className="styledTooltip">
-									<div>Tap to Enable Dark Mode</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
 				<input
 					type="text"
 					className="searchBarInput pl-64 pr-96 h-80 bg-white rounded-top-left-24 border-bottom-1"
 					placeholder="Search ..."
 					value={searchInputValue}
-					onFocus={() => setSearchBarHasFocus(true)}
-					onBlur={() => setSearchBarHasFocus(false)}
 					onChange={e => setSearchInputValue(e.target.value)}
 					spellCheck={false}
 				/>
+
+				{sass`
+					// NOTE: <input> elements are void elements and cannot nest children.
+					// Therefore use [data-checked="true"] for :checked.
+					.searchBarButton {
+						// Resets
+						&:focus { outline: none }
+
+						padding: rem(8);
+						border-radius: 9999px;
+
+						@include transition(150ms, (background-color), tw(ease, out)) {
+							background-color: color.scale(tw(blue, 500), $alpha: -90%);
+						}
+						&:hover,
+						&:focus {
+							background-color: color.scale(tw(blue, 500), $alpha: -80%);
+						}
+						&[data-checked="true"] {
+							background-color: tw(blue, 500);
+						}
+
+						&SVG {
+							@include transition(150ms, (color), tw(ease, out)) {
+								color: tw(blue, 500);
+							}
+							.searchBarButton[data-checked="true"] & {
+								color: white;
+							}
+						}
+					}
+
+					.styledTooltip {
+						margin-top: rem(-8);
+						padding: rem(8) rem(16);
+
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+
+						> * + * {
+							margin-left: rem(6);
+						}
+
+						@include unantialiased;
+						white-space: pre;
+						font: rem(13) / 1.25 tw(mono);
+						color: white;
+						background-color: tw(cool-gray, 800);
+						border-radius: rem(6);
+						box-shadow: tw(shadow, md),
+							tw(shadow, lg);
+
+						opacity: 0;
+						.searchBarButtonContext:hover &,
+						.searchBarButton:focus & {
+							opacity: 1;
+						}
+					}
+				`}
+
+				{/* RHS */}
+				<div className="absolute right-all">
+					<div className="-mx-4 px-16 flex-row h-full">
+
+						{/* Button */}
+						<div className="searchBarButtonContext px-4 relative flex-row align-center h-full pointer-events-auto">
+							<button className="searchBarButton" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
+								<div className="tooltip tooltip--bottom pointer-events-none">
+									<div className="styledTooltip">
+										{!copyAsJSX ? "Tap to Enable Copy as JSX" : "Tap to Enable Copy as HTML"}
+									</div>
+								</div>
+								<Feather.Code className="searchBarButtonSVG" />
+							</button>
+						</div>
+
+						{/* Button */}
+						<div className="searchBarButtonContext px-4 relative flex-row align-center h-full pointer-events-auto">
+							<button className="searchBarButton" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
+								<div className="tooltip tooltip--bottom pointer-events-none">
+									<div className="styledTooltip">
+										{!enableDarkMode ? "Tap to Enable Dark Mode" : "Tap to Enable Light Mode"}
+									</div>
+								</div>
+								<SVG svg={!enableDarkMode ? Feather.Sun : Feather.Moon} className="searchBarButtonSVG" />
+							</button>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
 	)
@@ -316,7 +339,7 @@ export default function App() {
 
 					{/* <StickyObscureEffect> */}
 					{/* TODO: May need to add -my to cover shadow */}
-					{/* <div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
+					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
 						<div className="flex-row">
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
 							<svg className="w-24 h-40 text-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
@@ -328,7 +351,7 @@ export default function App() {
 							</svg>
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
 						</div>
-					</div> */}
+					</div>
 
 					{/* Defer flex-row to here not w-xl because of <<StickyObscureEffect>> */}
 					<div className="flex-row">
@@ -413,7 +436,7 @@ export default function App() {
 															}
 														}
 														&SVG {
-															@include size(rem($size + 1));
+															@include size(rem($size + 1)); // Add 1 for SVG
 															@include transition($leave-ms, (color, opacity, transform), tw(ease, out)) {
 																color: tw(cool-gray, 400);
 																opacity: 0;
@@ -443,7 +466,8 @@ export default function App() {
 
 						{/* RHS */}
 						<div className="hide md:show w-320 bg-cool-gray-50 rounded-right-24 border-left-1">
-							<div className="xl:-mt-16 xl:pt-16 sticky top-all">
+							{/* <div className="xl:-mt-16 xl:pt-16 sticky top-all"> */}
+							<div className="sticky top-all z-10">
 
 								{/* Top */}
 								<div className="relative">
