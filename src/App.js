@@ -1,6 +1,22 @@
+import sass from "inline-sass"
+
 import * as cases from "./lib/cases"
 import * as Feather from "react-feather"
+
 import dataset from "./data/dataset.generated.json"
+
+sass.global`
+
+@use "sass:color";
+
+@use "duomo" as *;
+@use "duomo/mixins" as *;
+@use "duomo/tailwind" as *;
+
+$enter-ms: 200ms;
+$leave-ms: 400ms;
+
+`
 
 function iota(max) {
 	return Array.from(new Array(max), (_, x) => x);
@@ -133,6 +149,12 @@ function Header() {
 // 	return <input {...props} value={search} onChange={e => setSearch(e.target.value)} />
 // }
 
+// scss.global`
+// 	html {
+// 		background: #000 !important;
+// 	}
+// `
+
 export default function App() {
 	const [searchText, setSearchText] = React.useState("")
 
@@ -163,11 +185,11 @@ export default function App() {
 					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20">
 						<div className="flex-row">
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
-							<svg className="w-24 h-40 color-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+							<svg className="w-24 h-40 text-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
 								<path clipRule="evenodd" fillRule="evenodd" d="M24 0H0V40C0 26.7451 10.7451 16 24 16V0Z" />
 							</svg>
 							<div className="flex-grow h-16 bg-cool-gray-100"></div>
-							<svg className="w-24 h-40 color-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+							<svg className="w-24 h-40 text-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
 								<path clipRule="evenodd" fillRule="evenodd" d="M0 0H24V40C24 26.7451 13.2549 16 0 16V0Z" />
 							</svg>
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
@@ -193,10 +215,10 @@ export default function App() {
 											</div>
 											<div className="flex-grow"></div>
 											<div className="p-8 flex-row align-center pointer-auto">
-												<Feather.Code className="w-24 h-24 color-cool-gray-800" />
+												<Feather.Code className="w-24 h-24 text-cool-gray-800" />
 											</div>
 											<div className="p-8 flex-row align-center pointer-auto">
-												<Feather.Moon className="w-24 h-24 color-cool-gray-800" />
+												<Feather.Moon className="w-24 h-24 text-cool-gray-800" />
 											</div>
 										</div>
 									</div>
@@ -214,24 +236,87 @@ export default function App() {
 							</div>
 
 							{/* Body */}
-							<div className="px-16 xl:p-64 xl:pb-96 css-search-results-grid">
+							{sass`
+								.search-grid {
+									display: grid;
+									grid-template-columns: repeat(auto-fill, minmax(rem(144), 1fr));
+									&__item {
+										position: relative;
+										&::after {
+											@include zero-out { content: ""; }
+											background-color: color.scale(tw(blue, 400), $alpha: -75%);
+											border-radius: 9999px;
+											@include transition($leave-ms, (opacity, transform), tw(ease, out)) {
+												opacity: 0;
+												transform: scale(0);
+											}
+										}
+										// Use &:hover::after { ... } (&::after:hover does not work)
+										&:hover::after {
+											@include transition($enter-ms, (opacity, transform), tw(ease, out)) {
+												opacity: 1;
+												transform: scale(0.618);
+											}
+										}
+										&__svg {
+											@include transition($leave-ms, (color), tw(ease, out)) {
+												color: tw(cool-gray, 800);
+											}
+											.search-grid__item:hover & {
+												@include transition($enter-ms, (color), tw(ease, out)) {
+													color: tw(blue, 600);
+												}
+											}
+										}
+									}
+								}
+							`}
+							<div className="search-grid px-16 xl:p-64 xl:pb-96">
 								{Object.keys(dataset).map(k => (
-									<div key={k} className="aspect aspect-w-1 aspect-h-1 css-search-results-grid-item">
+									<div key={k} className="search-grid__item aspect aspect-w-1 aspect-h-1">
 										<div className="flex-row center">
 											{React.createElement(Feather[cases.titleCase(k)], {
-												className: "w-32 h-32 css-search-results-grid-item-svg",
-												// TODO
-												// style: {
-												// 	width: "var(--icon-size)",
-												// 	height: "var(--icon-size)",
-												// },
+												className: "search-grid__item__svg w-32 h-32",
 											})}
 										</div>
 										<div className="relative">
 											<div className="absolute bottom-all">
-												<a href={`/${k}`} className="py-8 flex-row center m-gap-4 css-search-results-text-box">
-													<div className="css-search-results-text">{k}</div>
-													<Feather.ExternalLink className="css-search-results-text-svg" />
+												{sass`
+													.search-textbox {
+														&__text {
+															text-align: center;
+															font: rem(13) / 1.125 tw(mono);
+															@include transition($leave-ms, (color, transform), tw(ease, out)) {
+																color: tw(cool-gray, 800);
+																transform: translateX(rem(13 * 1.125));
+															}
+															.search-textbox:hover & {
+																@include transition($enter-ms, (color, transform), tw(ease, out), 100ms) {
+																	color: tw(blue, 600);
+																	transform: translateX(0);
+																}
+															}
+														}
+														&__svg {
+															@include size(rem(13 * 1.125));
+															@include transition($leave-ms, (color, opacity, transform), tw(ease, out)) {
+																color: tw(cool-gray, 400);
+																opacity: 0;
+																transform: translateX(rem(-1 * 13 * 1.125));
+															}
+															.search-textbox:hover & {
+																@include transition($enter-ms, (color, opacity, transform), tw(ease, out), 100ms) {
+																	color: tw(blue, 600);
+																	opacity: 1;
+																	transform: translateX(0);
+																}
+															}
+														}
+													}
+												`}
+												<a href={`/${k}`} className="search-textbox py-8 flex-row center m-gap-4">
+													<div className="search-textbox__text">{k}</div>
+													<Feather.ExternalLink className="search-textbox__svg" />
 												</a>
 											</div>
 										</div>

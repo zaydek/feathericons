@@ -1,3 +1,5 @@
+@use "sass:list";
+
 // .foo {
 //   @include color(#000, #fff);
 //   @include background-color(#fff, #000);
@@ -51,4 +53,18 @@
 	left:   $inset;
 
 	@content;
+}
+
+@mixin transition($dur-ms, $properties, $ease, $delay-ms: null) {
+	$out: ();
+	@each $property in $properties {
+		@if not $delay-ms {
+			$out: list.append($out, $dur-ms $property $ease, comma);
+		} @else {
+			$out: list.append($out, $dur-ms $property $ease $delay-ms, comma);
+		}
+	}
+
+	@content;
+	transition: $out;
 }

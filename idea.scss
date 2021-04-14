@@ -11,8 +11,8 @@
   }
 }
 
-@each $k, $v in tw(red) {
-  .bg-red-#{$k} {
-    background-color: $v;
+@each $k, $v in tw(shadow) {
+  .shadow-#{$k} {
+    box-shadow: $v;
   }
 }

@@ -2,10 +2,10 @@
 const cssRe = /(?!\/\/\s*)css`((?:\n.*?)+)`/gm
 
 // Scans for scss.global`/* Sass code */`
-const scssGlobalRe = /(?!\/\/\s*)scss\.global`((?:\n.*?)+)`/gm
+const sassGlobalRe = /(?!\/\/\s*)sass\.global`((?:\n.*?)+)`/gm
 
-// Scans for scss`/* Sass code */`
-const scssInlineRe = /(?!\/\/\s*)scss(?!\.global)`((?:\n.*?)+)`/gm
+// Scans for sass`/* Sass code */`
+const sassInlineRe = /(?!\/\/\s*)sass(?!\.global)`((?:\n.*?)+)`/gm
 
 function scanCSSMatches(contents) {
 	const matches = []
@@ -16,14 +16,14 @@ function scanCSSMatches(contents) {
 	return matches
 }
 
-function scanSCSSMatches(contents) {
+function scanSassMatches(contents) {
 	const globals = []
 	const inlines = []
 	let match = null
-	while ((match = scssGlobalRe.exec(contents))) {
+	while ((match = sassGlobalRe.exec(contents))) {
 		globals.push(match[1])
 	}
-	while ((match = scssInlineRe.exec(contents))) {
+	while ((match = sassInlineRe.exec(contents))) {
 		inlines.push(match[1])
 	}
 	return [globals, inlines]
@@ -32,21 +32,21 @@ function scanSCSSMatches(contents) {
 /**
  * @type { import("esbuild").Plugin }
  */
-const cssPlugin = {
-	name: "css",
+const inlineCSSPlugins = {
+	name: "inline-css",
 	setup(build) {
 		const fs = require("fs")
 
 		const importers = new Set()
 
-		build.onResolve({ filter: /^css-plugin$/ }, args => {
+		build.onResolve({ filter: /^inline-css$/ }, args => {
 			importers.add(args.importer)
 			return {
 				path: args.path,
-				namespace: "css-ns",
+				namespace: "inline-css-ns",
 			}
 		})
-		build.onLoad({ filter: /.*/, namespace: "css-ns" }, async args => {
+		build.onLoad({ filter: /.*/, namespace: "inline-css-ns" }, async args => {
 			const matches = []
 			for (const importer of importers) {
 				const buffer = await fs.promises.readFile(importer)
@@ -73,26 +73,26 @@ const cssPlugin = {
 /**
  * @type { import("esbuild").Plugin }
  */
-const scssPlugin = {
-	name: "scss",
+const inlineSassPlugin = {
+	name: "inline-sass",
 	setup(build) {
 		const fs = require("fs")
 		const scss = require("sass")
 
 		const importers = new Set()
 
-		build.onResolve({ filter: /^scss-plugin$/ }, args => {
+		build.onResolve({ filter: /^inline-sass$/ }, args => {
 			importers.add(args.importer)
 			return {
 				path: args.path,
-				namespace: "scss-ns",
+				namespace: "inline-sass-ns",
 			}
 		})
-		build.onLoad({ filter: /.*/, namespace: "scss-ns" }, async args => {
+		build.onLoad({ filter: /.*/, namespace: "inline-sass-ns" }, async args => {
 			const globals = [], inlines = []
 			for (const importer of importers) {
 				const buffer = await fs.promises.readFile(importer)
-				const [globals_, inlines_] = scanSCSSMatches(buffer.toString())
+				const [globals_, inlines_] = scanSassMatches(buffer.toString())
 				globals.push(...globals_)
 				inlines.push(...inlines_)
 			}
@@ -137,6 +137,6 @@ const scssPlugin = {
 }
 
 module.exports = [
-	cssPlugin,
-	scssPlugin,
+	inlineCSSPlugins,
+	inlineSassPlugin,
 ]

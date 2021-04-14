@@ -6,6 +6,6 @@ module.exports = {
 	plugins: [
 		require("./plugins/mdxPlugin"),
 		require("./plugins/sassPlugin"),
-		...require("./plugins/cssScssPlugins"),
+		...require("./plugins/inlineSassPlugins"),
 	],
 }
