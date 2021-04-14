@@ -3621,10 +3621,10 @@ video {
 .z-50 {
   z-index: 50;
 }
-.pointer-none {
+.pointer-events-none {
   pointer-events: none;
 }
-.pointer-auto {
+.pointer-events-auto {
   pointer-events: auto;
 }
 @media (min-width: 640px) {
@@ -6917,10 +6917,10 @@ video {
   .sm\:z-50 {
     z-index: 50;
   }
-  .sm\:pointer-none {
+  .sm\:pointer-events-none {
     pointer-events: none;
   }
-  .sm\:pointer-auto {
+  .sm\:pointer-events-auto {
     pointer-events: auto;
   }
 }
@@ -10214,10 +10214,10 @@ video {
   .md\:z-50 {
     z-index: 50;
   }
-  .md\:pointer-none {
+  .md\:pointer-events-none {
     pointer-events: none;
   }
-  .md\:pointer-auto {
+  .md\:pointer-events-auto {
     pointer-events: auto;
   }
 }
@@ -13511,10 +13511,10 @@ video {
   .lg\:z-50 {
     z-index: 50;
   }
-  .lg\:pointer-none {
+  .lg\:pointer-events-none {
     pointer-events: none;
   }
-  .lg\:pointer-auto {
+  .lg\:pointer-events-auto {
     pointer-events: auto;
   }
 }
@@ -16808,10 +16808,10 @@ video {
   .xl\:z-50 {
     z-index: 50;
   }
-  .xl\:pointer-none {
+  .xl\:pointer-events-none {
     pointer-events: none;
   }
-  .xl\:pointer-auto {
+  .xl\:pointer-events-auto {
     pointer-events: auto;
   }
 }

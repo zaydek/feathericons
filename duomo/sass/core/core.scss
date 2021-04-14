@@ -137,7 +137,13 @@ $-aliases: (
 
 	@include z-index($variants...);
 
-	@include -define((pointer-events), pointer, (none, auto), none, rem, $variants...);
+	@each $v in (none, auto) {
+		.pointer-events-#{$v} {
+			@include mixins.responsive {
+				pointer-events: $v;
+			}
+		}
+	}
 }
 
 @mixin duomo-core {

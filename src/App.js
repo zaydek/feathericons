@@ -136,12 +136,6 @@ function Header() {
 // 	return <input {...props} value={search} onChange={e => setSearch(e.target.value)} />
 // }
 
-// scss.global`
-// 	html {
-// 		background: #000 !important;
-// 	}
-// `
-
 sass.global`
 
 @use "sass:color";
@@ -175,8 +169,124 @@ $leave-ms: 400ms;
 
 `
 
+function SearchBar() {
+	const [searchInputValue, setSearchInputValue] = React.useState("")
+
+	return (
+		<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
+			{sass`
+				.searchBar {
+					&SVG {
+						@include transition($leave-ms, (color), tw(ease, out)) {
+							color: tw(cool-gray, 800);
+						}
+						.searchBar:focus-within & {
+							@include transition($enter-ms, (color), tw(ease, out)) {
+								color: tw(blue, 600);
+							}
+						}
+					}
+					&Input {
+						// Resets
+						width: 100%;
+						&:focus { outline: unset; }
+
+						font: rem(20) / 1 tw(sans);
+						color: tw(cool-gray, 800);
+					}
+					&Tooltip {
+						// ...
+					}
+				}
+			`}
+			<div className="searchBar relative">
+				<div className="absolute all">
+					{sass`
+						.tooltip {
+							position: absolute;
+							&--top    { bottom: 100%; left:   50%; transform: translateX(-50%); }
+							&--right  { top:     50%; left:  100%; transform: translateY(-50%); }
+							&--bottom { top:    100%; left:   50%; transform: translateX(-50%); }
+							&--left   { top:     50%; right: 100%; transform: translateY(-50%); }
+						}
+
+						.styledTooltip {
+							margin-top: rem(-16);
+							padding: rem(8) rem(16);
+
+							@include unantialiased;
+							white-space: pre;
+							font: rem(13) / 1.25 tw(mono);
+							color: hsla(0, 0%, 100%, 0.975);
+							background-color: tw(cool-gray, 800);
+							border-radius: rem(6);
+							box-shadow: tw(shadow, md),
+								tw(shadow, lg);
+
+							// @include transition(200ms, (opacity, transform), tw(ease, out)) {
+							opacity: 0;
+							// 	transform: scale(0.9);
+							// 	transform-origin: center;
+							// }
+							.group:hover & {
+							// 	@include transition(100ms, (opacity, transform), tw(ease, out)) {
+							opacity: 1;
+							// 		transform: scale(1);
+							// 		transform-origin: center;
+							// 	}
+							}
+						}
+					`}
+					<div className="px-16 flex-row h-full">
+
+						{/* Icon */}
+						<div className="p-8 flex-row align-center">
+							<Feather.Search className="searchBarSVG w-24 h-24" />
+						</div>
+
+						{/* Icon */}
+						<div className="flex-grow"></div>
+						<div className="group relative">
+							<div className="p-8 flex-row align-center h-full">
+								<Feather.Code className="w-24 h-24 text-cool-gray-800" />
+							</div>
+							<div className="tooltip tooltip--bottom pointer-events-none">
+								<div className="styledTooltip">
+									<div>Tap to Copy as JSX</div>
+								</div>
+							</div>
+						</div>
+
+						{/* Icons */}
+						<div className="group relative">
+							<div className="p-8 flex-row align-center h-full">
+								<Feather.Moon className="w-24 h-24 text-cool-gray-800" />
+							</div>
+							<div className="tooltip tooltip--bottom pointer-events-none">
+								<div className="styledTooltip">
+									<div>Tap to Enable Dark Mode</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<input
+					type="text"
+					className="searchBarInput pl-64 pr-96 h-80 bg-white rounded-top-left-24 border-bottom-1"
+					placeholder="Search ..."
+					value={searchInputValue}
+					onFocus={() => setSearchBarHasFocus(true)}
+					onBlur={() => setSearchBarHasFocus(false)}
+					onChange={e => setSearchInputValue(e.target.value)}
+					spellCheck={false}
+				/>
+			</div>
+		</div>
+	)
+}
+
 export default function App() {
-	const [searchText, setSearchText] = React.useState("")
 
 	return (
 		<>
@@ -197,7 +307,7 @@ export default function App() {
 			<div className="flex-row justify-center">
 				{sass`
 					.searchAppContainer {
-						box-shadow: 0 0 0 0.5px hsla(0, 0, 0, 0.05),
+						box-shadow: 0 0 0 0.5px hsla(0, 0%, 0%, 0.05),
 							tw(shadow, sm),
 							tw(shadow, lg);
 					}
@@ -206,7 +316,7 @@ export default function App() {
 
 					{/* <StickyObscureEffect> */}
 					{/* TODO: May need to add -my to cover shadow */}
-					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20">
+					{/* <div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
 						<div className="flex-row">
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
 							<svg className="w-24 h-40 text-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
@@ -218,7 +328,7 @@ export default function App() {
 							</svg>
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
 						</div>
-					</div>
+					</div> */}
 
 					{/* Defer flex-row to here not w-xl because of <<StickyObscureEffect>> */}
 					<div className="flex-row">
@@ -227,37 +337,7 @@ export default function App() {
 						<div className="flex-grow">
 
 							{/* Search bar */}
-							<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
-								<div className="relative">
-									<div className="absolute all pointer-none">
-										<div className="px-16 flex-row h-full">
-											<div className="p-8 flex-row align-center">
-												<Feather.Search
-													className="w-24 h-24"
-												// style={{ color: searchBarHasFocus && "#2563eb" }}
-												/>
-											</div>
-											<div className="flex-grow"></div>
-											<div className="p-8 flex-row align-center pointer-auto">
-												<Feather.Code className="w-24 h-24 text-cool-gray-800" />
-											</div>
-											<div className="p-8 flex-row align-center pointer-auto">
-												<Feather.Moon className="w-24 h-24 text-cool-gray-800" />
-											</div>
-										</div>
-									</div>
-									<input
-										type="text"
-										className="pl-64 pr-96 w-full h-80 bg-white rounded-top-left-24 border-bottom-1"
-										placeholder="Search ..."
-										value={searchText}
-										onFocus={() => setSearchBarHasFocus(true)}
-										onBlur={() => setSearchBarHasFocus(false)}
-										onChange={e => setSearchText(e.target.value)}
-										spellCheck={false}
-									/>
-								</div>
-							</div>
+							<SearchBar />
 
 							{/* Body */}
 							{sass`
@@ -282,7 +362,7 @@ export default function App() {
 												transform: scale(0.618);
 											}
 										}
-										&Icon {
+										&SVG {
 											@include transition($leave-ms, (color), tw(ease, out)) {
 												color: tw(cool-gray, 800);
 											}
@@ -300,17 +380,17 @@ export default function App() {
 									<div key={k} className="searchGridItem aspect aspect-w-1 aspect-h-1">
 										<div className="flex-row center">
 											{React.createElement(Feather[cases.titleCase(k)], {
-												className: "searchGridItemIcon w-32 h-32",
+												className: "searchGridItemSVG w-32 h-32",
 											})}
 										</div>
 										<div className="relative">
 											<div className="absolute bottom-all">
 												{sass`
-													$enter-ms: 100ms;
-													$leave-ms: 200ms;
-
 													$size: 13;
 													$size-gap: 6;
+
+													$enter-ms: 100ms;
+													$leave-ms: 200ms;
 
 													.searchTextbox {
 														> * + * {
@@ -326,12 +406,13 @@ export default function App() {
 															}
 															.searchTextbox:hover & {
 																@include transition($enter-ms, (color, transform), tw(ease, out), 100ms) {
+																	// text-decoration: underline;
 																	color: tw(blue, 600);
 																	transform: translateX(0); // Reset
 																}
 															}
 														}
-														&Icon {
+														&SVG {
 															@include size(rem($size + 1));
 															@include transition($leave-ms, (color, opacity, transform), tw(ease, out)) {
 																color: tw(cool-gray, 400);
@@ -350,7 +431,7 @@ export default function App() {
 												`}
 												<a href={`/${k}`} className="searchTextbox py-8 flex-row center">
 													<div className="searchTextboxText">{k}</div>
-													<Feather.ExternalLink className="searchTextboxIcon" />
+													<Feather.ExternalLink className="searchTextboxSVG" />
 												</a>
 											</div>
 										</div>
