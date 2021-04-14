@@ -1,3 +1,4 @@
+@use "../duomo/mixins" as *;
 @use "../duomo/tailwind" as *;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,6 +27,24 @@ hr { width: 100%; }
 	}
 }
 
+.bg-dark    {
+	@include transition(500ms, (background-color), tw(ease, out)) {
+		@include background-color(
+			tw(cool-gray, 200),
+			tw(cool-gray, 600),
+		);
+	}
+}
+
+.bg-darker  {
+	@include transition(500ms, (background-color), tw(ease, out)) {
+		@include background-color(
+			tw(cool-gray, 300),
+			tw(cool-gray, 700),
+		);
+	}
+}
+
 @include colors(color, text, (cool-gray: tw(cool-gray)));
 @include colors(background-color, bg, (cool-gray: tw(cool-gray)));
 @include colors(border-color, border, (cool-gray: tw(cool-gray)));
@@ -34,8 +53,12 @@ hr { width: 100%; }
 
 .tooltip {
 	position: absolute;
-	&--top    { bottom: 100%; left:   50%; transform: translateX(-50%); }
-	&--right  { top:     50%; left:  100%; transform: translateY(-50%); }
-	&--bottom { top:    100%; left:   50%; transform: translateX(-50%); }
-	&--left   { top:     50%; right: 100%; transform: translateY(-50%); }
+	&--top          { bottom: 100%; left:   50%; transform: translateX(-50%); }
+	&--top-left     { bottom: 100%; left:    0%; }
+	&--top-right    { bottom: 100%; right:   0%; }
+	&--right        { top:     50%; left:  100%; transform: translateY(-50%); }
+	&--bottom       { top:    100%; left:   50%; transform: translateX(-50%); }
+	&--bottom-left  { top:    100%; left:    0%; }
+	&--bottom-right { top:    100%; right:   0%; }
+	&--left         { top:     50%; right: 100%; transform: translateY(-50%); }
 }

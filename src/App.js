@@ -4,7 +4,6 @@ import * as cases from "./lib/cases"
 import * as Feather from "react-feather"
 
 import dataset from "./data/dataset.generated.json"
-import React from "react";
 
 function iota(max) {
 	return Array.from(new Array(max), (_, x) => x);
@@ -14,8 +13,8 @@ function ItemLTR({ children }) {
 	return (
 		<div className="flex-row align-center m-gap-12">
 			{children ?? <>
-				<div className="w-16 h-16 bg-cool-gray-300 rounded-full"></div>
-				<div className="w-96 h-8 bg-cool-gray-300 rounded-full"></div>
+				<div className="w-16 h-16 bg-darker rounded-full"></div>
+				<div className="w-96 h-8 bg-darker rounded-full"></div>
 			</>}
 		</div>
 	)
@@ -25,8 +24,8 @@ function ItemLTRSmall({ children }) {
 	return (
 		<div className="flex-row align-center m-gap-8">
 			{children ?? <>
-				<div className="w-12 h-12 bg-cool-gray-300 rounded-full"></div>
-				<div className="w-96 h-8 bg-cool-gray-300 rounded-full"></div>
+				<div className="w-12 h-12 bg-darker rounded-full"></div>
+				<div className="w-96 h-8 bg-darker rounded-full"></div>
 			</>}
 		</div>
 	)
@@ -36,8 +35,8 @@ function ItemRTL({ children }) {
 	return (
 		<div className="flex-row align-center m-gap-12">
 			{children ?? <>
-				<div className="w-96 h-8 bg-cool-gray-300 rounded-full"></div>
-				<div className="w-16 h-16 bg-cool-gray-300 rounded-full"></div>
+				<div className="w-96 h-8 bg-darker rounded-full"></div>
+				<div className="w-16 h-16 bg-darker rounded-full"></div>
 			</>}
 		</div>
 	)
@@ -50,31 +49,31 @@ function Header() {
 	function SponsorButton() {
 		return (
 			<div className="flex-col align-center m-gap-12">
-				<div className="flex-row justify-center w-192 h-48 bg-cool-gray-200 rounded-full"></div>
+				<div className="flex-row justify-center w-192 h-48 bg-dark rounded-full"></div>
 				<ItemLTRSmall />
 			</div >
 		)
 	}
 
 	return (
-		// Use pb-112 to compensate for <TopNav className="h-48 ...">
+		// Use pb-112 (64 + 48) to compensate for <TopNav className="h-48 ...">
 		<div className="px-16 sm:px-24 py-64 pb-112 flex-row justify-center">
 			<div className="flex-col xl:flex-row xl:align-center m-gap-48 w-lg">
 
 				{/* CTA */}
 				<div className="flex-col align-center m-gap-32">
-					<div className="w-64 h-64 bg-cool-gray-300 rounded-full"></div>
+					<div className="w-64 h-64 bg-darker rounded-full"></div>
 					<div className="flex-col align-center m-gap-16">
-						<div className="w-160 h-16 bg-cool-gray-300 rounded-full"></div>
-						<div className="w-256 h-8 bg-cool-gray-300 rounded-full"></div>
+						<div className="w-160 h-16 bg-darker rounded-full"></div>
+						<div className="w-256 h-8 bg-darker rounded-full"></div>
 					</div>
 					{/* Use a custom <Button> because of self-stretch, sm:w-192, and
 					rounded-12 sm:rounded-full */}
 					<div className="self-stretch sm:self-center flex-col sm:flex-row m-gap-16">
-						<div className="flex-row justify-center sm:w-192 h-48 bg-cool-gray-200 rounded-12 sm:rounded-full">
+						<div className="flex-row justify-center sm:w-192 h-48 bg-dark rounded-12 sm:rounded-full">
 							<ItemLTR />
 						</div>
-						<div className="flex-row justify-center sm:w-192 h-48 bg-cool-gray-200 rounded-12 sm:rounded-full">
+						<div className="flex-row justify-center sm:w-192 h-48 bg-dark rounded-12 sm:rounded-full">
 							<ItemLTR />
 						</div>
 					</div>
@@ -150,12 +149,15 @@ sass.global`
 $enter-ms: 200ms;
 $leave-ms: 400ms;
 
+// TOOD: Extract to Duomo mixins
 @mixin antialiased   { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 @mixin unantialiased { -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto; }
 
+// TOOD: Extract to Duomo core
 .antialiased   { @include antialiased; }
 .unantialiased { @include unantialiased; }
 
+// TOOD: Extract to Duomo mixins
 @mixin padding-x($v) {
 	@if meta.type-of($v) == number and
 			math.is-unitless($v) {
@@ -189,18 +191,34 @@ $leave-ms: 400ms;
 	margin-bottom: $v;
 }
 
-// :root {
-// 	@include transition(1000ms, (background-color), tw(ease, out)) {
-// 		@include background-color(
-// 			tw(cool-gray, 50),
-// 			tw(cool-gray, 900),
-// 		);
-// 	}
-// }
+$shadow-px: 0 0 0 0.5px hsla(0, 0%, 0%, 0.15);
+$shadow-px-dark: 0 0 0 0.5px hsla(0, 0%, 100%, 0.15);
+
+$app-bg: tw(white);
+$app-bg-dark: tw(cool-gray, 800);
+$app-shadow: ($shadow-px, tw(shadow, xs), tw(shadow, sm));
+$app-shadow-dark: ($shadow-px-dark, tw(shadow, xs), tw(shadow, sm));
+$app-border-color: tw(cool-gray, 200);
+$app-border-color-dark: tw(black);
 
 :root {
 	@include antialiased;
-	background-color: tw(cool-gray, 50);
+
+	@include transition(500ms, (background-color), tw(ease, out)) {
+		@include background-color(
+			tw(cool-gray, 50),
+			tw(cool-gray, 900),
+		);
+	}
+}
+
+hr {
+	@include transition(500ms, (border-color), tw(ease, out)) {
+		@include border-color(
+			$app-border-color,
+			$app-border-color-dark,
+		);
+	}
 }
 
 `
@@ -247,19 +265,34 @@ function SearchBar() {
 					.searchBarInput {
 						// Reset
 						width: 100%;
+						background-color: unset;
 						&:focus { outline: unset; }
 
 						padding-left: rem(16 + 40 + 16);
 						padding-right: rem(16 + 40 + 8 + 40 + 16);
-
 						font: rem(20) / 1 tw(sans);
 						color: tw(cool-gray, 800);
+						border-bottom: rem(1) solid transparent;
+						@include transition(500ms, (color, background-color, border,color), tw(ease, out)) {
+							@include color(
+								tw(cool-gray, 800),
+								tw(cool-gray, 400),
+							);
+							@include background-color(
+								$app-bg,
+								$app-bg-dark,
+							);
+							@include border-color(
+								$app-border-color,
+								$app-border-color-dark,
+							);
+						}
 					}
 				`}
 
 				<input
 					type="text"
-					className="searchBarInput h-80 bg-white rounded-top-left-24 border-bottom-1"
+					className="searchBarInput h-80 bg-white rounded-top-left-24"
 					placeholder="Search ..."
 					value={searchInputValue}
 					onChange={e => setSearchInputValue(e.target.value)}
@@ -303,20 +336,34 @@ function SearchBar() {
 							color: white;
 							background-color: tw(cool-gray, 800);
 							border-radius: rem(6);
-							box-shadow: tw(shadow, md),
-								tw(shadow, lg);
+							// box-shadow: tw(shadow, md),
+							// 	tw(shadow, lg);
 
-							@include transition(100ms, (opacity, transform), tw(ease, out)) {
-								opacity: 0;
-								transform: scale(0.9);
-								transform-origin: center;
-							}
-							.searchBarButtonHoverArea:hover &,
-							.searchBarButton:focus & {
-								opacity: 1;
-								transform: scale(1);
-								transform-origin: center;
-							}
+							@include box-shadow(
+								(
+									tw(shadow, md),
+									tw(shadow, lg),
+								),
+								(
+									$shadow-px-dark,
+									tw(shadow, md),
+									tw(shadow, lg),
+								),
+							);
+
+							// @include transition(100ms, (opacity, transform), tw(ease, out)) {
+							// 	opacity: 0;
+							// 	transform: scale(0.9);
+							// 	transform-origin: center;
+							// }
+							// // FIXME: :active styles clash with :focus styles (e.g. JSX is
+							// // :active and Dark Mode is :focus)
+							// .searchBarButtonHoverArea:hover &,
+							// .searchBarButton:focus & {
+							// 	opacity: 1;
+							// 	transform: scale(1);
+							// 	transform-origin: center;
+							// }
 						}
 
 						&SVG {
@@ -337,7 +384,7 @@ function SearchBar() {
 						{/* Button */}
 						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
-								<div className="tooltip tooltip--bottom pointer-events-none">
+								<div className="tooltip tooltip--bottom-right pointer-events-none">
 									<div className="searchBarButtonTooltip">
 										{!copyAsJSX ? "Tap to Enable Copy as JSX" : "Tap to Enable Copy as HTML"}
 									</div>
@@ -349,7 +396,7 @@ function SearchBar() {
 						{/* Button */}
 						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
-								<div className="tooltip tooltip--bottom pointer-events-none">
+								<div className="tooltip tooltip--bottom-right pointer-events-none">
 									<div className="searchBarButtonTooltip">
 										{!enableDarkMode ? "Tap to Enable Dark Mode" : "Tap to Enable Light Mode"}
 									</div>
@@ -385,16 +432,23 @@ export default function App() {
 			{/* App */}
 			<div className="flex-row justify-center">
 				{sass`
-					.appSurface {
-						box-shadow: 0 0 0 0.5px hsla(0, 0%, 0%, 0.05),
-							tw(shadow, sm),
-							tw(shadow, md);
+					.app {
+						@include transition(500ms, (background-color, box-shadow), tw(ease, out)) {
+							@include background-color(
+								$app-bg,
+								$app-bg-dark,
+							);
+							@include box-shadow(
+								$app-shadow,
+								$app-shadow-dark,
+							);
+						}
 					}
 				`}
-				<div className="appSurface w-xl bg-white xl:rounded-24">
+				<div className="app w-xl xl:rounded-24">
 
 					{/* Obscure effect */}
-					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
+					{/* <div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
 						<div className="flex-row">
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
 							<svg className="w-24 h-40 text-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
@@ -406,7 +460,7 @@ export default function App() {
 							</svg>
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
 						</div>
-					</div>
+					</div> */}
 
 					{/* Defer flex-row to here not w-xl because of the obscure effect */}
 					<div className="flex-row">
@@ -479,8 +533,8 @@ export default function App() {
 													$leave-ms: 200ms;
 
 													.searchResultsTextbox {
-														// // Reset
-														// &:focus { outline: none; }
+														// Reset
+														&:focus { outline: none; }
 
 														// Prefer Sass because of use of $size-gap
 														@include padding-y(rem(8));
@@ -541,26 +595,60 @@ export default function App() {
 
 						</div>
 
+						{sass`
+							.appSidebar {
+								border-left: rem(1) solid transparent;
+								@include transition(500ms, (background-color, border-color), tw(ease, out)) {
+									@include background-color(
+										tw(cool-gray, 50),
+										$app-bg-dark,
+									);
+									@include border-color(
+										$app-border-color,
+										$app-border-color-dark,
+									);
+								}
+							}
+						`}
+
 						{/* RHS */}
-						<div className="hide md:show w-320 bg-cool-gray-50 rounded-right-24 border-left-1">
-							<div className="xl:-mt-16 xl:pt-16 sticky top-all">
+						<div className="appSidebar hide md:show w-320 rounded-right-24">
+							{/* <div className="xl:-mt-16 xl:pt-16 sticky top-all z-10"> */}
+							<div className="sticky top-all z-10">
 
 								{/* Top */}
 								<div className="relative">
-									<div className="flex-row center h-320 bg-white rounded-top-right-24 border-bottom-1">
-										<div className="w-64 h-64 bg-cool-gray-200 rounded-full"></div>
+
+									{sass`
+										.appSidebarPreview {
+											border-bottom: rem(1) solid transparent;
+											@include transition(500ms, (border-color, background-color), tw(ease, out)) {
+												@include border-color(
+													$app-border-color,
+													$app-border-color-dark,
+												);
+												@include background-color(
+													$app-bg,
+													$app-bg-dark,
+												);
+											}
+										}
+									`}
+
+									<div className="appSidebarPreview flex-row center h-320 rounded-top-right-24">
+										<div className="w-64 h-64 bg-dark rounded-full"></div>
 										<div className="absolute top-all">
 											<div className="p-24 flex-row align-center h-full">
 												<div className="flex-grow"></div>
-												<div className="w-24 h-24 bg-cool-gray-200 rounded-full"></div>
+												<div className="w-24 h-24 bg-dark rounded-full"></div>
 											</div>
 										</div>
 										<div className="absolute bottom-all">
 											<div className="p-24 flex-row align-center m-gap-16 h-full">
 												<div className="flex-grow">
-													<div className="h-8 bg-cool-gray-200 rounded-full"></div>
+													<div className="h-8 bg-dark rounded-full"></div>
 												</div>
-												<div className="w-64 h-24 bg-cool-gray-200 rounded-full"></div>
+												<div className="w-64 h-24 bg-dark rounded-full"></div>
 											</div>
 										</div>
 									</div>
@@ -574,17 +662,17 @@ export default function App() {
 
 											{/* Top */}
 											<div className="flex-row align-center m-gap-16 h-full">
-												<div className="w-96 h-8 bg-cool-gray-200 rounded-full"></div>
+												<div className="w-96 h-8 bg-dark rounded-full"></div>
 												<div className="flex-grow"></div>
-												<div className="w-24 h-24 bg-cool-gray-200 rounded-full"></div>
+												<div className="w-24 h-24 bg-dark rounded-full"></div>
 											</div>
 
 											{/* Bottom */}
 											<div className="flex-row align-center m-gap-16 h-full">
 												<div className="flex-grow">
-													<div className="h-8 bg-cool-gray-200 rounded-full"></div>
+													<div className="h-8 bg-dark rounded-full"></div>
 												</div>
-												<div className="w-64 h-24 bg-cool-gray-200 rounded-full"></div>
+												<div className="w-64 h-24 bg-dark rounded-full"></div>
 											</div>
 
 										</div>
@@ -594,16 +682,16 @@ export default function App() {
 								<hr />
 								<div className="p-24 flex-row m-gap-16">
 									<div className="w-128">
-										<div className="aspect aspect-w-6 aspect-h-4 bg-cool-gray-200 rounded-4"></div>
+										<div className="aspect aspect-w-6 aspect-h-4 bg-dark rounded-4"></div>
 									</div>
 									<div className="flex-grow">
 										<div className="flex-col m-gap-6 h-full">
-											<div className="w-stagger-1 h-6 bg-cool-gray-200 rounded-full"></div>
-											<div className="w-stagger-2 h-6 bg-cool-gray-200 rounded-full"></div>
-											<div className="w-stagger-3 h-6 bg-cool-gray-200 rounded-full"></div>
-											<div className="w-stagger-4 h-6 bg-cool-gray-200 rounded-full"></div>
+											<div className="w-stagger-1 h-6 bg-dark rounded-full"></div>
+											<div className="w-stagger-2 h-6 bg-dark rounded-full"></div>
+											<div className="w-stagger-3 h-6 bg-dark rounded-full"></div>
+											<div className="w-stagger-4 h-6 bg-dark rounded-full"></div>
 											<div className="flex-grow"></div>
-											<div className="self-end w-stagger-1 h-6 bg-cool-gray-200 rounded-full"></div>
+											<div className="self-end w-stagger-1 h-6 bg-dark rounded-full"></div>
 										</div>
 									</div>
 								</div>
