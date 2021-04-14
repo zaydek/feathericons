@@ -5,19 +5,6 @@ import * as Feather from "react-feather"
 
 import dataset from "./data/dataset.generated.json"
 
-sass.global`
-
-@use "sass:color";
-
-@use "duomo" as *;
-@use "duomo/mixins" as *;
-@use "duomo/tailwind" as *;
-
-$enter-ms: 200ms;
-$leave-ms: 400ms;
-
-`
-
 function iota(max) {
 	return Array.from(new Array(max), (_, x) => x);
 }
@@ -155,11 +142,41 @@ function Header() {
 // 	}
 // `
 
+sass.global`
+
+@use "sass:color";
+
+@use "duomo" as *;
+@use "duomo/mixins" as *;
+@use "duomo/tailwind" as *;
+
+$enter-ms: 200ms;
+$leave-ms: 400ms;
+
+@mixin antialiased   { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@mixin unantialiased { -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto; }
+
+.antialiased   { @include antialiased; }
+.unantialiased { @include unantialiased; }
+
+// :root {
+// 	@include transition(1000ms, (background-color), tw(ease, out)) {
+// 		@include background-color(
+// 			tw(cool-gray, 50),
+// 			tw(cool-gray, 900),
+// 		);
+// 	}
+// }
+
+:root {
+	@include antialiased;
+	background-color: tw(cool-gray, 50);
+}
+
+`
+
 export default function App() {
 	const [searchText, setSearchText] = React.useState("")
-
-	// // Group focus for SearchInputSVG does not work so use JavaScript
-	// const [searchBarHasFocus, setSearchBarHasFocus] = React.useState("")
 
 	return (
 		<>
@@ -178,7 +195,14 @@ export default function App() {
 
 			{/* App */}
 			<div className="flex-row justify-center">
-				<div className="w-xl bg-white xl:rounded-24 shadow">
+				{sass`
+					.searchAppContainer {
+						box-shadow: 0 0 0 0.5px hsla(0, 0, 0, 0.05),
+							tw(shadow, sm),
+							tw(shadow, lg);
+					}
+				`}
+				<div className="searchAppContainer w-xl bg-white xl:rounded-24">
 
 					{/* <StickyObscureEffect> */}
 					{/* TODO: May need to add -my to cover shadow */}
@@ -204,12 +228,12 @@ export default function App() {
 
 							{/* Search bar */}
 							<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
-								<div className="relative css-search-bar">
+								<div className="relative">
 									<div className="absolute all pointer-none">
 										<div className="px-16 flex-row h-full">
 											<div className="p-8 flex-row align-center">
 												<Feather.Search
-													className="w-24 h-24 css-search-bar-svg"
+													className="w-24 h-24"
 												// style={{ color: searchBarHasFocus && "#2563eb" }}
 												/>
 											</div>
@@ -224,7 +248,7 @@ export default function App() {
 									</div>
 									<input
 										type="text"
-										className="pl-64 pr-96 w-full h-80 bg-white rounded-top-left-24 border-bottom-1 css-search-bar-input"
+										className="pl-64 pr-96 w-full h-80 bg-white rounded-top-left-24 border-bottom-1"
 										placeholder="Search ..."
 										value={searchText}
 										onFocus={() => setSearchBarHasFocus(true)}
@@ -237,10 +261,10 @@ export default function App() {
 
 							{/* Body */}
 							{sass`
-								.search-grid {
+								.searchGrid {
 									display: grid;
 									grid-template-columns: repeat(auto-fill, minmax(rem(144), 1fr));
-									&__item {
+									&Item {
 										position: relative;
 										&::after {
 											@include zero-out { content: ""; }
@@ -258,11 +282,11 @@ export default function App() {
 												transform: scale(0.618);
 											}
 										}
-										&__svg {
+										&Icon {
 											@include transition($leave-ms, (color), tw(ease, out)) {
 												color: tw(cool-gray, 800);
 											}
-											.search-grid__item:hover & {
+											.searchGridItem:hover & {
 												@include transition($enter-ms, (color), tw(ease, out)) {
 													color: tw(blue, 600);
 												}
@@ -271,40 +295,50 @@ export default function App() {
 									}
 								}
 							`}
-							<div className="search-grid px-16 xl:p-64 xl:pb-96">
+							<div className="searchGrid px-16 xl:p-64 xl:pb-96">
 								{Object.keys(dataset).map(k => (
-									<div key={k} className="search-grid__item aspect aspect-w-1 aspect-h-1">
+									<div key={k} className="searchGridItem aspect aspect-w-1 aspect-h-1">
 										<div className="flex-row center">
 											{React.createElement(Feather[cases.titleCase(k)], {
-												className: "search-grid__item__svg w-32 h-32",
+												className: "searchGridItemIcon w-32 h-32",
 											})}
 										</div>
 										<div className="relative">
 											<div className="absolute bottom-all">
 												{sass`
-													.search-textbox {
-														&__text {
+													$enter-ms: 100ms;
+													$leave-ms: 200ms;
+
+													$size: 13;
+													$size-gap: 6;
+
+													.searchTextbox {
+														> * + * {
+															margin-left: rem($size-gap);
+														}
+														&Text {
+															@include unantialiased;
 															text-align: center;
-															font: rem(13) / 1.125 tw(mono);
+															font: rem($size) / 1.25 tw(mono);
 															@include transition($leave-ms, (color, transform), tw(ease, out)) {
 																color: tw(cool-gray, 800);
-																transform: translateX(rem(13 * 1.125));
+																transform: translateX(rem(($size + $size-gap) / 2));
 															}
-															.search-textbox:hover & {
+															.searchTextbox:hover & {
 																@include transition($enter-ms, (color, transform), tw(ease, out), 100ms) {
 																	color: tw(blue, 600);
-																	transform: translateX(0);
+																	transform: translateX(0); // Reset
 																}
 															}
 														}
-														&__svg {
-															@include size(rem(13 * 1.125));
+														&Icon {
+															@include size(rem($size + 1));
 															@include transition($leave-ms, (color, opacity, transform), tw(ease, out)) {
 																color: tw(cool-gray, 400);
 																opacity: 0;
-																transform: translateX(rem(-1 * 13 * 1.125));
+																transform: translateX(rem(-1 * ($size + $size-gap) / 2));
 															}
-															.search-textbox:hover & {
+															.searchTextbox:hover & {
 																@include transition($enter-ms, (color, opacity, transform), tw(ease, out), 100ms) {
 																	color: tw(blue, 600);
 																	opacity: 1;
@@ -314,9 +348,9 @@ export default function App() {
 														}
 													}
 												`}
-												<a href={`/${k}`} className="search-textbox py-8 flex-row center m-gap-4">
-													<div className="search-textbox__text">{k}</div>
-													<Feather.ExternalLink className="search-textbox__svg" />
+												<a href={`/${k}`} className="searchTextbox py-8 flex-row center">
+													<div className="searchTextboxText">{k}</div>
+													<Feather.ExternalLink className="searchTextboxIcon" />
 												</a>
 											</div>
 										</div>

@@ -1,10 +1,4 @@
-@use "sass:color";
-
-@use "../duomo" as *;
 @use "../duomo/tailwind" as *;
-
-// @use "css/search-bar";
-// @use "css/search-results";
 
 hr { width: 100%; }
 
@@ -31,11 +25,3 @@ hr { width: 100%; }
 @include colors(color, text, (cool-gray: tw(cool-gray)));
 @include colors(background-color, bg, (cool-gray: tw(cool-gray)));
 @include colors(border-color, border, (cool-gray: tw(cool-gray)));
-
-// :root {
-// 	background-color: tw(cool-gray, 50);
-// }
-
-// .shadow {
-// 	box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.05), tw(shadow, lg);
-// }

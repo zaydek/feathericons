@@ -1,18 +1,25 @@
-@use "duomo" as *;
-@use "duomo/mixins" as *;
-@use "duomo/tailwind" as *;
+// @use "duomo" as *;
+// @use "duomo/mixins" as *;
+// @use "duomo/tailwind" as *;
+//
+// @include duomo-core;
+//
+// @media (max-width: dm(breakpoint, xl)) {
+//   .foo {
+//     @include background-color(tw(red, 50),
+//       tailwind(red, 900));
+//   }
+// }
+//
+// @each $k, $v in tw(shadow) {
+//   .shadow-#{$k} {
+//     box-shadow: $v;
+//   }
+// }
 
-@include duomo-core;
-
-@media (max-width: dm(breakpoint, xl)) {
-  .foo {
-    @include background-color(tw(red, 50),
-      tailwind(red, 900));
-  }
+@function rem($n) {
+  @return $n / 16 + rem;
 }
 
-@each $k, $v in tw(shadow) {
-  .shadow-#{$k} {
-    box-shadow: $v;
-  }
-}
+$size: rem(2);
+@debug $size / 2;
