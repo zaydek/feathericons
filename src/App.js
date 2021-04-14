@@ -218,16 +218,27 @@ function SearchBar() {
 	// const [hoverTooltipArea, setHoverTooltipArea] = React.useState(false)
 
 	return (
-		// <div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
 		// Use z-20 not z-10 because the RHS uses z-10
 		<div className="xl:-mt-16 xl:pt-16 sticky top-all z-20">
-			<div className="relative">
+
+			{sass`
+				.searchBarSearchSVG {
+					@include transition(100ms, (color), tw(ease, out)) {
+						color: tw(cool-gray, 800);
+					}
+					.searchBar:focus-within & {
+						color: tw(blue, 500);
+					}
+				}
+			`}
+
+			<div className="searchBar relative">
 
 				{/* LHS */}
 				<div className="absolute left-all">
 					<div className="px-16 flex-row h-full">
 						<div className="p-8 flex-row align-center">
-							<Feather.Search className="searchBarSVG w-24 h-24" />
+							<Feather.Search className="searchBarSearchSVG w-24 h-24" />
 						</div>
 					</div>
 				</div>
@@ -238,6 +249,9 @@ function SearchBar() {
 						width: 100%;
 						&:focus { outline: unset; }
 
+						padding-left: rem(16 + 40 + 16);
+						padding-right: rem(16 + 40 + 8 + 40 + 16);
+
 						font: rem(20) / 1 tw(sans);
 						color: tw(cool-gray, 800);
 					}
@@ -245,7 +259,7 @@ function SearchBar() {
 
 				<input
 					type="text"
-					className="searchBarInput pl-64 pr-96 h-80 bg-white rounded-top-left-24 border-bottom-1"
+					className="searchBarInput h-80 bg-white rounded-top-left-24 border-bottom-1"
 					placeholder="Search ..."
 					value={searchInputValue}
 					onChange={e => setSearchInputValue(e.target.value)}
@@ -253,8 +267,8 @@ function SearchBar() {
 				/>
 
 				{sass`
-					// NOTE: <input> elements are void elements and cannot nest children.
-					// Therefore use [data-checked="true"] for :checked.
+					// Use [data-checked=true] for :checked because <button> cannot use
+					// type="checkbox"
 					.searchBarButton {
 						// Reset
 						&:focus { outline: none }
@@ -273,6 +287,38 @@ function SearchBar() {
 							background-color: tw(blue, 500);
 						}
 
+						&Tooltip {
+							margin-top: rem(-8);
+							padding: rem(8) rem(12);
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							> * + * {
+								margin-left: rem(6);
+							}
+
+							@include unantialiased;
+							white-space: pre;
+							font: rem(13) / 1.25 tw(mono);
+							color: white;
+							background-color: tw(cool-gray, 800);
+							border-radius: rem(6);
+							box-shadow: tw(shadow, md),
+								tw(shadow, lg);
+
+							@include transition(100ms, (opacity, transform), tw(ease, out)) {
+								opacity: 0;
+								transform: scale(0.9);
+								transform-origin: center;
+							}
+							.searchBarButtonHoverArea:hover &,
+							.searchBarButton:focus & {
+								opacity: 1;
+								transform: scale(1);
+								transform-origin: center;
+							}
+						}
+
 						&SVG {
 							@include transition(150ms, (color), tw(ease, out)) {
 								color: tw(blue, 500);
@@ -280,40 +326,6 @@ function SearchBar() {
 							.searchBarButton[data-checked="true"] & {
 								color: white;
 							}
-						}
-					}
-
-					.styledTooltip {
-						margin-top: rem(-8);
-						padding: rem(8) rem(12);
-
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-
-						> * + * {
-							margin-left: rem(6);
-						}
-
-						@include unantialiased;
-						white-space: pre;
-						font: rem(13) / 1.25 tw(mono);
-						color: white;
-						background-color: tw(cool-gray, 800);
-						border-radius: rem(6);
-						box-shadow: tw(shadow, md),
-							tw(shadow, lg);
-
-						@include transition(100ms, (opacity, transform), tw(ease, out)) {
-							opacity: 0;
-							transform: scale(0.9);
-							transform-origin: center;
-						}
-						.searchBarButtonHoverArea:hover &,
-						.searchBarButton:focus & {
-							opacity: 1;
-							transform: scale(1);
-							transform-origin: center;
 						}
 					}
 				`}
@@ -326,7 +338,7 @@ function SearchBar() {
 						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
 								<div className="tooltip tooltip--bottom pointer-events-none">
-									<div className="styledTooltip">
+									<div className="searchBarButtonTooltip">
 										{!copyAsJSX ? "Tap to Enable Copy as JSX" : "Tap to Enable Copy as HTML"}
 									</div>
 								</div>
@@ -338,7 +350,7 @@ function SearchBar() {
 						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
 								<div className="tooltip tooltip--bottom pointer-events-none">
-									<div className="styledTooltip">
+									<div className="searchBarButtonTooltip">
 										{!enableDarkMode ? "Tap to Enable Dark Mode" : "Tap to Enable Light Mode"}
 									</div>
 								</div>
