@@ -139,7 +139,9 @@ function Header() {
 
 sass.global`
 
-@use "sass:color";
+@use "sass:color"; // For color.scale
+@use "sass:meta";  // For meta.type-of
+@use "sass:math";  // For math.is-unitless
 
 @use "duomo" as *;
 @use "duomo/mixins" as *;
@@ -153,6 +155,39 @@ $leave-ms: 400ms;
 
 .antialiased   { @include antialiased; }
 .unantialiased { @include unantialiased; }
+
+@mixin padding-x($v) {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "padding-x: #{$v} must be of type rem, em, px, etc."
+	}
+	padding-left: $v;
+	padding-right: $v;
+}
+@mixin padding-y($v) {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "padding-y: #{$v} must be of type rem, em, px, etc."
+	}
+	padding-top: $v;
+	padding-bottom: $v;
+}
+@mixin margin-x($v)  {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "margin-x: #{$v} must be of type rem, em, px, etc."
+	}
+	margin-left: $v;
+	margin-right: $v;
+}
+@mixin margin-y($v)  {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "margin-y: #{$v} must be of type rem, em, px, etc."
+	}
+	margin-top: $v;
+	margin-bottom: $v;
+}
 
 // :root {
 // 	@include transition(1000ms, (background-color), tw(ease, out)) {
@@ -179,6 +214,9 @@ function SearchBar() {
 	const [copyAsJSX, setCopyAsJSX] = React.useState(false)
 	const [enableDarkMode, setEnableDarkMode] = React.useState(false)
 
+	// TODO
+	// const [hoverTooltipArea, setHoverTooltipArea] = React.useState(false)
+
 	return (
 		// <div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
 		// Use z-20 not z-10 because the RHS uses z-10
@@ -196,7 +234,7 @@ function SearchBar() {
 
 				{sass`
 					.searchBarInput {
-						// Resets
+						// Reset
 						width: 100%;
 						&:focus { outline: unset; }
 
@@ -218,7 +256,7 @@ function SearchBar() {
 					// NOTE: <input> elements are void elements and cannot nest children.
 					// Therefore use [data-checked="true"] for :checked.
 					.searchBarButton {
-						// Resets
+						// Reset
 						&:focus { outline: none }
 
 						padding: rem(8);
@@ -247,7 +285,7 @@ function SearchBar() {
 
 					.styledTooltip {
 						margin-top: rem(-8);
-						padding: rem(8) rem(16);
+						padding: rem(8) rem(12);
 
 						display: flex;
 						flex-direction: row;
@@ -266,10 +304,16 @@ function SearchBar() {
 						box-shadow: tw(shadow, md),
 							tw(shadow, lg);
 
-						opacity: 0;
-						.searchBarButtonContext:hover &,
+						@include transition(100ms, (opacity, transform), tw(ease, out)) {
+							opacity: 0;
+							transform: scale(0.9);
+							transform-origin: center;
+						}
+						.searchBarButtonHoverArea:hover &,
 						.searchBarButton:focus & {
 							opacity: 1;
+							transform: scale(1);
+							transform-origin: center;
 						}
 					}
 				`}
@@ -279,7 +323,7 @@ function SearchBar() {
 					<div className="-mx-4 px-16 flex-row h-full">
 
 						{/* Button */}
-						<div className="searchBarButtonContext px-4 relative flex-row align-center h-full pointer-events-auto">
+						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
 								<div className="tooltip tooltip--bottom pointer-events-none">
 									<div className="styledTooltip">
@@ -291,7 +335,7 @@ function SearchBar() {
 						</div>
 
 						{/* Button */}
-						<div className="searchBarButtonContext px-4 relative flex-row align-center h-full pointer-events-auto">
+						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
 								<div className="tooltip tooltip--bottom pointer-events-none">
 									<div className="styledTooltip">
@@ -329,16 +373,15 @@ export default function App() {
 			{/* App */}
 			<div className="flex-row justify-center">
 				{sass`
-					.searchAppContainer {
+					.appSurface {
 						box-shadow: 0 0 0 0.5px hsla(0, 0%, 0%, 0.05),
 							tw(shadow, sm),
-							tw(shadow, lg);
+							tw(shadow, md);
 					}
 				`}
-				<div className="searchAppContainer w-xl bg-white xl:rounded-24">
+				<div className="appSurface w-xl bg-white xl:rounded-24">
 
-					{/* <StickyObscureEffect> */}
-					{/* TODO: May need to add -my to cover shadow */}
+					{/* Obscure effect */}
 					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
 						<div className="flex-row">
 							<div className="w-8 h-40 bg-cool-gray-100"></div>
@@ -353,25 +396,28 @@ export default function App() {
 						</div>
 					</div>
 
-					{/* Defer flex-row to here not w-xl because of <<StickyObscureEffect>> */}
+					{/* Defer flex-row to here not w-xl because of the obscure effect */}
 					<div className="flex-row">
 
 						{/* LHS */}
 						<div className="flex-grow">
 
-							{/* Search bar */}
 							<SearchBar />
 
-							{/* Body */}
 							{sass`
-								.searchGrid {
+								.searchResults {
 									display: grid;
 									grid-template-columns: repeat(auto-fill, minmax(rem(144), 1fr));
-									&Item {
+
+									&Button {
+										// Reset
+										&:focus { outline: none; }
+
 										position: relative;
 										&::after {
 											@include zero-out { content: ""; }
-											background-color: color.scale(tw(blue, 400), $alpha: -75%);
+											// Use 90% not 80%
+											background-color: color.scale(tw(blue, 500), $alpha: -90%);
 											border-radius: 9999px;
 											@include transition($leave-ms, (opacity, transform), tw(ease, out)) {
 												opacity: 0;
@@ -379,17 +425,20 @@ export default function App() {
 											}
 										}
 										// Use &:hover::after { ... } (&::after:hover does not work)
-										&:hover::after {
+										&:hover::after,
+										&:focus::after {
 											@include transition($enter-ms, (opacity, transform), tw(ease, out)) {
 												opacity: 1;
 												transform: scale(0.618);
 											}
 										}
+
 										&SVG {
 											@include transition($leave-ms, (color), tw(ease, out)) {
 												color: tw(cool-gray, 800);
 											}
-											.searchGridItem:hover & {
+											.searchResultsButton:hover &,
+											.searchResultsButton:focus & {
 												@include transition($enter-ms, (color), tw(ease, out)) {
 													color: tw(blue, 600);
 												}
@@ -398,16 +447,18 @@ export default function App() {
 									}
 								}
 							`}
-							<div className="searchGrid px-16 xl:p-64 xl:pb-96">
-								{Object.keys(dataset).map(k => (
-									<div key={k} className="searchGridItem aspect aspect-w-1 aspect-h-1">
+
+							<div className="searchResults px-16 xl:p-64 xl:pb-96">
+								{Object.keys(dataset).map(key => (
+									<button key={key} className="searchResultsButton aspect aspect-w-1 aspect-h-1">
 										<div className="flex-row center">
-											{React.createElement(Feather[cases.titleCase(k)], {
-												className: "searchGridItemSVG w-32 h-32",
+											{React.createElement(Feather[cases.titleCase(key)], {
+												className: "searchResultsButtonSVG w-32 h-32",
 											})}
 										</div>
 										<div className="relative">
 											<div className="absolute bottom-all">
+
 												{sass`
 													$size: 13;
 													$size-gap: 6;
@@ -415,10 +466,20 @@ export default function App() {
 													$enter-ms: 100ms;
 													$leave-ms: 200ms;
 
-													.searchTextbox {
+													.searchResultsTextbox {
+														// // Reset
+														// &:focus { outline: none; }
+
+														// Prefer Sass because of use of $size-gap
+														@include padding-y(rem(8));
+														display: flex;
+														flex-direction: row;
+														justify-content: center;
+														align-items: center;
 														> * + * {
 															margin-left: rem($size-gap);
 														}
+
 														&Text {
 															@include unantialiased;
 															text-align: center;
@@ -427,14 +488,15 @@ export default function App() {
 																color: tw(cool-gray, 800);
 																transform: translateX(rem(($size + $size-gap) / 2));
 															}
-															.searchTextbox:hover & {
-																@include transition($enter-ms, (color, transform), tw(ease, out), 100ms) {
-																	// text-decoration: underline;
+															.searchResultsTextbox:hover & {
+															// .searchResultsTextbox:focus & {
+																@include transition($enter-ms, (color, transform), tw(ease, out), 50ms) {
 																	color: tw(blue, 600);
 																	transform: translateX(0); // Reset
 																}
 															}
 														}
+
 														&SVG {
 															@include size(rem($size + 1)); // Add 1 for SVG
 															@include transition($leave-ms, (color, opacity, transform), tw(ease, out)) {
@@ -442,23 +504,26 @@ export default function App() {
 																opacity: 0;
 																transform: translateX(rem(-1 * ($size + $size-gap) / 2));
 															}
-															.searchTextbox:hover & {
-																@include transition($enter-ms, (color, opacity, transform), tw(ease, out), 100ms) {
+															.searchResultsTextbox:hover & {
+															// .searchResultsTextbox:focus & {
+																@include transition($enter-ms, (color, opacity, transform), tw(ease, out), 50ms) {
 																	color: tw(blue, 600);
 																	opacity: 1;
-																	transform: translateX(0);
+																	transform: translateX(0); // Reset
 																}
 															}
 														}
 													}
 												`}
-												<a href={`/${k}`} className="searchTextbox py-8 flex-row center">
-													<div className="searchTextboxText">{k}</div>
-													<Feather.ExternalLink className="searchTextboxSVG" />
+
+												<a href={`/${key}`} className="searchResultsTextbox" tabIndex={-1}>
+													<div className="searchResultsTextboxText">{key}</div>
+													<Feather.ExternalLink className="searchResultsTextboxSVG" />
 												</a>
+
 											</div>
 										</div>
-									</div>
+									</button>
 								))}
 							</div>
 
@@ -466,8 +531,7 @@ export default function App() {
 
 						{/* RHS */}
 						<div className="hide md:show w-320 bg-cool-gray-50 rounded-right-24 border-left-1">
-							{/* <div className="xl:-mt-16 xl:pt-16 sticky top-all"> */}
-							<div className="sticky top-all z-10">
+							<div className="xl:-mt-16 xl:pt-16 sticky top-all">
 
 								{/* Top */}
 								<div className="relative">
@@ -495,12 +559,14 @@ export default function App() {
 									<React.Fragment key={key}>
 										{key > 0 && <hr />}
 										<div className="p-24 flex-col m-gap-16">
+
 											{/* Top */}
 											<div className="flex-row align-center m-gap-16 h-full">
 												<div className="w-96 h-8 bg-cool-gray-200 rounded-full"></div>
 												<div className="flex-grow"></div>
 												<div className="w-24 h-24 bg-cool-gray-200 rounded-full"></div>
 											</div>
+
 											{/* Bottom */}
 											<div className="flex-row align-center m-gap-16 h-full">
 												<div className="flex-grow">
@@ -508,6 +574,7 @@ export default function App() {
 												</div>
 												<div className="w-64 h-24 bg-cool-gray-200 rounded-full"></div>
 											</div>
+
 										</div>
 									</React.Fragment>
 								))}
