@@ -139,12 +139,14 @@ function Header() {
 sass.global`
 
 @use "sass:color"; // For color.scale
-@use "sass:meta";  // For meta.type-of
 @use "sass:math";  // For math.is-unitless
+@use "sass:meta";  // For meta.type-of
 
 @use "duomo" as *;
 @use "duomo/mixins" as *;
 @use "duomo/tailwind" as *;
+
+@use "src/index" as *;
 
 $enter-ms: 200ms;
 $leave-ms: 400ms;
@@ -156,6 +158,10 @@ $leave-ms: 400ms;
 // TOOD: Extract to Duomo core
 .antialiased   { @include antialiased; }
 .unantialiased { @include unantialiased; }
+
+@mixin reset {
+	@content;
+}
 
 // TOOD: Extract to Duomo mixins
 @mixin padding-x($v) {
@@ -191,6 +197,9 @@ $leave-ms: 400ms;
 	margin-bottom: $v;
 }
 
+// TODO: Add border-width
+// TODO: Add border-radius
+
 $shadow-px: 0 0 0 0.5px hsla(0, 0%, 0%, 0.15);
 $shadow-px-dark: 0 0 0 0.5px hsla(0, 0%, 100%, 0.15);
 
@@ -200,11 +209,30 @@ $app-shadow: ($shadow-px, tw(shadow, xs), tw(shadow, sm));
 $app-shadow-dark: ($shadow-px-dark, tw(shadow, xs), tw(shadow, sm));
 $app-border-color: tw(cool-gray, 200);
 $app-border-color-dark: tw(black);
+$theme-dur-ms: 500ms;
+
+.bg-dark {
+	@include transition(500ms, (background-color), tw(ease, out)) {
+		@include background-color(
+			tw(cool-gray, 200),
+			tw(cool-gray, 700),
+		);
+	}
+}
+
+.bg-darker {
+	@include transition(500ms, (background-color), tw(ease, out)) {
+		@include background-color(
+			tw(cool-gray, 300),
+			tw(cool-gray, 600),
+		);
+	}
+}
 
 :root {
 	@include antialiased;
 
-	@include transition(500ms, (background-color), tw(ease, out)) {
+	@include theme-transition($theme-dur-ms, (background-color), tw(ease, out)) {
 		@include background-color(
 			tw(cool-gray, 50),
 			tw(cool-gray, 900),
@@ -213,7 +241,7 @@ $app-border-color-dark: tw(black);
 }
 
 hr {
-	@include transition(500ms, (border-color), tw(ease, out)) {
+	@include theme-transition($theme-dur-ms, (border-color), tw(ease, out)) {
 		@include border-color(
 			$app-border-color,
 			$app-border-color-dark,
@@ -263,17 +291,18 @@ function SearchBar() {
 
 				{sass`
 					.searchBarInput {
-						// Reset
-						width: 100%;
-						background-color: unset;
-						&:focus { outline: unset; }
+						@include reset {
+							width: 100%;
+							background-color: unset;
+							&:focus { outline: unset; }
+						}
 
 						padding-left: rem(16 + 40 + 16);
 						padding-right: rem(16 + 40 + 8 + 40 + 16);
 						font: rem(20) / 1 tw(sans);
 						color: tw(cool-gray, 800);
 						border-bottom: rem(1) solid transparent;
-						@include transition(500ms, (color, background-color, border,color), tw(ease, out)) {
+						@include transition($theme-dur-ms, (color, background-color, border,color), tw(ease, out)) {
 							@include color(
 								tw(cool-gray, 800),
 								tw(cool-gray, 400),
@@ -303,8 +332,9 @@ function SearchBar() {
 					// Use [data-checked=true] for :checked because <button> cannot use
 					// type="checkbox"
 					.searchBarButton {
-						// Reset
-						&:focus { outline: none }
+						@include reset {
+							&:focus { outline: none }
+						}
 
 						padding: rem(8);
 						border-radius: 9999px;
@@ -336,34 +366,27 @@ function SearchBar() {
 							color: white;
 							background-color: tw(cool-gray, 800);
 							border-radius: rem(6);
-							// box-shadow: tw(shadow, md),
-							// 	tw(shadow, lg);
 
-							@include box-shadow(
-								(
-									tw(shadow, md),
-									tw(shadow, lg),
-								),
-								(
-									$shadow-px-dark,
-									tw(shadow, md),
-									tw(shadow, lg),
-								),
-							);
+							@include theme-transition($theme-dur-ms, (box-shadow), tw(ease, out)) {
+								@include box-shadow(
+									(tw(shadow, md), tw(shadow, lg)),
+									($shadow-px-dark, tw(shadow, md), tw(shadow, lg)),
+								);
+							}
 
-							// @include transition(100ms, (opacity, transform), tw(ease, out)) {
-							// 	opacity: 0;
-							// 	transform: scale(0.9);
-							// 	transform-origin: center;
-							// }
-							// // FIXME: :active styles clash with :focus styles (e.g. JSX is
-							// // :active and Dark Mode is :focus)
-							// .searchBarButtonHoverArea:hover &,
-							// .searchBarButton:focus & {
-							// 	opacity: 1;
-							// 	transform: scale(1);
-							// 	transform-origin: center;
-							// }
+							@include transition(100ms, (opacity, transform), tw(ease, out)) {
+								opacity: 0;
+								transform: scale(0.9);
+								transform-origin: center;
+							}
+							// FIXME: :active styles clash with :focus styles (e.g. JSX is
+							// :active and Dark Mode is :focus)
+							.searchBarButtonHoverArea:hover &,
+							.searchBarButton:focus & {
+								opacity: 1;
+								transform: scale(1);
+								transform-origin: center;
+							}
 						}
 
 						&SVG {
@@ -433,7 +456,7 @@ export default function App() {
 			<div className="flex-row justify-center">
 				{sass`
 					.app {
-						@include transition(500ms, (background-color, box-shadow), tw(ease, out)) {
+						@include transition($theme-dur-ms, (background-color, box-shadow), tw(ease, out)) {
 							@include background-color(
 								$app-bg,
 								$app-bg-dark,
@@ -476,8 +499,9 @@ export default function App() {
 									grid-template-columns: repeat(auto-fill, minmax(rem(144), 1fr));
 
 									&Button {
-										// Reset
-										&:focus { outline: none; }
+										@include reset {
+											&:focus { outline: none; }
+										}
 
 										position: relative;
 										&::after {
@@ -533,8 +557,9 @@ export default function App() {
 													$leave-ms: 200ms;
 
 													.searchResultsTextbox {
-														// Reset
-														&:focus { outline: none; }
+														@include reset {
+															&:focus { outline: none; }
+														}
 
 														// Prefer Sass because of use of $size-gap
 														@include padding-y(rem(8));
@@ -556,7 +581,7 @@ export default function App() {
 															}
 															.searchResultsTextbox:hover & {
 															// .searchResultsTextbox:focus & {
-																@include transition($enter-ms, (color, transform), tw(ease, out), 50ms) {
+																@include transition($enter-ms, (color, transform), tw(ease, out), 100ms) {
 																	color: tw(blue, 600);
 																	transform: translateX(0); // Reset
 																}
@@ -572,7 +597,7 @@ export default function App() {
 															}
 															.searchResultsTextbox:hover & {
 															// .searchResultsTextbox:focus & {
-																@include transition($enter-ms, (color, opacity, transform), tw(ease, out), 50ms) {
+																@include transition($enter-ms, (color, opacity, transform), tw(ease, out), 100ms) {
 																	color: tw(blue, 600);
 																	opacity: 1;
 																	transform: translateX(0); // Reset
@@ -598,7 +623,7 @@ export default function App() {
 						{sass`
 							.appSidebar {
 								border-left: rem(1) solid transparent;
-								@include transition(500ms, (background-color, border-color), tw(ease, out)) {
+								@include transition($theme-dur-ms, (background-color, border-color), tw(ease, out)) {
 									@include background-color(
 										tw(cool-gray, 50),
 										$app-bg-dark,
@@ -622,7 +647,7 @@ export default function App() {
 									{sass`
 										.appSidebarPreview {
 											border-bottom: rem(1) solid transparent;
-											@include transition(500ms, (border-color, background-color), tw(ease, out)) {
+											@include transition($theme-dur-ms, (border-color, background-color), tw(ease, out)) {
 												@include border-color(
 													$app-border-color,
 													$app-border-color-dark,

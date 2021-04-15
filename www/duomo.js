@@ -42,14 +42,14 @@ Duomo.toggleDarkMode = function() {
     console.log(`duomo: [data-theme="dark"] ${dark ? "on" : "off"}`);
   return dark;
 };
-if (Duomo.themePreference() === "dark") {
-  Duomo.toggleDarkMode();
-}
-document.addEventListener("keydown", (e) => {
-  if (e.ctrlKey === false && e.key.toLowerCase() === "d") {
-    Duomo.toggleDebugMode();
-  } else if (e.ctrlKey === true && e.key.toLowerCase() === "d") {
-    Duomo.toggleDarkMode();
-  }
-});
+// if (Duomo.themePreference() === "dark") {
+//   Duomo.toggleDarkMode();
+// }
+// document.addEventListener("keydown", (e) => {
+//   if (e.ctrlKey === false && e.key.toLowerCase() === "d") {
+//     Duomo.toggleDebugMode();
+//   } else if (e.ctrlKey === true && e.key.toLowerCase() === "d") {
+//     Duomo.toggleDarkMode();
+//   }
+// });
 window.Duomo = Duomo;

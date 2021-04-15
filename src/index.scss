@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "sass:selector";
+
 @use "../duomo/mixins" as *;
 @use "../duomo/tailwind" as *;
 
@@ -27,24 +30,6 @@ hr { width: 100%; }
 	}
 }
 
-.bg-dark    {
-	@include transition(500ms, (background-color), tw(ease, out)) {
-		@include background-color(
-			tw(cool-gray, 200),
-			tw(cool-gray, 600),
-		);
-	}
-}
-
-.bg-darker  {
-	@include transition(500ms, (background-color), tw(ease, out)) {
-		@include background-color(
-			tw(cool-gray, 300),
-			tw(cool-gray, 700),
-		);
-	}
-}
-
 @include colors(color, text, (cool-gray: tw(cool-gray)));
 @include colors(background-color, bg, (cool-gray: tw(cool-gray)));
 @include colors(border-color, border, (cool-gray: tw(cool-gray)));
@@ -61,4 +46,45 @@ hr { width: 100%; }
 	&--bottom-left  { top:    100%; left:    0%; }
 	&--bottom-right { top:    100%; right:   0%; }
 	&--left         { top:     50%; right: 100%; transform: translateY(-50%); }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+@mixin -transition-impl($dur-ms, $properties, $ease, $delay-ms: null) {
+	$out: ();
+	@each $property in $properties {
+		@if not $delay-ms {
+			$out: list.append($out, $dur-ms $property $ease, comma);
+		} @else {
+			$out: list.append($out, $dur-ms $property $ease $delay-ms, comma);
+		}
+	}
+	@content;
+	transition: $out;
+}
+
+@mixin transition($dur-ms, $properties, $ease, $delay-ms: null) {
+	@if selector.is-superselector(":root", &) {
+		// Escape the & context
+    @at-root {
+      :root:not([data-theme-effect]) {
+				@include -transition-impl($dur-ms, $properties, $ease, $delay-ms) {
+        	@content;
+				}
+      }
+    }
+	} @else {
+		:root:not([data-theme-effect]) & {
+			@include -transition-impl($dur-ms, $properties, $ease, $delay-ms) {
+				@content;
+			}
+		}
+	}
+	@content;
+}
+
+@mixin theme-transition($dur-ms, $properties, $ease, $delay-ms: null) {
+	@include -transition-impl($dur-ms, $properties, $ease, $delay-ms) {
+		@content;
+	}
 }

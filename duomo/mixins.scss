@@ -1,4 +1,5 @@
 @use "sass:list";
+@use "sass:selector";
 
 // .foo {
 //   @include color(#000, #fff);
@@ -7,12 +8,16 @@
 //
 @mixin -theme-property($property, $light, $dark) {
 	#{$property}: #{$light};
-	@if $dark {
-		@at-root {
-			$ampersand: if("" + & == ":root", "", &);
-			:root[data-theme="dark"] #{$ampersand} {
-				#{$property}: #{$dark};
-			}
+	@if selector.is-superselector(":root", &) {
+		// Escape the & context
+    @at-root {
+      :root[data-theme="dark"] {
+        #{$property}: #{$dark};
+      }
+    }
+	} @else {
+		:root[data-theme="dark"] & {
+			#{$property}: #{$dark};
 		}
 	}
 }
@@ -46,25 +51,9 @@
 
 @mixin zero-out($inset: 0) {
 	position: absolute;
-
 	top:    $inset;
 	right:  $inset;
 	bottom: $inset;
 	left:   $inset;
-
 	@content;
-}
-
-@mixin transition($dur-ms, $properties, $ease, $delay-ms: null) {
-	$out: ();
-	@each $property in $properties {
-		@if not $delay-ms {
-			$out: list.append($out, $dur-ms $property $ease, comma);
-		} @else {
-			$out: list.append($out, $dur-ms $property $ease $delay-ms, comma);
-		}
-	}
-
-	@content;
-	transition: $out;
 }

@@ -6,6 +6,36 @@
 		<title>Hello, world!</title>
 		<!-- Duomo -->
 		<script src="/www/duomo.js" data-verbose></script>
+
+		<script>
+			let once = false
+			function toggleDarkMode() {
+				if (once === false) {
+					Duomo.toggleDarkMode()
+					once = true
+					return
+				}
+				document.documentElement.setAttribute("data-theme-effect", "true")
+				setTimeout(() => {
+					Duomo.toggleDarkMode()
+					setTimeout(() => {
+						document.documentElement.removeAttribute("data-theme-effect")
+					}, 1_000)
+				}, 10)
+			}
+
+			if (Duomo.themePreference() === "dark") {
+				toggleDarkMode()
+			}
+			document.addEventListener("keydown", e => {
+				if (e.ctrlKey === false && e.key.toLowerCase() === "d") {
+					Duomo.toggleDebugMode()
+				} else if (e.ctrlKey === true && e.key.toLowerCase() === "d") {
+					toggleDarkMode()
+				}
+			})
+		</script>
+
 		<link rel="stylesheet" href="/www/duomo.css" />
 		<!-- Retro -->
 		<link rel="stylesheet" href="/bundle.css" />

@@ -1,0 +1,53 @@
+@use "sass:selector";
+
+$theme-dur-ms: 500ms;
+
+@mixin background-color($light, $dark) {
+	background-color: $light;
+	@if selector.is-superselector(":root", &) {
+		// Escape the & context
+		@at-root {
+			:root[data-theme="dark"] {
+				background-color: $dark;
+			}
+		}
+	} @else {
+		:root[data-theme="dark"] & {
+			background-color: $dark;
+		}
+	}
+}
+
+@mixin transition($dur-ms, $property, $ease, $delay-ms: null) {
+	@if selector.is-superselector(":root", &) {
+		// Escape the & context
+		@at-root {
+			:root:not([data-theme-effect]) {
+				@content;
+				transition: $dur-ms $property $ease $delay-ms;
+			}
+		}
+	} @else {
+		:root:not([data-theme-effect]) & {
+			@content;
+			transition: $dur-ms $property $ease $delay-ms;
+		}
+	}
+}
+
+@mixin theme-transition($dur-ms, $property, $ease, $delay-ms: null) {
+	@content;
+	transition: $dur-ms $property $ease $delay-ms;
+}
+
+.foo {
+	@include background-color(#fff, #000);
+	@include transition(100ms, background-color, ease-out);
+	@include theme-transition($theme-dur-ms, background-color, ease-out);
+}
+
+:root {
+	@include background-color(#fff, #000);
+	@include transition(100ms, background-color, ease-out);
+	@include theme-transition($theme-dur-ms, background-color, ease-out);
+}
