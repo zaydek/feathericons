@@ -162,42 +162,40 @@ $app-border-color: tw(cool-gray, 200);
 $app-border-color-dark: tw(black);
 
 .bg-dark {
-	@include transition(500ms, (background-color), tw(ease, out)) {
-		@include background-color(
+	@include theme((
+		background-color: (
 			tw(cool-gray, 200),
 			tw(cool-gray, 700),
-		);
-	}
+		),
+	));
 }
 
 .bg-darker {
-	@include transition(500ms, (background-color), tw(ease, out)) {
-		@include background-color(
+	@include theme((
+		background-color: (
 			tw(cool-gray, 300),
 			tw(cool-gray, 600),
-		);
-	}
-}
-
-@mixin theme-aware {
-	@include theme-transition(500ms, tw(ease, out)) {
-		@content;
-	}
+		),
+	));
 }
 
 :root {
 	@include antialiased;
-	@include theme-aware {
-		@include background-color(tw(cool-gray, 50),
-			tw(cool-gray, 900));
-	}
+	@include theme((
+		background-color: (
+			tw(cool-gray, 50),
+			tw(cool-gray, 900),
+		),
+	));
 }
 
 hr {
-	@include theme-aware {
-		@include border-color($app-border-color,
-			$app-border-color-dark);
-	}
+	@include theme((
+		border-color: (
+			$app-border-color,
+			$app-border-color-dark,
+		),
+	));
 }
 
 `
@@ -220,9 +218,9 @@ function SearchBar() {
 
 			{sass`
 				.searchBarSearchSVG {
-					@include theme-aware {
-						color: tw(cool-gray, 800);
-					}
+					// @include theme((
+					color: tw(cool-gray, 800);
+					// ));
 					@include transition(100ms, (color), tw(ease, out));
 					.searchBar:focus-within & {
 						color: tw(blue, 500);
@@ -255,9 +253,11 @@ function SearchBar() {
 						color: tw(cool-gray, 800);
 						border-bottom: rem(1) solid transparent;
 
-						@include color(tw(cool-gray, 800), tw(cool-gray, 400));
-						@include background-color($app-bg, $app-bg-dark);
-						@include border-color($app-border-color, $app-border-color-dark);
+						@include theme((
+							color: (tw(cool-gray, 800), tw(cool-gray, 400)),
+							background-color: ($app-bg, $app-bg-dark),
+							border-color: ($app-border-color, $app-border-color-dark),
+						));
 
 						// // TODO: 300ms
 						// @include transition(300ms, (color, background-color, border,color), tw(ease, out));
@@ -313,12 +313,12 @@ function SearchBar() {
 							background-color: tw(cool-gray, 800);
 							border-radius: rem(6);
 
-							@include theme-transition($theme-dur-ms, (box-shadow), tw(ease, out)) {
-								@include box-shadow(
+							@include theme((
+								box-shadow: (
 									(tw(shadow, md), tw(shadow, lg)),
 									($shadow-px-dark, tw(shadow, md), tw(shadow, lg)),
-								);
-							}
+								),
+							));
 
 							@include transition(100ms, (opacity, transform), tw(ease, out)) {
 								opacity: 0;
@@ -402,9 +402,10 @@ export default function App() {
 			<div className="flex-row justify-center">
 				{sass`
 					.app {
-						@include background-color($app-bg, $app-bg-dark);
-						@include box-shadow($app-shadow, $app-shadow-dark);
-						@include theme-transition($theme-dur-ms, (background-color, box-shadow), tw(ease, out));
+						@include theme((
+							background-color: ($app-bg, $app-bg-dark),
+							box-shadow: ($app-shadow, $app-shadow-dark),
+						));
 					}
 				`}
 				<div className="app w-xl xl:rounded-24">
@@ -461,9 +462,11 @@ export default function App() {
 										}
 
 										&SVG {
-											@include color(tw(cool-gray, 800), tw(white));
+											// TODO
+											@include theme((
+												color: (tw(cool-gray, 800), tw(white)),
+											));
 											@include transition($leave-ms, (color), tw(ease, out));
-											@include theme-transition($theme-dur-ms, (color), tw(ease, out));
 
 											.searchResultsButton:hover &,
 											.searchResultsButton:focus & {
@@ -513,13 +516,11 @@ export default function App() {
 															text-align: center;
 															font: rem($size) / 1.25 tw(mono);
 
-															@include color(tw(cool-gray, 800), tw(white));
+															@include theme((
+																color: (tw(cool-gray, 800), tw(white)),
+															));
 															transform: translateX(rem(($size + $size-gap) / 2));
 															@include transition($leave-ms, (color, transform), tw(ease, out));
-
-															// TODO: theme-transitions can infer use of color,
-															// background-color, etc.
-															@include theme-transition($theme-dur-ms, (color), tw(ease, out));
 
 															.searchResultsTextbox:hover & {
 															// .searchResultsTextbox:focus & { // TODO
@@ -562,9 +563,10 @@ export default function App() {
 						{sass`
 							.appSidebar {
 								border-left: rem(1) solid transparent;
-								@include background-color(tw(cool-gray, 50), $app-bg-dark);
-								@include border-color($app-border-color, $app-border-color-dark);
-								// @include transition($theme-dur-ms, (background-color, border-color), tw(ease, out));
+								@include theme((
+									background-color: (tw(cool-gray, 50), $app-bg-dark),
+									border-color: ($app-border-color, $app-border-color-dark),
+								));
 							}
 						`}
 
@@ -579,16 +581,13 @@ export default function App() {
 									{sass`
 										.appSidebarPreview {
 											border-bottom: rem(1) solid transparent;
-											@include transition($theme-dur-ms, (border-color, background-color), tw(ease, out)) {
-												@include border-color(
-													$app-border-color,
-													$app-border-color-dark,
-												);
-												@include background-color(
-													$app-bg,
-													$app-bg-dark,
-												);
-											}
+
+											// FIXME?
+											// @include transition($theme-dur-ms, (border-color, background-color), tw(ease, out)) {
+											@include theme((
+												border-color: ($app-border-color, $app-border-color-dark),
+												background-color: ($app-bg, $app-bg-dark),
+											));
 										}
 									`}
 

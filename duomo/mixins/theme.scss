@@ -2,8 +2,10 @@
 @use "sass:map";
 @use "sass:selector";
 
+@use "../tailwind" as *;
+
 $theme-dur-ms: 500ms !default;
-$theme-ease: cubic-bezier(0, 0, 0.2, 1) !default;
+$theme-ease: tw(ease, out) !default;
 $theme-delay-ms: null !default;
 
 @mixin -transition-impl($dur-ms, $props, $ease, $delay-ms: null) {
