@@ -2678,7 +2678,7 @@ video {
 }
 .w-xl {
   width: 100%;
-  max-width: 1344px;
+  max-width: 1280px;
 }
 .h-auto {
   height: auto;
@@ -6002,7 +6002,7 @@ video {
   }
   .sm\:w-xl {
     width: 100%;
-    max-width: 1344px;
+    max-width: 1280px;
   }
   .sm\:h-auto {
     height: auto;
@@ -9299,7 +9299,7 @@ video {
   }
   .md\:w-xl {
     width: 100%;
-    max-width: 1344px;
+    max-width: 1280px;
   }
   .md\:h-auto {
     height: auto;
@@ -12596,7 +12596,7 @@ video {
   }
   .lg\:w-xl {
     width: 100%;
-    max-width: 1344px;
+    max-width: 1280px;
   }
   .lg\:h-auto {
     height: auto;
@@ -13518,10 +13518,10 @@ video {
     pointer-events: auto;
   }
 }
-@media (min-width: 1344px) {
+@media (min-width: 1280px) {
   .container {
     width: 100%;
-    max-width: 1344px;
+    max-width: 1280px;
   }
   .xl\:static {
     position: static;
@@ -15893,7 +15893,7 @@ video {
   }
   .xl\:w-xl {
     width: 100%;
-    max-width: 1344px;
+    max-width: 1280px;
   }
   .xl\:h-auto {
     height: auto;

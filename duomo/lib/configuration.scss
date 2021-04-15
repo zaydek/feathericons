@@ -2,12 +2,12 @@
 
 @use "utils";
 
-$-configuration: (
+$dm-map: (
 	delimiter: ":",
 
 	nrange: (
-			-1, // <- Decrement by 1
-			-2, // <- Decrement by 2
+			-1,
+			-2,
 			-4,
 			-6,
 			-8,
@@ -16,27 +16,27 @@ $-configuration: (
 		 -14,
 		 -16,
 		 -18,
-		 -20, // <- Decrement by 4
+		 -20,
 		 -24,
 		 -28,
 		 -32,
 		 -36,
-		 -40, // <- Decrement by 8
+		 -40,
 		 -48,
 		 -56,
 		 -64,
 		 -72,
-		 -80, // <- Decrement by 16
+		 -80,
 		 -96,
 		-112,
 		-128,
 		-144,
-		-160, // <- Decrement by 32
+		-160,
 		-192,
 		-224,
 		-256,
 		-288,
-		-320, // <- Decrement by 64
+		-320,
 		-384,
 		-448,
 		-512,
@@ -45,9 +45,9 @@ $-configuration: (
 	),
 
 	range: (
-			0, // <- Increment by 1
+			0,
 			1,
-			2, // <- Increment by 2
+			2,
 			4,
 			6,
 			8,
@@ -56,27 +56,27 @@ $-configuration: (
 		 14,
 		 16,
 		 18,
-		 20, // <- Increment by 4
+		 20,
 		 24,
 		 28,
 		 32,
 		 36,
-		 40, // <- Increment by 8
+		 40,
 		 48,
 		 56,
 		 64,
 		 72,
-		 80, // <- Increment by 16
+		 80,
 		 96,
 		112,
 		128,
 		144,
-		160, // <- Increment by 32
+		160,
 		192,
 		224,
 		256,
 		288,
-		320, // <- Increment by 64
+		320,
 		384,
 		448,
 		512,
@@ -84,28 +84,18 @@ $-configuration: (
 		640,
 	),
 
-	breakpoint: (
-		sm:  640px,
-		md:  768px,
-		lg: 1024px,
-		xl: 1280px,
-	),
+	sm:  640px,
+	md:  768px,
+	lg: 1024px,
+	xl: 1280px,
 );
 
-@mixin configure-duomo($user-configuration) {
-	$-configuration: utils.map-deep-merge($-configuration, $user-configuration) !global;
+@mixin configure($user-configuration) {
+	$dm-map: utils.map-deep-merge($dm-map, $user-configuration) !global;
 }
 
-@function duomo($keys...) {
-	$got: map.get($-configuration, $keys...);
-	@if not $got {
-		@error "duomo(#{$keys}) == null";
-	}
-	@return $got;
-}
-
-@function dm($keys...) {
-	$got: map.get($-configuration, $keys...);
+@function dm($key) {
+	$got: map.get($dm-map, $key);
 	@if not $got {
 		@error "dm(#{$keys}) == null";
 	}

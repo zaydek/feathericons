@@ -26,6 +26,13 @@ $-aliases: (
 	9999px: full,
 );
 
+$-breakpoints: (
+	sm: configuration.dm(sm),
+	md: configuration.dm(md),
+	lg: configuration.dm(lg),
+	xl: configuration.dm(xl),
+);
+
 @function -alias($any) {
 	$got: map.get($-aliases, $any);
 	@if not $got {
@@ -94,7 +101,7 @@ $-aliases: (
 
 	@include -define((width), w, -range((0, 640), auto, configuration.dm(range), min-content, max-content, 100%, 100vw), rem, $variants...);
 
-	@each $k, $v in configuration.dm(breakpoint) {
+	@each $k, $v in $-breakpoints {
 		.w-#{$k} {
 			@include mixins.variants($variants...) {
 				width: 100%;
@@ -146,9 +153,9 @@ $-aliases: (
 	}
 }
 
-@mixin duomo-core {
+@mixin core {
 	/*! Duomo | MIT | https://github.com/zaydek/duomo */
-	@include duomo-base;
+	@include base;
 
 	[data-debug] * {
 		outline: 2px solid rgba(0, 128, 255, 0.5);
@@ -170,7 +177,7 @@ $-aliases: (
 	}
 
 	@include -utils(null, null, root);
-	@each $k, $v in configuration.dm(breakpoint) {
+	@each $k, $v in $-breakpoints {
 		@media (min-width: $v) {
 			.#{$k} {
 				@include -utils($k, $v, responsive);

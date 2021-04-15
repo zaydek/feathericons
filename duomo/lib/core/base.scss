@@ -1,8 +1,6 @@
-@use "../../tailwind" as *;
+@use "../../tailwind";
 
-//
 // https://github.com/sindresorhus/modern-normalize/blob/main/modern-normalize.css
-//
 @mixin -modern-normalize {
 	*,
 	*::before,
@@ -133,9 +131,7 @@
 	}
 }
 
-//
 // https://github.com/tailwindlabs/tailwindcss/blob/master/src/plugins/css/preflight.css
-//
 @mixin -tailwind-base {
 	blockquote,
 	dl,
@@ -171,7 +167,7 @@
 		padding: 0;
 	}
 	html {
-		font-family: tw(sans);
+		font-family: tailwind.tw(sans);
 		line-height: 1.5;
 	}
 	body {
@@ -233,7 +229,7 @@
 	code,
 	kbd,
 	samp {
-		font-family: tw(mono);
+		font-family: tailwind.tw(mono);
 	}
 	img,
 	svg,
@@ -253,7 +249,7 @@
 	}
 }
 
-@mixin duomo-base {
+@mixin base {
 	@include -modern-normalize;
 	@include -tailwind-base;
 }

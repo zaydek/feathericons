@@ -2,10 +2,10 @@
 @use "sass:map";
 @use "sass:selector";
 
-@use "../tailwind" as *;
+@use "../tailwind";
 
 $theme-dur-ms: 500ms !default;
-$theme-ease: tw(ease, out) !default;
+$theme-ease: tailwind.tw(ease-out) !default;
 $theme-delay-ms: null !default;
 
 @mixin -transition-impl($dur-ms, $props, $ease, $delay-ms: null) {

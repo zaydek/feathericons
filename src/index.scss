@@ -1,31 +1,30 @@
-@use "sass:list";
-@use "sass:selector";
+// @use "sass:list";
+// @use "sass:selector";
+//
+// @use "../duomo/mixins" as *;
+// @use "../duomo/tailwind" as *;
+//
+// // TODO: Deprecate
+// @mixin colors($prop, $shorthand, $colors) {
+// 	@each $k, $v in $colors {
+// 		.#{$shorthand}-transparent { #{$prop}: tw(transparent); }
+// 		.#{$shorthand}-current     { #{$prop}: tw(current); }
+// 		.#{$shorthand}-black       { #{$prop}: tw(black); }
+// 		.#{$shorthand}-white       { #{$prop}: tw(white); }
+//
+// 		@each $k2, $v2 in $v {
+// 			.#{$shorthand}-#{$k}-#{$k2} {
+// 				#{$prop}: $v2;
+// 			}
+// 		}
+// 	}
+// }
+//
+// @include colors(color, text, (cool-gray: tw(cool-gray)));
+// @include colors(background-color, bg, (cool-gray: tw(cool-gray)));
+// @include colors(border-color, border, (cool-gray: tw(cool-gray)));
 
-@use "../duomo/mixins" as *;
-@use "../duomo/tailwind" as *;
-
-// TODO: Deprecate
-@mixin colors($prop, $shorthand, $colors) {
-	@each $k, $v in $colors {
-		.#{$shorthand}-transparent { #{$prop}: tw(transparent); }
-		.#{$shorthand}-current     { #{$prop}: tw(current); }
-		.#{$shorthand}-black       { #{$prop}: tw(black); }
-		.#{$shorthand}-white       { #{$prop}: tw(white); }
-
-		@each $k2, $v2 in $v {
-			.#{$shorthand}-#{$k}-#{$k2} {
-				#{$prop}: $v2;
-			}
-		}
-	}
-}
-
-@include colors(color, text, (cool-gray: tw(cool-gray)));
-@include colors(background-color, bg, (cool-gray: tw(cool-gray)));
-@include colors(border-color, border, (cool-gray: tw(cool-gray)));
-
-////////////////////////////////////////////////////////////////////////////////
-
+// TODO: Extract to mixins?
 .tooltip {
 	position: absolute;
 	&--top          { bottom: 100%; left:   50%; transform: translateX(-50%); }

@@ -155,17 +155,17 @@ $enter-ms: 200ms;
 $leave-ms: 400ms;
 
 $app-bg: tw(white);
-$app-bg-dark: tw(cool-gray, 800);
-$app-shadow: ($shadow-px, tw(shadow, xs), tw(shadow, sm));
-$app-shadow-dark: ($shadow-px-dark, tw(shadow, xs), tw(shadow, sm));
-$app-border-color: tw(cool-gray, 200);
+$app-bg-dark: tw(cool-gray-800);
+$app-shadow: ($shadow-px, tw(shadow-xs), tw(shadow-sm));
+$app-shadow-dark: ($shadow-px-dark, tw(shadow-xs), tw(shadow-sm));
+$app-border-color: tw(cool-gray-200);
 $app-border-color-dark: tw(black);
 
 .bg-dark {
 	@include theme((
 		background-color: (
-			tw(cool-gray, 200),
-			tw(cool-gray, 700),
+			tw(cool-gray-200),
+			tw(cool-gray-700),
 		),
 	));
 }
@@ -173,8 +173,8 @@ $app-border-color-dark: tw(black);
 .bg-darker {
 	@include theme((
 		background-color: (
-			tw(cool-gray, 300),
-			tw(cool-gray, 600),
+			tw(cool-gray-300),
+			tw(cool-gray-600),
 		),
 	));
 }
@@ -183,8 +183,8 @@ $app-border-color-dark: tw(black);
 	@include antialiased;
 	@include theme((
 		background-color: (
-			tw(cool-gray, 50),
-			tw(cool-gray, 900),
+			tw(cool-gray-50),
+			tw(cool-gray-900),
 		),
 	));
 }
@@ -219,11 +219,11 @@ function SearchBar() {
 			{sass`
 				.searchBarSearchSVG {
 					// @include theme((
-					color: tw(cool-gray, 800);
+					color: tw(cool-gray-800);
 					// ));
-					@include transition(100ms, (color), tw(ease, out));
+					@include transition(100ms, (color), tw(ease-out));
 					.searchBar:focus-within & {
-						color: tw(blue, 500);
+						color: tw(blue-500);
 					}
 				}
 			`}
@@ -254,7 +254,7 @@ function SearchBar() {
 						font: rem(20) / 1 tw(sans);
 
 						@include theme((
-							color: (tw(cool-gray, 800), tw(cool-gray, 400)),
+							color: (tw(cool-gray-800), tw(cool-gray-400)),
 							background-color: ($app-bg, $app-bg-dark),
 							border-color: ($app-border-color, $app-border-color-dark),
 						));
@@ -281,15 +281,15 @@ function SearchBar() {
 						padding: rem(8);
 						border-radius: 9999px;
 
-						@include transition(150ms, (background-color), tw(ease, out)) {
-							background-color: color.scale(tw(blue, 500), $alpha: -90%);
+						@include transition(150ms, (background-color), tw(ease-out)) {
+							background-color: color.scale(tw(blue-500), $alpha: -90%);
 						}
 						&:hover,
 						&:focus {
-							background-color: color.scale(tw(blue, 500), $alpha: -80%);
+							background-color: color.scale(tw(blue-500), $alpha: -80%);
 						}
 						&[data-checked="true"] {
-							background-color: tw(blue, 500);
+							background-color: tw(blue-500);
 						}
 
 						&Tooltip {
@@ -306,17 +306,17 @@ function SearchBar() {
 							white-space: pre;
 							font: rem(13) / 1.25 tw(mono);
 							color: white;
-							background-color: tw(cool-gray, 800);
+							background-color: tw(cool-gray-800);
 							border-radius: rem(6);
 
 							@include theme((
 								box-shadow: (
-									(tw(shadow, md), tw(shadow, lg)),
-									($shadow-px-dark, tw(shadow, md), tw(shadow, lg)),
+									(tw(shadow-md), tw(shadow-lg)),
+									($shadow-px-dark, tw(shadow-md), tw(shadow-lg)),
 								),
 							));
 
-							@include transition(100ms, (opacity, transform), tw(ease, out)) {
+							@include transition(100ms, (opacity, transform), tw(ease-out)) {
 								opacity: 0;
 								transform: scale(0.9);
 								transform-origin: center;
@@ -332,8 +332,8 @@ function SearchBar() {
 						}
 
 						&SVG {
-							@include transition(150ms, (color), tw(ease, out)) {
-								color: tw(blue, 500);
+							@include transition(150ms, (color), tw(ease-out)) {
+								color: tw(blue-500);
 							}
 							.searchBarButton[data-checked="true"] & {
 								color: white;
@@ -442,32 +442,32 @@ export default function App() {
 										position: relative;
 										&::after {
 											@include zero-out { content: ""; }
-											background-color: color.scale(tw(blue, 500), $alpha: -90%); // Use 90% not 80%
+											background-color: color.scale(tw(blue-500), $alpha: -90%); // Use 90% not 80%
 											border-radius: 9999px;
 
 											opacity: 0;
 											transform: scale(0);
-											@include transition($leave-ms, (opacity, transform), tw(ease, out));
+											@include transition($leave-ms, (opacity, transform), tw(ease-out));
 										}
 										// Use &:hover::after { ... } (&::after:hover does not work)
 										&:hover::after,
 										&:focus::after {
 											opacity: 1;
 											transform: scale(0.618);
-											@include transition($enter-ms, (opacity, transform), tw(ease, out));
+											@include transition($enter-ms, (opacity, transform), tw(ease-out));
 										}
 
 										&SVG {
 											// TODO
 											@include theme((
-												color: (tw(cool-gray, 800), tw(white)),
+												color: (tw(cool-gray-800), tw(white)),
 											));
-											@include transition($leave-ms, (color), tw(ease, out));
+											@include transition($leave-ms, (color), tw(ease-out));
 
 											.searchResultsButton:hover &,
 											.searchResultsButton:focus & {
-												color: tw(blue, 600);
-												@include transition($enter-ms, (color), tw(ease, out));
+												color: tw(blue-600);
+												@include transition($enter-ms, (color), tw(ease-out));
 											}
 										}
 									}
@@ -513,31 +513,31 @@ export default function App() {
 															font: rem($size) / 1.25 tw(mono);
 
 															@include theme((
-																color: (tw(cool-gray, 800), tw(white)),
+																color: (tw(cool-gray-800), tw(white)),
 															));
 															transform: translateX(rem(($size + $size-gap) / 2));
-															@include transition($leave-ms, (color, transform), tw(ease, out));
+															@include transition($leave-ms, (color, transform), tw(ease-out));
 
 															.searchResultsTextbox:hover & {
 															// .searchResultsTextbox:focus & { // TODO
-																color: tw(blue, 600);
+																color: tw(blue-600);
 																transform: translateX(0); // Reset
-																@include transition($enter-ms, (color, transform), tw(ease, out), 100ms);
+																@include transition($enter-ms, (color, transform), tw(ease-out), 100ms);
 															}
 														}
 
 														&SVG {
 															@include size(rem($size + 1)); // Add 1 for SVG
-															color: tw(blue, 600);
+															color: tw(blue-600);
 															opacity: 0;
 															transform: translateX(rem(-1 * ($size + $size-gap) / 2));
-															@include transition($leave-ms, (opacity, transform), tw(ease, out));
+															@include transition($leave-ms, (opacity, transform), tw(ease-out));
 
 															.searchResultsTextbox:hover & {
 															// .searchResultsTextbox:focus & {
 																opacity: 1;
 																transform: translateX(0); // Reset
-																@include transition($enter-ms, (opacity, transform), tw(ease, out), 100ms);
+																@include transition($enter-ms, (opacity, transform), tw(ease-out), 100ms);
 															}
 														}
 													}
@@ -560,7 +560,7 @@ export default function App() {
 							.appSidebar {
 								border-left: rem(1) solid transparent;
 								@include theme((
-									background-color: (tw(cool-gray, 50), $app-bg-dark),
+									background-color: (tw(cool-gray-50), $app-bg-dark),
 									border-color: ($app-border-color, $app-border-color-dark),
 								));
 							}
