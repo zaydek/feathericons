@@ -1,90 +1,36 @@
-@use "sass:list";
-@use "sass:map";
-@use "sass:selector";
+@use "sass:math";
+@use "sass:meta";
 
-$theme-dur-ms: 500ms !default;
-$theme-ease: cubic-bezier(0, 0, 0.2, 1) !default;
-$theme-delay-ms: null !default;
-
-@mixin -transition-impl($dur-ms, $props, $ease, $delay-ms: null) {
-	$a: ();
-	@each $prop in $props {
-		@if not $delay-ms {
-			$a: list.append($a, $dur-ms $prop $ease, comma);
-		} @else {
-			$a: list.append($a, $dur-ms $prop $ease $delay-ms, comma);
-		}
+@function rem($any) {
+	@if not(meta.type-of($any) == number and math.is-unitless($any)) {
+		@return $any; // Passthrough
 	}
-	@content;
-	transition: $a;
+	$num: $any;
+	@if $num == 0 {
+		@return 0;
+	}
+	@return $num / 16 + rem;
 }
 
-@mixin transition($dur-ms, $props, $ease, $delay-ms: null) {
-	@if selector.is-superselector(":root", &) {
-		// Use @at-root to escape the & context
-    @at-root {
-      :root:not([data-theme-effect]) {
-				@include -transition-impl($dur-ms, $props, $ease, $delay-ms) {
-        	@content;
-				}
-      }
-    }
-	} @else {
-		:root:not([data-theme-effect]) & {
-			@include -transition-impl($dur-ms, $props, $ease, $delay-ms) {
-				@content;
-			}
+@function -untyped($args...) {
+	@each $arg in $args {
+		@if meta.type-of($arg) == number and
+				math.is-unitless($arg) {
+			@return true;
 		}
 	}
-	@content;
+	@return false;
 }
 
-@mixin theme($theme-map) {
-	$keys: ();
-	@each $k, $v in $theme-map {
-		@if not map.has-key((
-			background-color: true,
-			border-color: true,
-			box-shadow: true,
-			color: true,
-			fill: true,
-			opacity: true,
-			stroke: true,
-		), $k) {
-			@error "theme: Theme property must be " +
-				"background-color, border-color, box-shadow, color, fill, opacity, or stroke.";
-		}
-		$keys: list.append($keys, $k);
+@mixin margin-x($arg1, $arg2: null) {
+	@if -untyped($arg1, $arg2) {
+		@error "margin-x(#{$arg1}#{if($arg2 == null, "", ", #{$arg2}")}): " +
+			"Numbers must be of type rem, em, px, etc.";
 	}
-	@each $k, $v in $theme-map {
-		#{$k}: list.nth($v, 1);
-	}
-	@include -transition-impl($theme-dur-ms, $keys, $theme-ease, $theme-delay-ms);
-	@if selector.is-superselector(":root", &) {
-		// Use @at-root to escape the & context
-		@at-root {
-			:root[data-theme="dark"] {
-				@each $k, $v in $theme-map {
-					#{$k}: list.nth($v, 2);
-				}
-			}
-		}
-	} @else {
-		:root[data-theme="dark"] & {
-			@each $k, $v in $theme-map {
-				#{$k}: list.nth($v, 2);
-			}
-		}
-	}
+	margin-left: $arg1;
+	margin-right: if($arg2 == null, $arg1, $arg2);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 .foo {
-	@include theme((
-		color: (x1, x2),
-		background-color: (y1, y2),
-		box-shadow: (z1, z2),
-	));
-	@include transition(100s, (color), ease-out);
+	@include margin-x(1rem, 1rem);
 }

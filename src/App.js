@@ -247,27 +247,23 @@ function SearchBar() {
 							&:focus { outline: unset; }
 						}
 
-						padding-left: rem(16 + 40 + 16);
-						padding-right: rem(16 + 40 + 8 + 40 + 16);
+						@include padding-x(
+							rem(16 + 40 + 16),
+							rem(16 + 40 + 8 + 40 + 16),
+						);
 						font: rem(20) / 1 tw(sans);
-						color: tw(cool-gray, 800);
-						border-bottom: rem(1) solid transparent;
 
 						@include theme((
 							color: (tw(cool-gray, 800), tw(cool-gray, 400)),
 							background-color: ($app-bg, $app-bg-dark),
 							border-color: ($app-border-color, $app-border-color-dark),
 						));
-
-						// // TODO: 300ms
-						// @include transition(300ms, (color, background-color, border,color), tw(ease, out));
-						// @include theme-transition($theme-dur-ms, (color, background-color, border,color), tw(ease, out));
 					}
 				`}
 
 				<input
 					type="text"
-					className="searchBarInput h-80 bg-white rounded-top-left-24"
+					className="searchBarInput h-80 border-bottom-1 rounded-top-left-24"
 					placeholder="Search ..."
 					value={searchInputValue}
 					onChange={e => setSearchInputValue(e.target.value)}
@@ -579,11 +575,7 @@ export default function App() {
 								<div className="relative">
 
 									{sass`
-										.appSidebarPreview {
-											border-bottom: rem(1) solid transparent;
-
-											// FIXME?
-											// @include transition($theme-dur-ms, (border-color, background-color), tw(ease, out)) {
+										.sidebarIconPane {
 											@include theme((
 												border-color: ($app-border-color, $app-border-color-dark),
 												background-color: ($app-bg, $app-bg-dark),
@@ -591,7 +583,7 @@ export default function App() {
 										}
 									`}
 
-									<div className="appSidebarPreview flex-row center h-320 rounded-top-right-24">
+									<div className="sidebarIconPane flex-row center h-320 border-bottom-1 rounded-top-right-24">
 										<div className="w-64 h-64 bg-dark rounded-full"></div>
 										<div className="absolute top-all">
 											<div className="p-24 flex-row align-center h-full">

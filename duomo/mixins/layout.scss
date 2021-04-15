@@ -1,70 +1,80 @@
 @use "sass:math";
 @use "sass:meta";
 
-@mixin margin-x($v)  {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "margin-x: #{$v} must be of type rem, em, px, etc.";
+@function -untyped($args...) {
+	@each $arg in $args {
+		@if meta.type-of($arg) == number and
+				math.is-unitless($arg) {
+			@return true;
+		}
 	}
-	margin-left:  $v;
-	margin-right: $v;
+	@return false;
 }
 
-@mixin margin-y($v)  {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "margin-y: #{$v} must be of type rem, em, px, etc.";
+@mixin margin-x($arg1, $arg2: null) {
+	@if -untyped($arg1, $arg2) {
+		@error "margin-x(#{$arg1}#{if($arg2 == null, "", ", #{$arg2}")}): " +
+			"Numbers must be of type rem, em, px, etc.";
 	}
-	margin-top:    $v;
-	margin-bottom: $v;
+	margin-left: $arg1;
+	margin-right: if($arg2 == null, $arg1, $arg2);
 }
 
-@mixin padding-x($v) {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "padding-x: #{$v} must be of type rem, em, px, etc.";
+@mixin margin-y($arg1, $arg2: null) {
+	@if -untyped($arg1, $arg2) {
+		@error "margin-y(#{$arg1}#{if($arg2 == null, "", ", #{$arg2}")}): " +
+			"Numbers must be of type rem, em, px, etc.";
 	}
-	padding-left:  $v;
-	padding-right: $v;
+	margin-top: $arg1;
+	margin-bottom: if($arg2 == null, $arg1, $arg2);
 }
 
-@mixin padding-y($v) {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "padding-y: #{$v} must be of type rem, em, px, etc.";
+@mixin padding-x($arg1, $arg2: null) {
+	@if -untyped($arg1, $arg2) {
+		@error "padding-x(#{$arg1}#{if($arg2 == null, "", ", #{$arg2}")}): " +
+			"Numbers must be of type rem, em, px, etc.";
 	}
-	padding-top:    $v;
-	padding-bottom: $v;
+	padding-left: $arg1;
+	padding-right: if($arg2 == null, $arg1, $arg2);
+}
+
+@mixin padding-y($arg1, $arg2: null) {
+	@if -untyped($arg1, $arg2) {
+		@error "padding-y(#{$arg1}#{if($arg2 == null, "", ", #{$arg2}")}): " +
+			"Numbers must be of type rem, em, px, etc.";
+	}
+	padding-top: $arg1;
+	padding-bottom: if($arg2 == null, $arg1, $arg2);
 }
 
 @mixin zero-out($inset: 0) {
 	position: absolute;
-	top:    $inset;
-	right:  $inset;
+	top: $inset;
+	right: $inset;
 	bottom: $inset;
-	left:   $inset;
+	left: $inset;
 	@content;
 }
 
 @mixin size($v) {
-	width:  $v;
+	width: $v;
 	height: $v;
 }
 
-@mixin border-x($v)  {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "border-x: #{$v} must be of type rem, em, px, etc.";
+@mixin border-x($arg1, $arg2: null) {
+	@if -untyped($arg1, $arg2) {
+		@error "border-x(#{$arg1}#{if($arg2 == null, "", ", #{$arg2}")}): " +
+			"Numbers must be of type rem, em, px, etc.";
 	}
-	border-left-width:  $v;
-	border-right-width: $v;
+	border-left-width: $arg1;
+	border-right-width: if($arg2 == null, $arg1, $arg2);
 }
 
-@mixin border-y($v)  {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "border-y: #{$v} must be of type rem, em, px, etc.";
+@mixin border-y($arg1, $arg2: null) {
+	@if -untyped($arg1, $arg2) {
+		@error "border-y(#{$arg1}#{if($arg2 == null, "", ", #{$arg2}")}): " +
+			"Numbers must be of type rem, em, px, etc.";
 	}
-	border-top-width:    $v;
-	border-bottom-width: $v;
+	border-top-width: $arg1;
+	border-bottom-width: if($arg2 == null, $arg1, $arg2);
 }
