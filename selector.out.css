@@ -1,22 +1,14 @@
 .foo {
-  background-color: #fff;
-  transition: 500ms background-color ease-out;
+  color: x1;
+  background-color: y1;
+  box-shadow: z1;
+  transition: 500ms color cubic-bezier(0, 0, 0.2, 1), 500ms background-color cubic-bezier(0, 0, 0.2, 1), 500ms box-shadow cubic-bezier(0, 0, 0.2, 1);
 }
 :root[data-theme=dark] .foo {
-  background-color: #000;
+  color: x2;
+  background-color: y2;
+  box-shadow: z2;
 }
 :root:not([data-theme-effect]) .foo {
-  transition: 100ms background-color ease-out;
-}
-
-:root {
-  background-color: #fff;
-  transition: 500ms background-color ease-out;
-}
-:root[data-theme=dark] {
-  background-color: #000;
-}
-
-:root:not([data-theme-effect]) {
-  transition: 100ms background-color ease-out;
+  transition: 100s color ease-out;
 }

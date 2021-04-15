@@ -4,27 +4,17 @@
 @use "../duomo/mixins" as *;
 @use "../duomo/tailwind" as *;
 
-////////////////////////////////////////////////////////////////////////////////
-
-hr { width: 100%; }
-
-.w-stagger-1 { width: 50%;   }
-.w-stagger-2 { width: 75%;   }
-.w-stagger-3 { width: 87.5%; }
-.w-stagger-4 { width: 62.5%; }
-
-////////////////////////////////////////////////////////////////////////////////
-
-@mixin colors($property, $shorthand, $colors) {
+// TODO: Deprecate
+@mixin colors($prop, $shorthand, $colors) {
 	@each $k, $v in $colors {
-		.#{$shorthand}-transparent { #{$property}: tw(transparent); }
-		.#{$shorthand}-current     { #{$property}: tw(current); }
-		.#{$shorthand}-black       { #{$property}: tw(black); }
-		.#{$shorthand}-white       { #{$property}: tw(white); }
+		.#{$shorthand}-transparent { #{$prop}: tw(transparent); }
+		.#{$shorthand}-current     { #{$prop}: tw(current); }
+		.#{$shorthand}-black       { #{$prop}: tw(black); }
+		.#{$shorthand}-white       { #{$prop}: tw(white); }
 
 		@each $k2, $v2 in $v {
 			.#{$shorthand}-#{$k}-#{$k2} {
-				#{$property}: $v2;
+				#{$prop}: $v2;
 			}
 		}
 	}
@@ -46,45 +36,4 @@ hr { width: 100%; }
 	&--bottom-left  { top:    100%; left:    0%; }
 	&--bottom-right { top:    100%; right:   0%; }
 	&--left         { top:     50%; right: 100%; transform: translateY(-50%); }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-@mixin -transition-impl($dur-ms, $properties, $ease, $delay-ms: null) {
-	$out: ();
-	@each $property in $properties {
-		@if not $delay-ms {
-			$out: list.append($out, $dur-ms $property $ease, comma);
-		} @else {
-			$out: list.append($out, $dur-ms $property $ease $delay-ms, comma);
-		}
-	}
-	@content;
-	transition: $out;
-}
-
-@mixin transition($dur-ms, $properties, $ease, $delay-ms: null) {
-	@if selector.is-superselector(":root", &) {
-		// Escape the & context
-    @at-root {
-      :root:not([data-theme-effect]) {
-				@include -transition-impl($dur-ms, $properties, $ease, $delay-ms) {
-        	@content;
-				}
-      }
-    }
-	} @else {
-		:root:not([data-theme-effect]) & {
-			@include -transition-impl($dur-ms, $properties, $ease, $delay-ms) {
-				@content;
-			}
-		}
-	}
-	@content;
-}
-
-@mixin theme-transition($dur-ms, $properties, $ease, $delay-ms: null) {
-	@include -transition-impl($dur-ms, $properties, $ease, $delay-ms) {
-		@content;
-	}
 }

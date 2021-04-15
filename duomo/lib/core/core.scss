@@ -34,14 +34,14 @@ $-aliases: (
 	@return $got;
 }
 
-@mixin -define($properties, $shorthand, $range, $unit, $variants...) {
+@mixin -define($props, $shorthand, $range, $unit, $variants...) {
 	@each $v in $range {
 		$n: if(meta.type-of($v) == number and $v < 0, "-", "");
 		$abs: if(meta.type-of($v) == number, math.abs($v), $v);
 		.#{$n}#{$shorthand}-#{-alias($abs)} {
 			@include mixins.variants($variants...) {
-				@each $property in $properties {
-					#{$property}: units.resolve-unit($v, $unit);
+				@each $prop in $props {
+					#{$prop}: units.resolve-unit($v, $unit);
 				}
 			}
 		}

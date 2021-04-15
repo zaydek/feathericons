@@ -1,0 +1,70 @@
+@use "sass:math";
+@use "sass:meta";
+
+@mixin margin-x($v)  {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "margin-x: #{$v} must be of type rem, em, px, etc.";
+	}
+	margin-left:  $v;
+	margin-right: $v;
+}
+
+@mixin margin-y($v)  {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "margin-y: #{$v} must be of type rem, em, px, etc.";
+	}
+	margin-top:    $v;
+	margin-bottom: $v;
+}
+
+@mixin padding-x($v) {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "padding-x: #{$v} must be of type rem, em, px, etc.";
+	}
+	padding-left:  $v;
+	padding-right: $v;
+}
+
+@mixin padding-y($v) {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "padding-y: #{$v} must be of type rem, em, px, etc.";
+	}
+	padding-top:    $v;
+	padding-bottom: $v;
+}
+
+@mixin zero-out($inset: 0) {
+	position: absolute;
+	top:    $inset;
+	right:  $inset;
+	bottom: $inset;
+	left:   $inset;
+	@content;
+}
+
+@mixin size($v) {
+	width:  $v;
+	height: $v;
+}
+
+@mixin border-x($v)  {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "border-x: #{$v} must be of type rem, em, px, etc.";
+	}
+	border-left-width:  $v;
+	border-right-width: $v;
+}
+
+@mixin border-y($v)  {
+	@if meta.type-of($v) == number and
+			math.is-unitless($v) {
+		@error "border-y: #{$v} must be of type rem, em, px, etc.";
+	}
+	border-top-width:    $v;
+	border-bottom-width: $v;
+}

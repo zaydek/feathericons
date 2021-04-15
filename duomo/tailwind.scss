@@ -342,6 +342,10 @@ $-configuration: (
 	$-configuration: utils.map-deep-merge($-configuration, $user-configuration) !global;
 }
 
+// TODO: Concatenate keys so use can use tw(cool-gray-800) vs.
+// tw(cool-gray, 800)
+// TODO: Add support for tw(cool-gray-500, (alpha: 0.5)) or
+// tw(cool-gray-500, $alpha: 0.5)
 @function tailwind($keys...) {
 	$got: map.get($-configuration, $keys...);
 	@if not $got {
