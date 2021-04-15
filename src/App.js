@@ -603,7 +603,12 @@ export default function App() {
 															transform: translateX(rem(((($font-size + $svg-size) / 2) + $gap) / 2));
 															@include transition($leave, (color, transform), tw(ease-out));
 															.searchResultsTextbox:hover & {
-																color: tw(blue-500);
+																@include theme((
+																	color: (
+																		tw(blue-500),
+																		tw(cool-gray-200),
+																	),
+																));
 																transform: translateX(0); // Reset
 																@include transition($enter, (color, transform), tw(ease-out), 100ms);
 															}
@@ -611,23 +616,27 @@ export default function App() {
 
 														&SVG {
 															@include size(rem($svg-size));
-															color: tw(blue-500);
-															opacity: 0;
+															color: transparent;
 															transform: translateX(rem(-1 * ((($font-size + $svg-size) / 2) + $gap) / 2));
-															@include transition($leave, (opacity, transform), tw(ease-out));
+															@include transition($leave, (color, transform), tw(ease-out));
 															.searchResultsTextbox:hover & {
-																opacity: 1;
+																@include theme((
+																	color: (
+																		tw(blue-500),
+																		tw(cool-gray-200),
+																	),
+																));
 																transform: translateX(0); // Reset
-																@include transition($enter, (opacity, transform), tw(ease-out), 100ms);
+																@include transition($enter, (color, transform), tw(ease-out), 100ms);
 															}
 														}
 													}
 												`}
 
-												{/* Use Sass for m-gap because of $gap */}
+												{/* Use Sass for m-gap; $gap */}
 												<a href={`/${k}`} className="searchResultsTextbox py-8 flex-row center" tabIndex={-1}>
 													<div className="searchResultsTextboxText">{k}</div>
-													<Feather.ExternalLink className="searchResultsTextboxSVG" />
+													<Feather.Link2 className="searchResultsTextboxSVG" />
 												</a>
 
 											</div>

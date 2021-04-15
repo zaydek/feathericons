@@ -161,6 +161,10 @@ $-breakpoints: (
 		outline: 2px solid rgba(0, 128, 255, 0.5);
 		outline-offset: -1px;
 	}
+	[data-debug] svg * {
+		outline: revert;
+	}
+
 	[data-debug] .flex-grow:empty {
 		position: relative;
 		align-self: stretch; // Stretch y-axis
