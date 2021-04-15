@@ -1,7 +1,7 @@
 @use "../mixins";
 
-$range: (
-	 0,
+$-range: (
+	 0, // TODO: Do we need 0?
 	 1,
 	 2,
 	 3,
@@ -57,7 +57,7 @@ $range: (
 		}
 	}
 
-	@each $v in $range {
+	@each $v in $-range {
 		.aspect-w-#{$v} {
 			@include mixins.variants($variants...) {
 				--dm-aspect-w: #{$v};
@@ -65,7 +65,7 @@ $range: (
 		}
 	}
 
-	@each $v in $range {
+	@each $v in $-range {
 		.aspect-h-#{$v} {
 			@include mixins.variants($variants...) {
 				--dm-aspect-h: #{$v};

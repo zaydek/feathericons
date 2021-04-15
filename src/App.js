@@ -58,7 +58,7 @@ function Header() {
 
 	return (
 		// Use pb-112 (64 + 48) to compensate for <TopNav className="h-48 ...">
-		<div className="px-16 sm:px-24 py-64 pb-112 flex-row justify-center">
+		<div className="header px-16 sm:px-24 py-64 pb-112 flex-row justify-center">
 			<div className="flex-col xl:flex-row xl:align-center m-gap-48 w-lg">
 
 				{/* CTA */}
@@ -161,12 +161,11 @@ $theme-dur: 0ms;
 // can anticipate the transition without surprise.
 $theme-delay: 250ms;
 
-
 $enter: 200ms; // FIXME
 $leave: 400ms; // FIXME
 
 // Takes precedence
-$shadow-px:              0 0 0 0.5px hsla(0, 0%, 0%, 0.25);
+$shadow-px:              0 0 0 0.5px hsla(0, 0%, 0%, 0.1);
 $shadow-px-dark:         0 0 0 0.5px hsla(0, 0%, 100%, 0.25);
 
 $app-bg:                 tw(white);
@@ -181,6 +180,12 @@ $placeholder-color-dark: tw(cool-gray-600);
 $text-color:             tw(cool-gray-800);
 $text-color-dark:        tw(cool-gray-200);
 
+$obscure: tw(blue-500);
+$obscure-hsl: ( // Must use hsl for url-based SVG
+	math.floor(color.hue($obscure)),
+	math.floor(color.saturation($obscure)),
+	math.floor(color.lightness($obscure)),
+);
 
 :root {
 	@include antialiased;
@@ -190,6 +195,44 @@ $text-color-dark:        tw(cool-gray-200);
 			tw(cool-gray-900),
 		),
 	));
+}
+
+body {
+	$h: rem(472);
+	background-image:
+		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
+		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
+	background-repeat:
+		repeat-x,
+		no-repeat;
+	background-size:
+		$h,
+		100%;
+	// background-attachment:
+	// 	fixed,
+	// 	fixed;
+	background-position:
+		0 0,
+		0 $h;
+
+	> * {
+		$h: rem(128);
+		background-image:
+			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
+			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
+		background-repeat:
+			repeat-x,
+			no-repeat;
+		background-size:
+			$h,
+			100%;
+		background-attachment:
+			fixed,
+			fixed;
+		background-position:
+			0 0,
+			0 $h;
+	}
 }
 
 .bg-dark {
@@ -316,8 +359,10 @@ function SearchBar() {
 							),
 						));
 						@include transition(200ms, (color), tw(ease-out));
+
+						// TODO: This fires on button focus so use inline styles instead?
 						.searchBar:focus-within & {
-							color: tw(blue-500);
+							color: tw(blue-400); // Use blue-400 not blue-500
 						}
 					}
 
@@ -462,14 +507,14 @@ export default function App() {
 	return (
 		<>
 			{/* Top nav */}
-			<div className="hide sm:show px-16 sm:px-24 py-16 flex-row justify-center">
+			{/* <div className="hide sm:show px-16 sm:px-24 py-16 flex-row justify-center">
 				<div className="flex-row m-gap-16 w-xl">
 					<ItemLTR />
 					<div className="flex-grow"></div>
 					<ItemRTL />
 					<ItemRTL />
 				</div>
-			</div>
+			</div> */}
 
 			{/* Header */}
 			<Header />
@@ -486,20 +531,31 @@ export default function App() {
 				`}
 				<div className="app w-xl xl:rounded-24">
 
+					{sass`
+						.obscurer {
+							> div {
+								background-color: $obscure;
+							}
+							> svg {
+								color: $obscure;
+							}
+						}
+					`}
+
 					{/* Obscure effect */}
-					{/* <div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
-						<div className="flex-row">
-							<div className="w-8 h-40 bg-cool-gray-100"></div>
-							<svg className="w-24 h-40 text-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
+						<div className="obscurer flex-row">
+							<div className="w-8 h-40"></div>
+							<svg className="w-24 h-40" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
 								<path clipRule="evenodd" fillRule="evenodd" d="M24 0H0V40C0 26.7451 10.7451 16 24 16V0Z" />
 							</svg>
-							<div className="flex-grow h-16 bg-cool-gray-100"></div>
-							<svg className="w-24 h-40 text-cool-gray-100" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+							<div className="flex-grow h-16"></div>
+							<svg className="w-24 h-40" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
 								<path clipRule="evenodd" fillRule="evenodd" d="M0 0H24V40C24 26.7451 13.2549 16 0 16V0Z" />
 							</svg>
-							<div className="w-8 h-40 bg-cool-gray-100"></div>
+							<div className="w-8 h-40"></div>
 						</div>
-					</div> */}
+					</div>
 
 					{/* Defer flex-row to here not w-xl because of the obscure effect */}
 					<div className="flex-row">
@@ -660,8 +716,7 @@ export default function App() {
 
 						{/* RHS */}
 						<div className="hide md:show w-320 border-left-1 rounded-right-24">
-							{/* <div className="xl:-mt-16 xl:pt-16 sticky top-all z-10"> */}
-							<div className="sticky top-all z-10">
+							<div className="xl:-mt-16 xl:pt-16 sticky top-all z-10">
 
 								{/* Top */}
 								<div className="relative">

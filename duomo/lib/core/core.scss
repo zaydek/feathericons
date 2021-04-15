@@ -26,13 +26,6 @@ $-aliases: (
 	9999px: full,
 );
 
-$-breakpoints: (
-	sm: configuration.dm(sm),
-	md: configuration.dm(md),
-	lg: configuration.dm(lg),
-	xl: configuration.dm(xl),
-);
-
 @function -alias($any) {
 	$got: map.get($-aliases, $any);
 	@if not $got {
@@ -59,6 +52,16 @@ $-breakpoints: (
 	$min: list.nth($bounds, 1);
 	$max: list.nth($bounds, 2);
 	@return utils.list-limit(utils.list-merge($entries...), $min, $max);
+}
+
+@function -breakpoints() {
+	$out: (
+		sm: configuration.dm(sm),
+		md: configuration.dm(md),
+		lg: configuration.dm(lg),
+		xl: configuration.dm(xl),
+	);
+	@return $out;
 }
 
 @mixin -utils($breakpoint-k, $breakpoint-v, $variants...) {
@@ -101,7 +104,7 @@ $-breakpoints: (
 
 	@include -define((width), w, -range((0, 640), auto, configuration.dm(range), min-content, max-content, 100%, 100vw), rem, $variants...);
 
-	@each $k, $v in $-breakpoints {
+	@each $k, $v in -breakpoints() {
 		.w-#{$k} {
 			@include mixins.variants($variants...) {
 				width: 100%;
@@ -181,7 +184,7 @@ $-breakpoints: (
 	}
 
 	@include -utils(null, null, root);
-	@each $k, $v in $-breakpoints {
+	@each $k, $v in -breakpoints() {
 		@media (min-width: $v) {
 			.#{$k} {
 				@include -utils($k, $v, responsive);
