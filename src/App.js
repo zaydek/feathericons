@@ -415,7 +415,7 @@ function SearchBar() {
 								color: tw(blue-500);
 								@include transition(200ms, (color), tw(ease-out));
 								.searchBarButton[data-checked="true"] & {
-									color: white;
+									color: tw(white);
 								}
 							}
 						}
@@ -525,6 +525,7 @@ export default function App() {
 											@include zero-out { content: ""; }
 											@include theme((
 												background-color: (
+													// TODO
 													color.scale(tw(blue-500), $alpha: -90%), // Use 90% not 80%
 													tw(blue-500),
 												),
@@ -552,9 +553,14 @@ export default function App() {
 											));
 											@include transition($leave, (color), tw(ease-out));
 
-											:root:not([data-theme="dark"]) .searchResultsButton:hover &,
-											:root:not([data-theme="dark"]) .searchResultsButton:focus & {
-												color: tw(blue-500);
+											.searchResultsButton:hover &,
+											.searchResultsButton:focus & {
+												@include theme((
+													color: (
+														tw(blue-500),
+														tw(white), // Use white not cool-gray-200
+													),
+												));
 												@include transition($enter, (color), tw(ease-out));
 											}
 										}
@@ -602,11 +608,16 @@ export default function App() {
 															));
 															transform: translateX(rem(((($font-size + $svg-size) / 2) + $gap) / 2));
 															@include transition($leave, (color, transform), tw(ease-out));
+
+															// // TODO
+															// cursor: text;
+															// user-select: text; // TODO: Do we need this?
+
 															.searchResultsTextbox:hover & {
 																@include theme((
 																	color: (
 																		tw(blue-500),
-																		tw(cool-gray-200),
+																		tw(white), // Use white not cool-gray-200
 																	),
 																));
 																transform: translateX(0); // Reset
@@ -623,7 +634,7 @@ export default function App() {
 																@include theme((
 																	color: (
 																		tw(blue-500),
-																		tw(cool-gray-200),
+																		tw(white), // Use white not cool-gray-200
 																	),
 																));
 																transform: translateX(0); // Reset
