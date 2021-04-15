@@ -4,6 +4,7 @@ import * as cases from "./lib/cases"
 import * as Feather from "react-feather"
 
 import dataset from "./data/dataset.generated.json"
+import Tooltip from "./Tooltip"
 
 function iota(max) {
 	return Array.from(new Array(max), (_, x) => x);
@@ -148,6 +149,10 @@ sass.global`
 
 @use "src/index" as *;
 
+// $fast: 100ms;
+// $slow: 200ms;
+// $slower: 300ms;
+
 $theme-dur: 0ms;
 
 // Add a slight delay so the dark mode transition is not instant. Instant dark
@@ -156,18 +161,26 @@ $theme-dur: 0ms;
 // can anticipate the transition without surprise.
 $theme-delay: 250ms;
 
-$shadow-px: 0 0 0 0.5px hsla(0, 0%, 0%, 0.25);
-$shadow-px-dark: 0 0 0 0.5px hsla(0, 0%, 100%, 0.25);
 
 $enter-ms: 200ms; // FIXME
 $leave-ms: 400ms; // FIXME
 
-$app-bg: tw(white);
-$app-bg-dark: tw(cool-gray-800);
-$app-shadow: ($shadow-px, tw(shadow-xs), tw(shadow-sm));
-$app-shadow-dark: ($shadow-px-dark, tw(shadow-xs), tw(shadow-sm));
-$app-border-color: tw(cool-gray-200);
-$app-border-color-dark: tw(black);
+// Takes precedence
+$shadow-px:              0 0 0 0.5px hsla(0, 0%, 0%, 0.25);
+$shadow-px-dark:         0 0 0 0.5px hsla(0, 0%, 100%, 0.25);
+
+$app-bg:                 tw(white);
+$app-bg-dark:            tw(cool-gray-800);
+$app-shadow:             ($shadow-px, tw(shadow-xs), tw(shadow-sm));
+$app-shadow-dark:        ($shadow-px-dark, tw(shadow-xs), tw(shadow-sm));
+$app-border-color:       tw(cool-gray-200);
+$app-border-color-dark:  tw(black);
+
+$placeholder-color:      tw(cool-gray-400);
+$placeholder-color-dark: tw(cool-gray-600);
+$text-color:             tw(cool-gray-800);
+$text-color-dark:        tw(cool-gray-200);
+
 
 :root {
 	@include antialiased;
@@ -218,24 +231,54 @@ function SearchBar() {
 	const [copyAsJSX, setCopyAsJSX] = React.useState(false)
 	const [enableDarkMode, setEnableDarkMode] = React.useState(false)
 
-	// TODO
-	// const [hoverTooltipArea, setHoverTooltipArea] = React.useState(false)
-
 	return (
 		// Use z-20 not z-10 because the RHS uses z-10
 		<div className="xl:-mt-16 xl:pt-16 sticky top-all z-20">
 
 			{sass`
-				.searchBarSearchSVG {
-					@include theme((
-						color: (
-							tw(cool-gray-800),
-							tw(cool-gray-400),
-						),
-					));
-					@include transition(100ms, (color), tw(ease-out));
-					.searchBar:focus-within & {
-						color: tw(blue-500);
+				.searchBar {
+					&SearchSVG {
+						@include theme((
+							color: (
+								$placeholder-color,
+								$placeholder-color-dark,
+							),
+						));
+						@include transition(200ms, (color), tw(ease-out));
+						.searchBar:focus-within & {
+							color: tw(blue-500);
+						}
+					}
+
+					&Input {
+						@include reset {
+							width: 100%;
+							background-color: unset;
+							&:focus { outline: unset; }
+						}
+						@include padding-x(
+							rem(16 + 40 + 16),          // LHS buttons
+							rem(16 + 40 + 8 + 40 + 16), // RHS buttons
+						);
+						font: rem(20) / 1 tw(sans);
+						@include theme((
+							color: (
+								$text-color,
+								$text-color-dark,
+							),
+							background-color: (
+								$app-bg,
+								$app-bg-dark,
+							),
+						));
+						&::placeholder {
+							@include theme((
+								color: (
+									$placeholder-color,
+									$placeholder-color-dark,
+								),
+							));
+						}
 					}
 				}
 			`}
@@ -251,27 +294,6 @@ function SearchBar() {
 					</div>
 				</div>
 
-				{sass`
-					.searchBarInput {
-						@include reset {
-							width: 100%;
-							background-color: unset;
-							&:focus { outline: unset; }
-						}
-
-						@include padding-x(
-							rem(16 + 40 + 16),
-							rem(16 + 40 + 8 + 40 + 16),
-						);
-						font: rem(20) / 1 tw(sans);
-
-						@include theme((
-							color: (tw(cool-gray-800), tw(cool-gray-400)),
-							background-color: ($app-bg, $app-bg-dark),
-						));
-					}
-				`}
-
 				<input
 					type="text"
 					className="searchBarInput h-80 border-bottom-1 rounded-top-left-24"
@@ -282,72 +304,28 @@ function SearchBar() {
 				/>
 
 				{sass`
-					// Use [data-checked=true] for :checked because <button> cannot use
+					// Use [data-checked] for :checked because <button>s cannot use
 					// type="checkbox"
-					.searchBarButton {
-						@include reset {
-							&:focus { outline: none }
-						}
-
-						padding: rem(8);
-						border-radius: 9999px;
-
-						@include transition(150ms, (background-color), tw(ease-out)) {
+					.searchBar {
+						&Button {
+							@include reset {
+								&:focus { outline: none }
+							}
 							background-color: color.scale(tw(blue-500), $alpha: -90%);
-						}
-						&:hover,
-						&:focus {
-							background-color: color.scale(tw(blue-500), $alpha: -80%);
-						}
-						&[data-checked="true"] {
-							background-color: tw(blue-500);
-						}
-
-						&Tooltip {
-							margin-top: rem(-8);
-							padding: rem(8) rem(12);
-							display: flex;
-							flex-direction: row;
-							align-items: center;
-							> * + * {
-								margin-left: rem(6);
+							@include transition(200ms, (background-color), tw(ease-out));
+							&:hover,
+							&:focus {
+								background-color: color.scale(tw(blue-500), $alpha: -80%);
 							}
-
-							@include unantialiased;
-							white-space: pre;
-							font: rem(13) / 1.25 tw(mono);
-							color: white;
-							background-color: tw(cool-gray-800);
-							border-radius: rem(6);
-
-							@include theme((
-								box-shadow: (
-									(tw(shadow-md), tw(shadow-lg)),
-									($shadow-px-dark, tw(shadow-md), tw(shadow-lg)),
-								),
-							));
-
-							@include transition(100ms, (opacity, transform), tw(ease-out)) {
-								opacity: 0;
-								transform: scale(0.9);
-								transform-origin: center;
+							&[data-checked="true"] {
+								background-color: tw(blue-500);
 							}
-							// FIXME: :active styles clash with :focus styles (e.g. JSX is
-							// :active and Dark Mode is :focus)
-							.searchBarButtonHoverArea:hover &,
-							.searchBarButton:focus & {
-								opacity: 1;
-								transform: scale(1);
-								transform-origin: center;
-							}
-						}
-
-						&SVG {
-							@include transition(150ms, (color), tw(ease-out)) {
+							&SVG {
 								color: tw(blue-500);
-							}
-							.searchBarButton[data-checked="true"] & {
-								color: white;
+								@include transition(200ms, (color), tw(ease-out));
+								.searchBarButton[data-checked="true"] & {
+									color: white;
+								}
 							}
 						}
 					}
@@ -358,25 +336,25 @@ function SearchBar() {
 					<div className="-mx-4 px-16 flex-row h-full">
 
 						{/* Button */}
-						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
-							<button className="searchBarButton" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
-								<div className="tooltip tooltip--bottom-right pointer-events-none">
-									<div className="searchBarButtonTooltip">
-										{!copyAsJSX ? "Tap to Enable Copy as JSX" : "Tap to Enable Copy as HTML"}
-									</div>
-								</div>
+						<div className="hoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
+							<button className="searchBarButton focusArea p-8 rounded-full" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
+								<Tooltip>
+									{!copyAsJSX
+										? "Tap to Enable Copy as JSX"
+										: "Tap to Enable Copy as HTML"}
+								</Tooltip>
 								<Feather.Code className="searchBarButtonSVG" />
 							</button>
 						</div>
 
 						{/* Button */}
-						<div className="searchBarButtonHoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
-							<button className="searchBarButton" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
-								<div className="tooltip tooltip--bottom-right pointer-events-none">
-									<div className="searchBarButtonTooltip">
-										{!enableDarkMode ? "Tap to Enable Dark Mode" : "Tap to Enable Light Mode"}
-									</div>
-								</div>
+						<div className="hoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
+							<button className="searchBarButton focusArea p-8 rounded-full" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
+								<Tooltip>
+									{!enableDarkMode
+										? "Tap to Enable Dark Mode"
+										: "Tap to Enable Light Mode"}
+								</Tooltip>
 								<SVG svg={!enableDarkMode ? Feather.Sun : Feather.Moon} className="searchBarButtonSVG" />
 							</button>
 						</div>
