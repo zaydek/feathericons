@@ -148,60 +148,11 @@ sass.global`
 
 @use "src/index" as *;
 
-$enter-ms: 200ms;
-$leave-ms: 400ms;
-
-// TOOD: Extract to Duomo mixins
-@mixin antialiased   { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-@mixin unantialiased { -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto; }
-
-// TOOD: Extract to Duomo core
-.antialiased   { @include antialiased; }
-.unantialiased { @include unantialiased; }
-
-@mixin reset {
-	@content;
-}
-
-// TOOD: Extract to Duomo mixins
-@mixin padding-x($v) {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "padding-x: #{$v} must be of type rem, em, px, etc."
-	}
-	padding-left: $v;
-	padding-right: $v;
-}
-@mixin padding-y($v) {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "padding-y: #{$v} must be of type rem, em, px, etc."
-	}
-	padding-top: $v;
-	padding-bottom: $v;
-}
-@mixin margin-x($v)  {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "margin-x: #{$v} must be of type rem, em, px, etc."
-	}
-	margin-left: $v;
-	margin-right: $v;
-}
-@mixin margin-y($v)  {
-	@if meta.type-of($v) == number and
-			math.is-unitless($v) {
-		@error "margin-y: #{$v} must be of type rem, em, px, etc."
-	}
-	margin-top: $v;
-	margin-bottom: $v;
-}
-
-// TODO: Add border-width
-// TODO: Add border-radius
-
 $shadow-px: 0 0 0 0.5px hsla(0, 0%, 0%, 0.15);
 $shadow-px-dark: 0 0 0 0.5px hsla(0, 0%, 100%, 0.15);
+
+$enter-ms: 200ms;
+$leave-ms: 400ms;
 
 $app-bg: tw(white);
 $app-bg-dark: tw(cool-gray, 800);
