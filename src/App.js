@@ -226,13 +226,84 @@ function SVG({ svg: SVG_, ...props }) {
 	return <SVG_ {...props} />
 }
 
+function encodeURL(str) {
+	return encodeURI(str.replace(/\s/g, "+"))
+}
+function decodeURL(str) {
+	return decodeURI(str.replace(/\+/g, " "))
+}
+
 function SearchBar() {
-	const [searchInputValue, setSearchInputValue] = React.useState("")
+	const searchBarInputRef = React.useRef(null)
+
+	const [searchInputValue, setSearchInputValue] = React.useState(() => {
+		const search = window.location.search.slice("?search=".length)
+		if (search === "") return ""
+		return decodeURL(search)
+	})
+	const [searchInputHasFocus, setSearchInputHasFocus] = React.useState(false)
+
+	// TODO: Change to localStorage?
 	const [copyAsJSX, setCopyAsJSX] = React.useState(false)
-	const [enableDarkMode, setEnableDarkMode] = React.useState(false)
+	const [enableDarkMode, setEnableDarkMode] = React.useState(() => document.documentElement.getAttribute("data-theme") === "dark")
+
+	// Focus effect
+	React.useEffect(() => {
+		function handleKeyDown(e) {
+			switch (e.keyCode) {
+			// "esc"
+			case 27:
+				e.preventDefault()
+				if (document.activeElement !== searchBarInputRef.current) {
+					searchBarInputRef.current.focus()
+				} else {
+					searchBarInputRef.current.blur()
+				}
+				return
+			// "/"
+			case 191:
+				e.preventDefault()
+				searchBarInputRef.current.focus()
+				return
+			}
+		}
+		window.addEventListener("keydown", handleKeyDown)
+		return () => window.removeEventListener("keydown", handleKeyDown)
+	}, [])
+
+	// URL effect
+	React.useEffect(() => {
+		const search = encodeURL(searchInputValue)
+		if (search === "") {
+			// Reset to the current pathname
+			window.history.replaceState({}, "", window.location.pathname)
+		} else {
+			window.history.replaceState({}, "", `?search=${search}`)
+		}
+	}, [searchInputValue])
+
+	// Dark mode getter effect (get <html data-theme="dark">)
+	React.useEffect(() => {
+		const obs = new MutationObserver(muts => {
+			for (const mut of muts) {
+				setEnableDarkMode(mut.target.getAttribute("data-theme") === "dark")
+			}
+		})
+		obs.observe(document.documentElement, { attributes: true })
+		return () => obs.disconnect()
+	}, [])
+
+	// Dark mode setter effect (set <html data-theme="dark">)
+	React.useEffect(() => {
+		if (enableDarkMode) {
+			document.documentElement.setAttribute("data-theme", "dark")
+		} else {
+			document.documentElement.removeAttribute("data-theme")
+		}
+	}, [enableDarkMode])
 
 	return (
-		// Use z-20 not z-10 because the RHS uses z-10
+		// Use z-20 because sidebarIconPane uses z-10
 		<div className="xl:-mt-16 xl:pt-16 sticky top-all z-20">
 
 			{sass`
@@ -279,6 +350,23 @@ function SearchBar() {
 								),
 							));
 						}
+						// Do not use &::selection, &::-moz-selection (as one)
+						&::selection {
+							@include theme((
+								background-color: (
+									tw(blue-200),
+									tw(blue-500),
+								),
+							));
+						}
+						&::-moz-selection {
+							@include theme((
+								background-color: (
+									tw(blue-200),
+									tw(blue-500),
+								),
+							));
+						}
 					}
 				}
 			`}
@@ -295,17 +383,20 @@ function SearchBar() {
 				</div>
 
 				<input
+					ref={searchBarInputRef}
 					type="text"
 					className="searchBarInput h-80 border-bottom-1 rounded-top-left-24"
-					placeholder="Search ..."
+					placeholder={!searchInputHasFocus ? `Search (Tap \`/\` to Focus)` : ""}
 					value={searchInputValue}
 					onChange={e => setSearchInputValue(e.target.value)}
+					onFocus={e => setSearchInputHasFocus(true)}
+					onBlur={e => setSearchInputHasFocus(false)}
 					spellCheck={false}
 				/>
 
 				{sass`
-					// Use [data-checked] for :checked because <button>s cannot use
-					// type="checkbox"
+					// Use [data-checked] for :checked because buttons (<button>) cannot
+					// use type="checkbox"
 					.searchBar {
 						&Button {
 							@include reset {
@@ -355,7 +446,7 @@ function SearchBar() {
 										? "Tap to Enable Dark Mode"
 										: "Tap to Enable Light Mode"}
 								</Tooltip>
-								<SVG svg={!enableDarkMode ? Feather.Sun : Feather.Moon} className="searchBarButtonSVG" />
+								<SVG svg={Feather.Moon} className="searchBarButtonSVG" />
 							</button>
 						</div>
 

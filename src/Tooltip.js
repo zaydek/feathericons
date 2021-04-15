@@ -4,6 +4,9 @@ export default function Tooltip({ children }) {
   return (
     <>
       {sass`
+        $tooltip-shadow:      (tw(shadow-md), tw(shadow-lg));
+        $tooltip-shadow-dark: ($shadow-px-dark, tw(shadow-md), tw(shadow-lg));
+
         .tooltip {
           @include unantialiased;
           font: rem(13) / 1.25 tw(mono);
@@ -11,8 +14,8 @@ export default function Tooltip({ children }) {
           background-color: tw(cool-gray-800);
           @include theme((
             box-shadow: (
-              (tw(shadow-md), tw(shadow-lg)),
-              ($shadow-px-dark, tw(shadow-md), tw(shadow-lg)),
+              $tooltip-shadow,
+              $tooltip-shadow-dark,
             ),
           ));
           opacity: 0;
