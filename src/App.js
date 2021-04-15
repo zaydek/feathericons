@@ -162,8 +162,8 @@ $theme-dur: 0ms;
 $theme-delay: 250ms;
 
 
-$enter-ms: 200ms; // FIXME
-$leave-ms: 400ms; // FIXME
+$enter: 200ms; // FIXME
+$leave: 400ms; // FIXME
 
 // Takes precedence
 $shadow-px:              0 0 0 0.5px hsla(0, 0%, 0%, 0.25);
@@ -512,42 +512,50 @@ export default function App() {
 							{sass`
 								.searchResults {
 									display: grid;
-									grid-template-columns: repeat(auto-fill, minmax(rem(144), 1fr));
+									grid-template-columns: repeat(auto-fill, minmax(rem(128), 1fr));
 
 									&Button {
 										@include reset {
 											&:focus { outline: none; }
 										}
-
 										position: relative;
-										&::after {
-											@include zero-out { content: ""; }
-											background-color: color.scale(tw(blue-500), $alpha: -90%); // Use 90% not 80%
-											border-radius: 9999px;
 
+										// Use ::before not ::after
+										&::before {
+											@include zero-out { content: ""; }
+											@include theme((
+												background-color: (
+													color.scale(tw(blue-500), $alpha: -90%), // Use 90% not 80%
+													tw(blue-500),
+												),
+											));
+											border-radius: 9999px;
 											opacity: 0;
 											transform: scale(0);
-											@include transition($leave-ms, (opacity, transform), tw(ease-out));
+											@include transition($leave, (opacity, transform), tw(ease-out));
 										}
-										// Use &:hover::after { ... } (&::after:hover does not work)
-										&:hover::after,
-										&:focus::after {
+
+										// Use &:hover::before { ... } (&::before:hover does not work)
+										&:hover::before,
+										&:focus::before {
 											opacity: 1;
 											transform: scale(0.618);
-											@include transition($enter-ms, (opacity, transform), tw(ease-out));
+											@include transition($enter, (opacity, transform), tw(ease-out));
 										}
 
 										&SVG {
-											// TODO
 											@include theme((
-												color: (tw(cool-gray-800), tw(white)),
+												color: (
+													tw(cool-gray-800),
+													tw(cool-gray-200),
+												),
 											));
-											@include transition($leave-ms, (color), tw(ease-out));
+											@include transition($leave, (color), tw(ease-out));
 
-											.searchResultsButton:hover &,
-											.searchResultsButton:focus & {
-												color: tw(blue-600);
-												@include transition($enter-ms, (color), tw(ease-out));
+											:root:not([data-theme="dark"]) .searchResultsButton:hover &,
+											:root:not([data-theme="dark"]) .searchResultsButton:focus & {
+												color: tw(blue-500);
+												@include transition($enter, (color), tw(ease-out));
 											}
 										}
 									}
@@ -566,64 +574,58 @@ export default function App() {
 											<div className="absolute bottom-all">
 
 												{sass`
-													$size: 13;
-													$size-gap: 6;
+													$font-size: 12;
+													$svg-size:  14;
+													$gap:        6;
 
-													$enter-ms: 100ms;
-													$leave-ms: 200ms;
+													$enter: 100ms; // Make shorter
+													$leave: 200ms; // Make shorter
 
 													.searchResultsTextbox {
 														@include reset {
 															&:focus { outline: none; }
 														}
 
-														// Prefer Sass because of use of $size-gap
-														@include padding-y(rem(8));
-														display: flex;
-														flex-direction: row;
-														justify-content: center;
-														align-items: center;
 														> * + * {
-															margin-left: rem($size-gap);
+															margin-left: rem($gap);
 														}
 
 														&Text {
 															@include unantialiased;
 															text-align: center;
-															font: rem($size) / 1.25 tw(mono);
-
+															font: rem($font-size) / 1.25 tw(mono);
 															@include theme((
-																color: (tw(cool-gray-800), tw(white)),
+																color: (
+																	tw(cool-gray-600),
+																	tw(cool-gray-400),
+																),
 															));
-															transform: translateX(rem(($size + $size-gap) / 2));
-															@include transition($leave-ms, (color, transform), tw(ease-out));
-
+															transform: translateX(rem(((($font-size + $svg-size) / 2) + $gap) / 2));
+															@include transition($leave, (color, transform), tw(ease-out));
 															.searchResultsTextbox:hover & {
-															// .searchResultsTextbox:focus & { // TODO
-																color: tw(blue-600);
+																color: tw(blue-500);
 																transform: translateX(0); // Reset
-																@include transition($enter-ms, (color, transform), tw(ease-out), 100ms);
+																@include transition($enter, (color, transform), tw(ease-out), 100ms);
 															}
 														}
 
 														&SVG {
-															@include size(rem($size + 1)); // Add 1 for SVG
-															color: tw(blue-600);
+															@include size(rem($svg-size));
+															color: tw(blue-500);
 															opacity: 0;
-															transform: translateX(rem(-1 * ($size + $size-gap) / 2));
-															@include transition($leave-ms, (opacity, transform), tw(ease-out));
-
+															transform: translateX(rem(-1 * ((($font-size + $svg-size) / 2) + $gap) / 2));
+															@include transition($leave, (opacity, transform), tw(ease-out));
 															.searchResultsTextbox:hover & {
-															// .searchResultsTextbox:focus & {
 																opacity: 1;
 																transform: translateX(0); // Reset
-																@include transition($enter-ms, (opacity, transform), tw(ease-out), 100ms);
+																@include transition($enter, (opacity, transform), tw(ease-out), 100ms);
 															}
 														}
 													}
 												`}
 
-												<a href={`/${k}`} className="searchResultsTextbox" tabIndex={-1}>
+												{/* Use Sass for m-gap because of $gap */}
+												<a href={`/${k}`} className="searchResultsTextbox py-8 flex-row center" tabIndex={-1}>
 													<div className="searchResultsTextboxText">{k}</div>
 													<Feather.ExternalLink className="searchResultsTextboxSVG" />
 												</a>
