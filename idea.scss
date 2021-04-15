@@ -1,34 +1,10 @@
-@use "sass:color";
-@use "sass:math";
-
-@use "duomo/tailwind" as *;
-
-$obscure: tw(blue-500);
-
-// Cannot use #hex for url-based SVG
-$obscure-hsl: (
-	math.floor(color.hue($obscure)),
-	math.floor(color.saturation($obscure)),
-	math.floor(color.lightness($obscure)),
-);
-
-@debug $obscure;
-
-body {
-	$h: rem(472);
-	background-image:
-		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
-		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
-	background-repeat:
-		repeat-x,
-		no-repeat;
-	background-size:
-		$h,
-		100%;
-	// background-attachment:
-	// 	fixed,
-	// 	fixed;
-	background-position:
-		0 0,
-		0 $h;
+.obscure {
+	@at-root {
+		svg#{&} {
+			color: red;
+		}
+		div#{&} {
+			background-color: red;
+		}
+	}
 }

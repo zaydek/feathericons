@@ -58,7 +58,22 @@ function Header() {
 
 	return (
 		// Use pb-112 (64 + 48) to compensate for <TopNav className="h-48 ...">
-		<div className="header px-16 sm:px-24 py-64 pb-112 flex-row justify-center">
+		<div className="obscureBackground px-16 sm:px-24 py-64 pb-112 relative flex-row justify-center">
+
+			{/* Obscure effect (absolute and fixed) */}
+			<div className="obscureArea absolute top-all -z-10" style={{ top: "100%" }}>
+				<div className="h-192"></div>
+				<svg fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
+					<path d="M16 1C4 1 0 0 0 0H32C32 0 28 1 16 1Z"></path>
+				</svg>
+			</div>
+			<div className="obscureArea fixed top-all -z-10">
+				<div className="h-192"></div>
+				<svg fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
+					<path d="M16 1C4 1 0 0 0 0H32C32 0 28 1 16 1Z"></path>
+				</svg>
+			</div>
+
 			<div className="flex-col xl:flex-row xl:align-center m-gap-48 w-lg">
 
 				{/* CTA */}
@@ -169,7 +184,7 @@ $shadow-px:              0 0 0 0.5px hsla(0, 0%, 0%, 0.1);
 $shadow-px-dark:         0 0 0 0.5px hsla(0, 0%, 100%, 0.25);
 
 $app-bg:                 tw(white);
-$app-bg-dark:            tw(cool-gray-800);
+$app-bg-dark:            color.scale(tw(cool-gray-800), $lightness: 2.5%);
 $app-shadow:             ($shadow-px, tw(shadow-xs), tw(shadow-sm));
 $app-shadow-dark:        ($shadow-px-dark, tw(shadow-xs), tw(shadow-sm));
 $app-border-color:       tw(cool-gray-200);
@@ -180,60 +195,73 @@ $placeholder-color-dark: tw(cool-gray-600);
 $text-color:             tw(cool-gray-800);
 $text-color-dark:        tw(cool-gray-200);
 
-$obscure: tw(blue-500);
-$obscure-hsl: ( // Must use hsl for url-based SVG
-	math.floor(color.hue($obscure)),
-	math.floor(color.saturation($obscure)),
-	math.floor(color.lightness($obscure)),
-);
+.obscure {
+	&Background {
+		// background-color: #0066ff;
+		background-color: tw(blue-600);
+	}
+	&Area {
+		// > svg { color: #0066ff; }
+		> svg { color: tw(blue-600); }
+		// > div { background-color: #0066ff; }
+		> div { background-color: tw(blue-600); }
+	}
+}
+
+// $obscure: tw(blue-500);
+// $obscure-hsl: ( // Must use hsl for url-based SVG
+// 	math.floor(color.hue($obscure)),
+// 	math.floor(color.saturation($obscure)),
+// 	math.floor(color.lightness($obscure)),
+// );
 
 :root {
 	@include antialiased;
 	@include theme((
 		background-color: (
-			tw(cool-gray-50),
+			tw(cool-gray-100),
 			tw(cool-gray-900),
 		),
 	));
 }
 
-body {
-	$h: rem(472);
-	background-image:
-		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
-		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
-	background-repeat:
-		repeat-x,
-		no-repeat;
-	background-size:
-		$h,
-		100%;
-	// background-attachment:
-	// 	fixed,
-	// 	fixed;
-	background-position:
-		0 0,
-		0 $h;
-
-	> * {
-		$h: rem(128);
-		background-image:
-			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
-			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
-		background-repeat:
-			repeat-x,
-			no-repeat;
-		background-size:
-			$h,
-			100%;
-		background-attachment:
-			fixed,
-			fixed;
-		background-position:
-			0 0,
-			0 $h;
-	}
-}
+// body {
+// 	$h: rem(472);
+// 	background-image:
+// 		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
+// 		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
+// 	background-repeat:
+// 		repeat-x,
+// 		no-repeat;
+// 	background-size:
+// 		$h,
+// 		100%;
+// 	// background-attachment:
+// 	// 	fixed,
+// 	// 	fixed;
+// 	background-position:
+// 		0 0,
+// 		0 $h;
+//
+// 	> * {
+// 		$h: rem(128);
+// 		background-image:
+// 			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
+// 			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
+// 		background-repeat:
+// 			repeat-x,
+// 			no-repeat;
+// 		background-size:
+// 			$h,
+// 			100%;
+// 		background-attachment:
+// 			fixed,
+// 			fixed;
+// 		background-position:
+// 			0 0,
+// 			0 $h;
+// 	}
+// }
 
 .bg-dark {
 	@include theme((
@@ -325,24 +353,39 @@ function SearchBar() {
 		}
 	}, [searchInputValue])
 
-	// Dark mode getter effect (get <html data-theme="dark">)
-	React.useEffect(() => {
-		const obs = new MutationObserver(muts => {
-			for (const mut of muts) {
-				setEnableDarkMode(mut.target.getAttribute("data-theme") === "dark")
-			}
-		})
-		obs.observe(document.documentElement, { attributes: true })
-		return () => obs.disconnect()
-	}, [])
+	// // Dark mode getter effect (get <html data-theme="dark">)
+	// React.useEffect(() => {
+	// 	const obs = new MutationObserver(muts => {
+	// 		for (const mut of muts) {
+	// 			setEnableDarkMode(mut.target.getAttribute("data-theme") === "dark")
+	// 		}
+	// 	})
+	// 	obs.observe(document.documentElement, { attributes: true })
+	// 	return () => obs.disconnect()
+	// }, [])
 
 	// Dark mode setter effect (set <html data-theme="dark">)
+	const once = React.useRef(false)
 	React.useEffect(() => {
-		if (enableDarkMode) {
-			document.documentElement.setAttribute("data-theme", "dark")
-		} else {
-			document.documentElement.removeAttribute("data-theme")
+		if (once.current === false) {
+			once.current = true
+			return
 		}
+		// window.Duomo.toggleDarkMode()
+
+		document.documentElement.setAttribute("data-theme-effect", "true")
+		setTimeout(() => {
+			Duomo.toggleDarkMode()
+			setTimeout(() => {
+				document.documentElement.removeAttribute("data-theme-effect")
+			}, 1_000)
+		}, 10)
+
+		// if (enableDarkMode) {
+		// 	document.documentElement.setAttribute("data-theme", "dark")
+		// } else {
+		// 	document.documentElement.removeAttribute("data-theme")
+		// }
 	}, [enableDarkMode])
 
 	return (
@@ -362,7 +405,7 @@ function SearchBar() {
 
 						// TODO: This fires on button focus so use inline styles instead?
 						.searchBar:focus-within & {
-							color: tw(blue-400); // Use blue-400 not blue-500
+							color: tw(blue-500);
 						}
 					}
 
@@ -507,14 +550,14 @@ export default function App() {
 	return (
 		<>
 			{/* Top nav */}
-			{/* <div className="hide sm:show px-16 sm:px-24 py-16 flex-row justify-center">
+			<div className="hide sm:show px-16 sm:px-24 py-16 flex-row justify-center">
 				<div className="flex-row m-gap-16 w-xl">
 					<ItemLTR />
 					<div className="flex-grow"></div>
 					<ItemRTL />
 					<ItemRTL />
 				</div>
-			</div> */}
+			</div>
 
 			{/* Header */}
 			<Header />
@@ -531,20 +574,9 @@ export default function App() {
 				`}
 				<div className="app w-xl xl:rounded-24">
 
-					{sass`
-						.obscurer {
-							> div {
-								background-color: $obscure;
-							}
-							> svg {
-								color: $obscure;
-							}
-						}
-					`}
-
 					{/* Obscure effect */}
 					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
-						<div className="obscurer flex-row">
+						<div className="obscureArea flex-row">
 							<div className="w-8 h-40"></div>
 							<svg className="w-24 h-40" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
 								<path clipRule="evenodd" fillRule="evenodd" d="M24 0H0V40C0 26.7451 10.7451 16 24 16V0Z" />
@@ -567,6 +599,9 @@ export default function App() {
 
 							{sass`
 								.searchResults {
+									// TODO
+									// Use relative to make fast scrolling less buggy
+									position: relative;
 									display: grid;
 									grid-template-columns: repeat(auto-fill, minmax(rem(128), 1fr));
 
@@ -625,7 +660,7 @@ export default function App() {
 							`}
 
 							<div className="searchResults px-16 xl:p-64 xl:pb-96">
-								{Object.keys(dataset).map(k => (
+								{Object.keys(dataset).slice(0, 64).map(k => (
 									<button key={k} className="searchResultsButton aspect aspect-w-1 aspect-h-1">
 										<div className="flex-row center">
 											{React.createElement(Feather[cases.titleCase(k)], {
