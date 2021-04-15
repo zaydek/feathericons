@@ -148,11 +148,19 @@ sass.global`
 
 @use "src/index" as *;
 
-$shadow-px: 0 0 0 0.5px hsla(0, 0%, 0%, 0.15);
-$shadow-px-dark: 0 0 0 0.5px hsla(0, 0%, 100%, 0.15);
+$theme-dur: 0ms;
 
-$enter-ms: 200ms;
-$leave-ms: 400ms;
+// Add a slight delay so the dark mode transition is not instant. Instant dark
+// mode transitions actually have a blinding effect where the user feels
+// overwhelmed by the immediate transition. About 250ms feels ample so the user
+// can anticipate the transition without surprise.
+$theme-delay: 250ms;
+
+$shadow-px: 0 0 0 0.5px hsla(0, 0%, 0%, 0.25);
+$shadow-px-dark: 0 0 0 0.5px hsla(0, 0%, 100%, 0.25);
+
+$enter-ms: 200ms; // FIXME
+$leave-ms: 400ms; // FIXME
 
 $app-bg: tw(white);
 $app-bg-dark: tw(cool-gray-800);
@@ -160,6 +168,16 @@ $app-shadow: ($shadow-px, tw(shadow-xs), tw(shadow-sm));
 $app-shadow-dark: ($shadow-px-dark, tw(shadow-xs), tw(shadow-sm));
 $app-border-color: tw(cool-gray-200);
 $app-border-color-dark: tw(black);
+
+:root {
+	@include antialiased;
+	@include theme((
+		background-color: (
+			tw(cool-gray-50),
+			tw(cool-gray-900),
+		),
+	));
+}
 
 .bg-dark {
 	@include theme((
@@ -179,17 +197,8 @@ $app-border-color-dark: tw(black);
 	));
 }
 
-:root {
-	@include antialiased;
-	@include theme((
-		background-color: (
-			tw(cool-gray-50),
-			tw(cool-gray-900),
-		),
-	));
-}
-
-hr {
+hr,
+[class*="border"] {
 	@include theme((
 		border-color: (
 			$app-border-color,
@@ -218,9 +227,12 @@ function SearchBar() {
 
 			{sass`
 				.searchBarSearchSVG {
-					// @include theme((
-					color: tw(cool-gray-800);
-					// ));
+					@include theme((
+						color: (
+							tw(cool-gray-800),
+							tw(cool-gray-400),
+						),
+					));
 					@include transition(100ms, (color), tw(ease-out));
 					.searchBar:focus-within & {
 						color: tw(blue-500);
@@ -231,7 +243,7 @@ function SearchBar() {
 			<div className="searchBar relative">
 
 				{/* LHS */}
-				<div className="absolute left-all">
+				<div className="absolute left-all pointer-events-none">
 					<div className="px-16 flex-row h-full">
 						<div className="p-8 flex-row align-center">
 							<Feather.Search className="searchBarSearchSVG w-24 h-24" />
@@ -256,7 +268,6 @@ function SearchBar() {
 						@include theme((
 							color: (tw(cool-gray-800), tw(cool-gray-400)),
 							background-color: ($app-bg, $app-bg-dark),
-							border-color: ($app-border-color, $app-border-color-dark),
 						));
 					}
 				`}
@@ -475,10 +486,10 @@ export default function App() {
 							`}
 
 							<div className="searchResults px-16 xl:p-64 xl:pb-96">
-								{Object.keys(dataset).map(key => (
-									<button key={key} className="searchResultsButton aspect aspect-w-1 aspect-h-1">
+								{Object.keys(dataset).map(k => (
+									<button key={k} className="searchResultsButton aspect aspect-w-1 aspect-h-1">
 										<div className="flex-row center">
-											{React.createElement(Feather[cases.titleCase(key)], {
+											{React.createElement(Feather[cases.titleCase(k)], {
 												className: "searchResultsButtonSVG w-32 h-32",
 											})}
 										</div>
@@ -543,8 +554,8 @@ export default function App() {
 													}
 												`}
 
-												<a href={`/${key}`} className="searchResultsTextbox" tabIndex={-1}>
-													<div className="searchResultsTextboxText">{key}</div>
+												<a href={`/${k}`} className="searchResultsTextbox" tabIndex={-1}>
+													<div className="searchResultsTextboxText">{k}</div>
 													<Feather.ExternalLink className="searchResultsTextboxSVG" />
 												</a>
 
@@ -556,18 +567,8 @@ export default function App() {
 
 						</div>
 
-						{sass`
-							.appSidebar {
-								border-left: rem(1) solid transparent;
-								@include theme((
-									background-color: (tw(cool-gray-50), $app-bg-dark),
-									border-color: ($app-border-color, $app-border-color-dark),
-								));
-							}
-						`}
-
 						{/* RHS */}
-						<div className="appSidebar hide md:show w-320 rounded-right-24">
+						<div className="hide md:show w-320 border-left-1 rounded-right-24">
 							{/* <div className="xl:-mt-16 xl:pt-16 sticky top-all z-10"> */}
 							<div className="sticky top-all z-10">
 
@@ -577,8 +578,10 @@ export default function App() {
 									{sass`
 										.sidebarIconPane {
 											@include theme((
-												border-color: ($app-border-color, $app-border-color-dark),
-												background-color: ($app-bg, $app-bg-dark),
+												background-color: (
+													$app-bg,
+													$app-bg-dark,
+												),
 											));
 										}
 									`}

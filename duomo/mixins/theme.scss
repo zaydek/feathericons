@@ -4,36 +4,36 @@
 
 @use "../tailwind";
 
-$theme-dur-ms: 500ms !default;
+$theme-dur: 500ms !default;
 $theme-ease: tailwind.tw(ease-out) !default;
-$theme-delay-ms: null !default;
+$theme-delay: null !default;
 
-@mixin -transition-impl($dur-ms, $props, $ease, $delay-ms: null) {
+@mixin -transition-impl($dur, $props, $ease, $delay: null) {
 	$a: ();
 	@each $prop in $props {
-		@if not $delay-ms {
-			$a: list.append($a, $dur-ms $prop $ease, comma);
+		@if not $delay {
+			$a: list.append($a, $dur $prop $ease, comma);
 		} @else {
-			$a: list.append($a, $dur-ms $prop $ease $delay-ms, comma);
+			$a: list.append($a, $dur $prop $ease $delay, comma);
 		}
 	}
 	@content;
 	transition: $a;
 }
 
-@mixin transition($dur-ms, $props, $ease, $delay-ms: null) {
+@mixin transition($dur, $props, $ease, $delay: null) {
 	@if selector.is-superselector(":root", &) {
 		// Use @at-root to escape the & context
 		@at-root {
 			:root:not([data-theme-effect]) {
-				@include -transition-impl($dur-ms, $props, $ease, $delay-ms) {
+				@include -transition-impl($dur, $props, $ease, $delay) {
 					@content;
 				}
 			}
 		}
 	} @else {
 		:root:not([data-theme-effect]) & {
-			@include -transition-impl($dur-ms, $props, $ease, $delay-ms) {
+			@include -transition-impl($dur, $props, $ease, $delay) {
 				@content;
 			}
 		}
@@ -41,27 +41,27 @@ $theme-delay-ms: null !default;
 	@content;
 }
 
+$-theme-props: (
+	background-color,
+	border-color,
+	box-shadow,
+	color,
+	fill,
+	opacity,
+	stroke,
+);
+
 @mixin theme($theme-map) {
-	$keys: ();
 	@each $k, $v in $theme-map {
-		@if not map.has-key((
-			background-color: true,
-			border-color: true,
-			box-shadow: true,
-			color: true,
-			fill: true,
-			opacity: true,
-			stroke: true,
-		), $k) {
+		@if not list.index($-theme-props, $k) {
 			@error "theme: Theme property must be " +
 				"background-color, border-color, box-shadow, color, fill, opacity, or stroke.";
 		}
-		$keys: list.append($keys, $k);
 	}
 	@each $k, $v in $theme-map {
 		#{$k}: list.nth($v, 1);
 	}
-	@include -transition-impl($theme-dur-ms, $keys, $theme-ease, $theme-delay-ms);
+	@include -transition-impl($theme-dur, $-theme-props, $theme-ease, $theme-delay);
 	@if selector.is-superselector(":root", &) {
 		// Use @at-root to escape the & context
 		@at-root {
