@@ -4,9 +4,9 @@
 
 @use "../tailwind";
 
-$theme-dur: 500ms !default;
-$theme-ease: tailwind.tw(ease-out) !default;
-$theme-delay: null !default;
+// $theme-dur: 500ms !default;
+// $theme-ease: tailwind.tw(ease-out) !default;
+// $theme-delay: null !default;
 
 @mixin -transition-impl($dur, $props, $ease, $delay: null) {
 	$a: ();
@@ -22,7 +22,8 @@ $theme-delay: null !default;
 }
 
 @mixin transition($dur, $props, $ease, $delay: null) {
-	@if selector.is-superselector(":root", &) {
+	@if selector.is-superselector(":root", &) or
+			selector.is-superselector(html, &) {
 		// Use @at-root to escape the & context
 		@at-root {
 			:root:not([data-theme-effect]) {
@@ -61,8 +62,9 @@ $-theme-props: (
 	@each $k, $v in $theme-map {
 		#{$k}: list.nth($v, 1);
 	}
-	@include -transition-impl($theme-dur, $-theme-props, $theme-ease, $theme-delay);
-	@if selector.is-superselector(":root", &) {
+	// @include -transition-impl($theme-dur, $-theme-props, $theme-ease, $theme-delay);
+	@if selector.is-superselector(":root", &) or
+			selector.is-superselector(html, &) {
 		// Use @at-root to escape the & context
 		@at-root {
 			:root[data-theme="dark"] {

@@ -28,22 +28,38 @@ Duomo.themePreference = function () {
 }
 
 Duomo.toggleDebugMode = function () {
-	const dark = document.documentElement.toggleAttribute("data-debug")
-	if (Duomo.verbose === true) console.log(`duomo: [data-debug] ${dark ? "on" : "off"}`)
-	return dark
+	const debugMode = document.documentElement.toggleAttribute("data-debug")
+	if (Duomo.verbose === true) console.log(`duomo: [data-debug] ${debugMode ? "on" : "off"}`)
+	return debugMode
 }
 
-Duomo.toggleDarkMode = function () {
-	let dark = false
-	if (!document.documentElement.hasAttribute("data-theme")) {
+Duomo.toggleDarkModeImmediate = function () {
+	const darkMode = !document.documentElement.hasAttribute("data-theme")
+	if (darkMode === true) {
 		document.documentElement.setAttribute("data-theme", "dark")
-		dark = true
 	} else {
 		document.documentElement.removeAttribute("data-theme")
-		dark = false
 	}
-	if (Duomo.verbose === true) console.log(`duomo: [data-theme="dark"] ${dark ? "on" : "off"}`)
-	return dark
+	if (Duomo.verbose === true) console.log(`duomo: [data-theme="dark"] ${darkMode ? "on" : "off"}`)
+	return darkMode
+}
+
+let Duomo_timeoutIDs = []
+Duomo.toggleDarkMode = function () {
+	// clearTimeout(Duomo_timeoutIDs)
+	Duomo_timeoutIDs
+		.reverse()
+		.forEach(timeoutID => clearTimeout(timeoutID))
+
+	const darkMode = !document.documentElement.hasAttribute("data-theme")
+	document.documentElement.setAttribute("data-theme-effect", "true")
+	Duomo_timeoutIDs.push(setTimeout(() => {
+		Duomo.toggleDarkModeImmediate()
+		Duomo_timeoutIDs.push(setTimeout(() => {
+			document.documentElement.removeAttribute("data-theme-effect")
+		}, 50))
+	}, 50))
+	return darkMode
 }
 
 // if (Duomo.themePreference() === "dark") {

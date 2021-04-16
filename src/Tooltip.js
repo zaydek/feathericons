@@ -22,16 +22,18 @@ export default function Tooltip({ children }) {
           transform: scale(0.9);
           transform-origin: center;
 
+          @include transition(200ms, (opacity, transform), tw(ease-out));
+
           // Disable pointer-events so pointer events are not eagerly
           // intercepted
           pointer-events: none;
 
-          @include transition(200ms, (opacity, transform), tw(ease-out));
           .hoverArea:hover &,
           .focusArea:focus & {
             opacity: 1;
             transform: scale(1);
             transform-origin: center;
+
             @include transition(100ms, (opacity, transform), tw(ease-out));
 
             // Enable pointer-events so pointer events are eagerly

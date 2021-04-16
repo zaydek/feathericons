@@ -50,8 +50,11 @@ function Header() {
 	function SponsorButton() {
 		return (
 			<div className="flex-col align-center m-gap-12">
-				<div className="flex-row justify-center w-192 h-48 bg-dark rounded-full"></div>
-				<ItemLTRSmall />
+				<div className="flex-row justify-center w-192 h-48 bg-light-only rounded-full"></div>
+				<div className="flex-row align-center m-gap-8">
+					<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+					<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+				</div>
 			</div >
 		)
 	}
@@ -60,37 +63,64 @@ function Header() {
 		// Use pb-112 (64 + 48) to compensate for <TopNav className="h-48 ...">
 		<div className="obscureBackground px-16 sm:px-24 py-64 pb-112 relative flex-row justify-center">
 
+			{/* Top nav */}
+			{/* <div className="hide sm:show flex-row justify-center">
+				<div className="flex-row m-gap-16 w-xl">
+					<div className="flex-row align-center m-gap-8">
+						<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+						<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+					</div>
+					<div className="flex-grow"></div>
+					<div className="flex-row align-center m-gap-8">
+						<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+					</div>
+					<div className="flex-row align-center m-gap-8">
+						<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+					</div>
+				</div>
+			</div> */}
+
 			{/* Obscure effect (absolute and fixed) */}
-			<div className="obscureArea absolute top-all -z-10" style={{ top: "100%" }}>
+			<div className="obscureArea hide xl:show absolute top-all -z-10" style={{ top: "100%" }}>
 				<div className="h-192"></div>
 				<svg fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
 					<path d="M16 1C4 1 0 0 0 0H32C32 0 28 1 16 1Z"></path>
 				</svg>
 			</div>
-			<div className="obscureArea fixed top-all -z-10">
+			<div className="obscureArea hide xl:show fixed top-all -z-10">
 				<div className="h-192"></div>
 				<svg fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
 					<path d="M16 1C4 1 0 0 0 0H32C32 0 28 1 16 1Z"></path>
 				</svg>
 			</div>
 
+			{/* <div className="flex-col xl:flex-row xl:align-center m-gap-48" style={{ width: "100%", maxWidth: `${480 / 16}rem`, backgroundColor: "red" }}> */}
 			<div className="flex-col xl:flex-row xl:align-center m-gap-48 w-lg">
 
 				{/* CTA */}
 				<div className="flex-col align-center m-gap-32">
-					<div className="w-64 h-64 bg-darker rounded-full"></div>
+					<div className="w-64 h-64 bg-lighter-only rounded-full"></div>
 					<div className="flex-col align-center m-gap-16">
-						<div className="w-160 h-16 bg-darker rounded-full"></div>
-						<div className="w-256 h-8 bg-darker rounded-full"></div>
+						<div className="w-160 h-16 bg-lighter-only rounded-full"></div>
+						<div className="w-256 h-8 bg-lighter-only rounded-full"></div>
 					</div>
 					{/* Use a custom <Button> because of self-stretch, sm:w-192, and
 					rounded-12 sm:rounded-full */}
+					{/* FIXME: Too wide. Do we need to introduce flex-shrink? */}
 					<div className="self-stretch sm:self-center flex-col sm:flex-row m-gap-16">
-						<div className="flex-row justify-center sm:w-192 h-48 bg-dark rounded-12 sm:rounded-full">
-							<ItemLTR />
+						<div className="flex-row justify-center sm:w-192 h-48 bg-light-only rounded-12 sm:rounded-full">
+							<div className="flex-row align-center m-gap-12">
+								<div className="w-16 h-16 bg-lighter-only rounded-full"></div>
+								<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+							</div>
 						</div>
-						<div className="flex-row justify-center sm:w-192 h-48 bg-dark rounded-12 sm:rounded-full">
-							<ItemLTR />
+						<div className="flex-row justify-center sm:w-192 h-48 bg-light-only rounded-12 sm:rounded-full">
+							<div className="flex-row align-center m-gap-12">
+								<div className="w-16 h-16 bg-lighter-only rounded-full"></div>
+								<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -99,8 +129,14 @@ function Header() {
 				<div className="hide sm:hide xl:show flex-grow"></div>
 				<div className="hide sm:hide xl:show flex-col align-center m-gap-24">
 					<div className="flex-row m-gap-16">
-						<ItemLTRSmall />
-						<ItemLTRSmall />
+						<div className="flex-row align-center m-gap-8">
+							<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+							<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						</div>
+						<div className="flex-row align-center m-gap-8">
+							<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+							<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						</div>
 					</div>
 					<div className="flex-row m-gap-16">
 						<SponsorButton />
@@ -117,8 +153,14 @@ function Header() {
 				<div className="hide sm:show xl:hide flex-grow"></div>
 				<div className="hide sm:show xl:hide flex-col align-center m-gap-24">
 					<div className="flex-row m-gap-16">
-						<ItemLTRSmall />
-						<ItemLTRSmall />
+						<div className="flex-row align-center m-gap-8">
+							<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+							<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						</div>
+						<div className="flex-row align-center m-gap-8">
+							<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+							<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						</div>
 					</div>
 					{/* Add a wrapper <div> for -mx-8 and -my-12 */}
 					<div>
@@ -185,8 +227,8 @@ $shadow-px-dark:         0 0 0 0.5px hsla(0, 0%, 100%, 0.25);
 
 $app-bg:                 tw(white);
 $app-bg-dark:            color.scale(tw(cool-gray-800), $lightness: 2.5%);
-$app-shadow:             ($shadow-px, tw(shadow-xs), tw(shadow-sm));
-$app-shadow-dark:        ($shadow-px-dark, tw(shadow-xs), tw(shadow-sm));
+$app-shadow:             (tw(shadow-sm), tw(shadow-md));
+$app-shadow-dark:        ($shadow-px-dark, tw(shadow-sm), tw(shadow-md));
 $app-border-color:       tw(cool-gray-200);
 $app-border-color-dark:  tw(black);
 
@@ -208,12 +250,13 @@ $text-color-dark:        tw(cool-gray-200);
 	}
 }
 
-// $obscure: tw(blue-500);
-// $obscure-hsl: ( // Must use hsl for url-based SVG
-// 	math.floor(color.hue($obscure)),
-// 	math.floor(color.saturation($obscure)),
-// 	math.floor(color.lightness($obscure)),
-// );
+* {
+	@include reset {
+		// https://stackoverflow.com/a/29961714
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
+	}
+}
 
 :root {
 	@include antialiased;
@@ -225,60 +268,30 @@ $text-color-dark:        tw(cool-gray-200);
 	));
 }
 
-// body {
-// 	$h: rem(472);
-// 	background-image:
-// 		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
-// 		url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
-// 	background-repeat:
-// 		repeat-x,
-// 		no-repeat;
-// 	background-size:
-// 		$h,
-// 		100%;
-// 	// background-attachment:
-// 	// 	fixed,
-// 	// 	fixed;
-// 	background-position:
-// 		0 0,
-// 		0 $h;
-//
-// 	> * {
-// 		$h: rem(128);
-// 		background-image:
-// 			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 1 1' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' /%3E%3C/svg%3E"),
-// 			url("data:image/svg+xml,%3Csvg fill='hsl(#{$obscure-hsl})' viewBox='0 0 16 1' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1C4 1 1.33333 0.333333 0 0H16C14.6667 0.333333 12 1 8 1Z' /%3E%3C/svg%3E");
-// 		background-repeat:
-// 			repeat-x,
-// 			no-repeat;
-// 		background-size:
-// 			$h,
-// 			100%;
-// 		background-attachment:
-// 			fixed,
-// 			fixed;
-// 		background-position:
-// 			0 0,
-// 			0 $h;
-// 	}
-// }
-
-.bg-dark {
-	@include theme((
-		background-color: (
-			tw(cool-gray-200),
-			tw(cool-gray-700),
-		),
-	));
-}
-
-.bg-darker {
-	@include theme((
-		background-color: (
-			tw(cool-gray-300),
-			tw(cool-gray-600),
-		),
-	));
+// TODO
+.bg {
+	&-light-only {
+		background-color: tw(cool-gray-200);
+	}
+	&-lighter-only {
+		background-color: tw(cool-gray-300);
+	}
+	&-dark {
+		@include theme((
+			background-color: (
+				tw(cool-gray-200),
+				tw(cool-gray-700),
+			),
+		));
+	}
+	&-darker {
+		@include theme((
+			background-color: (
+				tw(cool-gray-300),
+				tw(cool-gray-600),
+			),
+		));
+	}
 }
 
 hr,
@@ -365,27 +378,13 @@ function SearchBar() {
 	// }, [])
 
 	// Dark mode setter effect (set <html data-theme="dark">)
-	const once = React.useRef(false)
+	const onceRef = React.useRef(false)
 	React.useEffect(() => {
-		if (once.current === false) {
-			once.current = true
+		if (onceRef.current === false) {
+			onceRef.current = true
 			return
 		}
-		// window.Duomo.toggleDarkMode()
-
-		document.documentElement.setAttribute("data-theme-effect", "true")
-		setTimeout(() => {
-			Duomo.toggleDarkMode()
-			setTimeout(() => {
-				document.documentElement.removeAttribute("data-theme-effect")
-			}, 1_000)
-		}, 10)
-
-		// if (enableDarkMode) {
-		// 	document.documentElement.setAttribute("data-theme", "dark")
-		// } else {
-		// 	document.documentElement.removeAttribute("data-theme")
-		// }
+		window.Duomo.toggleDarkMode()
 	}, [enableDarkMode])
 
 	return (
@@ -419,7 +418,8 @@ function SearchBar() {
 							rem(16 + 40 + 16),          // LHS buttons
 							rem(16 + 40 + 8 + 40 + 16), // RHS buttons
 						);
-						font: rem(20) / 1 tw(sans);
+						// Prefer 1.5 for WebKit
+						font: rem(20) / 1.5 tw(sans);
 						@include theme((
 							color: (
 								$text-color,
@@ -474,7 +474,9 @@ function SearchBar() {
 					ref={searchBarInputRef}
 					type="text"
 					className="searchBarInput h-80 border-bottom-1 rounded-top-left-24"
-					placeholder={!searchInputHasFocus ? `Search (Tap \`/\` to Focus)` : ""}
+					placeholder={window.innerWidth <= 512
+						? "Search"
+						: (!searchInputHasFocus ? `Search (Tap \`/\` to Focus)` : "")}
 					value={searchInputValue}
 					onChange={e => setSearchInputValue(e.target.value)}
 					onFocus={e => setSearchInputHasFocus(true)}
@@ -512,10 +514,10 @@ function SearchBar() {
 
 				{/* RHS */}
 				<div className="absolute right-all">
-					<div className="-mx-4 px-16 flex-row h-full">
+					<div className="px-16 flex-row h-full">
 
 						{/* Button */}
-						<div className="hoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
+						<div className="hoverArea px-4 pl-0 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton focusArea p-8 rounded-full" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
 								<Tooltip>
 									{!copyAsJSX
@@ -527,7 +529,7 @@ function SearchBar() {
 						</div>
 
 						{/* Button */}
-						<div className="hoverArea px-4 relative flex-row align-center h-full pointer-events-auto">
+						<div className="hoverArea px-4 pr-0 relative flex-row align-center h-full pointer-events-auto">
 							<button className="searchBarButton focusArea p-8 rounded-full" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
 								<Tooltip>
 									{!enableDarkMode
@@ -547,15 +549,76 @@ function SearchBar() {
 
 export default function App() {
 
+	// React.useEffect(() => {
+	// 	let animationFrame = 0
+	// 	function virtualScroller(targets, { offset, topOffset, bottomOffset } = {}) {
+	// 		offset ??= 0
+	// 		topOffset ??= offset ?? 0
+	// 		bottomOffset ??= offset ?? 0
+	// 		cancelAnimationFrame(animationFrame)
+	// 		animationFrame = window.requestAnimationFrame(() => {
+	// 			for (let x = 0, len = targets.length; x < len; x++) {
+	// 				let target = targets[x]
+	// 				const { top, bottom } = target.getBoundingClientRect()
+	// 				//
+	// 				// +----------+ <- offset
+	// 				// |//////////|
+	// 				// +----------+ <- t
+	// 				// |          |
+	// 				// |          |
+	// 				// +----------+ <- b
+	// 				// |//////////|
+	// 				// +----------+ <- offset
+	// 				//
+	// 				const t = -1 * bottom
+	// 				const b = (window.scrollY + top) - (window.scrollY + window.innerHeight)
+	// 				if (t > topOffset) {
+	// 					target.style.visibility = "hidden"
+	// 				} else if (b > bottomOffset) {
+	// 					target.style.visibility = "hidden"
+	// 					for (x++; x < len; x++) {
+	// 						target = targets[x]
+	// 						target.style.visibility = "hidden"
+	// 					}
+	// 					return
+	// 				} else {
+	// 					target.style.visibility = ""
+	// 				}
+	// 			}
+	// 		})
+	// 	}
+	// 	const targets = document.getElementsByClassName("searchResultsButton")
+	// 	function handleScroll(e) {
+	// 		virtualScroller(targets, {
+	// 			offset: 2 * window.innerHeight,
+	// 		})
+	// 	}
+	// 	virtualScroller(targets, {
+	// 		offset: 2 * window.innerHeight,
+	// 	})
+	// 	document.addEventListener("scroll", handleScroll, false)
+	// 	return () => document.removeEventListener("scroll", handleScroll, false)
+	// }, [])
+
 	return (
 		<>
+
 			{/* Top nav */}
 			<div className="hide sm:show px-16 sm:px-24 py-16 flex-row justify-center">
 				<div className="flex-row m-gap-16 w-xl">
-					<ItemLTR />
+					<div className="flex-row align-center m-gap-8">
+						<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+						<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+					</div>
 					<div className="flex-grow"></div>
-					<ItemRTL />
-					<ItemRTL />
+					<div className="flex-row align-center m-gap-8">
+						<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+					</div>
+					<div className="flex-row align-center m-gap-8">
+						<div className="w-96 h-8 bg-lighter-only rounded-full"></div>
+						<div className="w-12 h-12 bg-lighter-only rounded-full"></div>
+					</div>
 				</div>
 			</div>
 
@@ -564,6 +627,7 @@ export default function App() {
 
 			{/* App */}
 			<div className="flex-row justify-center">
+
 				{sass`
 					.app {
 						@include theme((
@@ -572,6 +636,7 @@ export default function App() {
 						));
 					}
 				`}
+
 				<div className="app w-xl xl:rounded-24">
 
 					{/* Obscure effect */}
@@ -599,11 +664,12 @@ export default function App() {
 
 							{sass`
 								.searchResults {
-									// TODO
-									// Use relative to make fast scrolling less buggy
-									position: relative;
+									// // TODO
+									// // Use relative to make fast scrolling less buggy
+									// position: relative;
 									display: grid;
 									grid-template-columns: repeat(auto-fill, minmax(rem(128), 1fr));
+									// grid-auto-rows: rem(128);
 
 									&Button {
 										@include reset {
@@ -659,8 +725,9 @@ export default function App() {
 								}
 							`}
 
-							<div className="searchResults px-16 xl:p-64 xl:pb-96">
-								{Object.keys(dataset).slice(0, 64).map(k => (
+							<div className="searchResults px-16 pb-64 xl:p-64">
+								{Object.keys(dataset).map(k => (
+									// <button key={k} className="searchResultsButton" style={{ transition: "500ms opacity cubic-bezier(0, 0, 0.2, 1)" }}>
 									<button key={k} className="searchResultsButton aspect aspect-w-1 aspect-h-1">
 										<div className="flex-row center">
 											{React.createElement(Feather[cases.titleCase(k)], {
@@ -837,7 +904,9 @@ export default function App() {
 				</div>
 			</div>
 
+			{/* Footer */}
 			<div className="hide xl:show h-64"></div>
+
 		</>
 	)
 }
