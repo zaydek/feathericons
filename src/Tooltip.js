@@ -12,12 +12,10 @@ export default function Tooltip({ children }) {
           font: rem(13) / 1.25 tw(mono);
           color: tw(white);
           background-color: tw(cool-gray-800);
-          @include theme((
-            box-shadow: (
-              $tooltip-shadow,
-              $tooltip-shadow-dark,
-            ),
-          ));
+          @include box-shadow(
+            $tooltip-shadow,
+            $tooltip-shadow-dark,
+          );
           opacity: 0;
           transform: scale(0.9);
           transform-origin: center;

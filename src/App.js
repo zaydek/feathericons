@@ -206,12 +206,6 @@ sass.global`
 
 @use "src/index" as *;
 
-// $fast: 100ms;
-// $slow: 200ms;
-// $slower: 300ms;
-
-$theme-dur: 0ms;
-
 // Add a slight delay so the dark mode transition is not instant. Instant dark
 // mode transitions actually have a blinding effect where the user feels
 // overwhelmed by the immediate transition. About 250ms feels ample so the user
@@ -260,12 +254,10 @@ $text-color-dark:        tw(cool-gray-200);
 
 :root {
 	@include antialiased;
-	@include theme((
-		background-color: (
-			tw(cool-gray-100),
-			tw(cool-gray-900),
-		),
-	));
+	@include background-color(
+		tw(cool-gray-100),
+		tw(cool-gray-900),
+	);
 }
 
 // TODO
@@ -277,31 +269,25 @@ $text-color-dark:        tw(cool-gray-200);
 		background-color: tw(cool-gray-300);
 	}
 	&-dark {
-		@include theme((
-			background-color: (
-				tw(cool-gray-200),
-				tw(cool-gray-700),
-			),
-		));
+		@include background-color(
+			tw(cool-gray-200),
+			tw(cool-gray-700),
+		);
 	}
 	&-darker {
-		@include theme((
-			background-color: (
-				tw(cool-gray-300),
-				tw(cool-gray-600),
-			),
-		));
+		@include background-color(
+			tw(cool-gray-300),
+			tw(cool-gray-600),
+		);
 	}
 }
 
 hr,
 [class*="border"] {
-	@include theme((
-		border-color: (
-			$app-border-color,
-			$app-border-color-dark,
-		),
-	));
+	@include border-color(
+		$app-border-color,
+		$app-border-color-dark,
+	);
 }
 
 `
@@ -394,12 +380,10 @@ function SearchBar() {
 			{sass`
 				.searchBar {
 					&SearchSVG {
-						@include theme((
-							color: (
-								$placeholder-color,
-								$placeholder-color-dark,
-							),
-						));
+						@include color(
+							$placeholder-color,
+							$placeholder-color-dark,
+						);
 						@include transition(200ms, (color), tw(ease-out));
 
 						// TODO: This fires on button focus so use inline styles instead?
@@ -420,40 +404,32 @@ function SearchBar() {
 						);
 						// Prefer 1.5 for WebKit
 						font: rem(20) / 1.5 tw(sans);
-						@include theme((
-							color: (
-								$text-color,
-								$text-color-dark,
-							),
-							background-color: (
-								$app-bg,
-								$app-bg-dark,
-							),
-						));
+						@include color(
+							$text-color,
+							$text-color-dark,
+						);
+						@include background-color(
+							$app-bg,
+							$app-bg-dark,
+						);
 						&::placeholder {
-							@include theme((
-								color: (
-									$placeholder-color,
-									$placeholder-color-dark,
-								),
-							));
+							@include color(
+								$placeholder-color,
+								$placeholder-color-dark,
+							);
 						}
 						// Do not use &::selection, &::-moz-selection (as one)
 						&::selection {
-							@include theme((
-								background-color: (
-									tw(blue-200),
-									tw(blue-500),
-								),
-							));
+							@include background-color(
+								tw(blue-200),
+								tw(blue-500),
+							);
 						}
 						&::-moz-selection {
-							@include theme((
-								background-color: (
-									tw(blue-200),
-									tw(blue-500),
-								),
-							));
+							@include background-color(
+								tw(blue-200),
+								tw(blue-500),
+							);
 						}
 					}
 				}
@@ -630,10 +606,14 @@ export default function App() {
 
 				{sass`
 					.app {
-						@include theme((
-							background-color: ($app-bg, $app-bg-dark),
-							box-shadow: ($app-shadow, $app-shadow-dark),
-						));
+						@include background-color(
+							$app-bg,
+							$app-bg-dark,
+						);
+						@include box-shadow(
+							$app-shadow,
+							$app-shadow-dark,
+						);
 					}
 				`}
 
@@ -680,13 +660,11 @@ export default function App() {
 										// Use ::before not ::after
 										&::before {
 											@include zero-out { content: ""; }
-											@include theme((
-												background-color: (
-													// TODO
-													color.scale(tw(blue-500), $alpha: -90%), // Use 90% not 80%
-													tw(blue-500),
-												),
-											));
+											// TODO
+											@include background-color(
+												color.scale(tw(blue-500), $alpha: -90%), // Use 90% not 80%
+												tw(blue-500),
+											);
 											border-radius: 9999px;
 											opacity: 0;
 											transform: scale(0);
@@ -702,22 +680,18 @@ export default function App() {
 										}
 
 										&SVG {
-											@include theme((
-												color: (
-													tw(cool-gray-800),
-													tw(cool-gray-200),
-												),
-											));
+											@include color(
+												tw(cool-gray-800),
+												tw(cool-gray-200),
+											);
 											@include transition($leave, (color), tw(ease-out));
 
 											.searchResultsButton:hover &,
 											.searchResultsButton:focus & {
-												@include theme((
-													color: (
-														tw(blue-500),
-														tw(white), // Use white not cool-gray-200
-													),
-												));
+												@include color(
+													tw(blue-500),
+													tw(white), // Use white not cool-gray-200
+												);
 												@include transition($enter, (color), tw(ease-out));
 											}
 										}
@@ -758,12 +732,10 @@ export default function App() {
 															@include unantialiased;
 															text-align: center;
 															font: rem($font-size) / 1.25 tw(mono);
-															@include theme((
-																color: (
-																	tw(cool-gray-600),
-																	tw(cool-gray-400),
-																),
-															));
+															@include color(
+																tw(cool-gray-600),
+																tw(cool-gray-400),
+															);
 															transform: translateX(rem(((($font-size + $svg-size) / 2) + $gap) / 2));
 															@include transition($leave, (color, transform), tw(ease-out));
 
@@ -772,12 +744,10 @@ export default function App() {
 															// user-select: text; // TODO: Do we need this?
 
 															.searchResultsTextbox:hover & {
-																@include theme((
-																	color: (
-																		tw(blue-500),
-																		tw(white), // Use white not cool-gray-200
-																	),
-																));
+																@include color(
+																	tw(blue-500),
+																	tw(white), // Use white not cool-gray-200
+																);
 																transform: translateX(0); // Reset
 																@include transition($enter, (color, transform), tw(ease-out), 100ms);
 															}
@@ -789,12 +759,10 @@ export default function App() {
 															transform: translateX(rem(-1 * ((($font-size + $svg-size) / 2) + $gap) / 2));
 															@include transition($leave, (color, transform), tw(ease-out));
 															.searchResultsTextbox:hover & {
-																@include theme((
-																	color: (
-																		tw(blue-500),
-																		tw(white), // Use white not cool-gray-200
-																	),
-																));
+																@include color(
+																	tw(blue-500),
+																	tw(white), // Use white not cool-gray-200
+																);
 																transform: translateX(0); // Reset
 																@include transition($enter, (color, transform), tw(ease-out), 100ms);
 															}
@@ -825,12 +793,10 @@ export default function App() {
 
 									{sass`
 										.sidebarIconPane {
-											@include theme((
-												background-color: (
-													$app-bg,
-													$app-bg-dark,
-												),
-											));
+											@include background-color(
+												$app-bg,
+												$app-bg-dark,
+											);
 										}
 									`}
 

@@ -4,10 +4,6 @@
 
 @use "../tailwind";
 
-// $theme-dur: 500ms !default;
-// $theme-ease: tailwind.tw(ease-out) !default;
-// $theme-delay: null !default;
-
 @mixin -transition-impl($dur, $props, $ease, $delay: null) {
 	$a: ();
 	@each $prop in $props {
@@ -42,42 +38,44 @@
 	@content;
 }
 
-$-theme-props: (
-	background-color,
-	border-color,
-	box-shadow,
-	color,
-	fill,
-	opacity,
-	stroke,
-);
-
-@mixin theme($theme-map) {
-	@each $k, $v in $theme-map {
-		@if not list.index($-theme-props, $k) {
-			@error "theme: Theme property must be " +
-				"background-color, border-color, box-shadow, color, fill, opacity, or stroke.";
-		}
-	}
-	@each $k, $v in $theme-map {
-		#{$k}: list.nth($v, 1);
-	}
-	// @include -transition-impl($theme-dur, $-theme-props, $theme-ease, $theme-delay);
+@mixin -theme-prop-impl($prop, $light, $dark) {
+	#{$prop}: $light;
 	@if selector.is-superselector(":root", &) or
 			selector.is-superselector(html, &) {
 		// Use @at-root to escape the & context
 		@at-root {
 			:root[data-theme="dark"] {
-				@each $k, $v in $theme-map {
-					#{$k}: list.nth($v, 2);
-				}
+				#{$prop}: $dark;
 			}
 		}
 	} @else {
 		:root[data-theme="dark"] & {
-			@each $k, $v in $theme-map {
-				#{$k}: list.nth($v, 2);
-			}
+			#{$prop}: $dark;
 		}
 	}
+}
+
+@mixin background-color($light, $dark) {
+	@include -theme-prop-impl(background-color, $light, $dark);
+}
+// @mixin background($light, $dark) {
+// 	@include -theme-prop-impl(background, $light, $dark);
+// }
+@mixin border-color($light, $dark) {
+	@include -theme-prop-impl(border-color, $light, $dark);
+}
+@mixin box-shadow($light, $dark) {
+	@include -theme-prop-impl(box-shadow, $light, $dark);
+}
+@mixin color($light, $dark) {
+	@include -theme-prop-impl(color, $light, $dark);
+}
+@mixin fill($light, $dark) {
+	@include -theme-prop-impl(fill, $light, $dark);
+}
+@mixin opacity($light, $dark) {
+	@include -theme-prop-impl(opacity, $light, $dark);
+}
+@mixin stroke($light, $dark) {
+	@include -theme-prop-impl(stroke, $light, $dark);
 }
