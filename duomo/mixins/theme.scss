@@ -38,7 +38,7 @@
 	@content;
 }
 
-@mixin -theme-prop-impl($prop, $light, $dark) {
+@mixin theme-property($prop, $light, $dark) {
 	#{$prop}: $light;
 	@if selector.is-superselector(":root", &) or
 			selector.is-superselector(html, &) {
@@ -56,26 +56,23 @@
 }
 
 @mixin background-color($light, $dark) {
-	@include -theme-prop-impl(background-color, $light, $dark);
+	@include theme-property(background-color, $light, $dark);
 }
-// @mixin background($light, $dark) {
-// 	@include -theme-prop-impl(background, $light, $dark);
-// }
 @mixin border-color($light, $dark) {
-	@include -theme-prop-impl(border-color, $light, $dark);
+	@include theme-property(border-color, $light, $dark);
 }
 @mixin box-shadow($light, $dark) {
-	@include -theme-prop-impl(box-shadow, $light, $dark);
+	@include theme-property(box-shadow, $light, $dark);
 }
 @mixin color($light, $dark) {
-	@include -theme-prop-impl(color, $light, $dark);
+	@include theme-property(color, $light, $dark);
 }
 @mixin fill($light, $dark) {
-	@include -theme-prop-impl(fill, $light, $dark);
+	@include theme-property(fill, $light, $dark);
 }
 @mixin opacity($light, $dark) {
-	@include -theme-prop-impl(opacity, $light, $dark);
+	@include theme-property(opacity, $light, $dark);
 }
 @mixin stroke($light, $dark) {
-	@include -theme-prop-impl(stroke, $light, $dark);
+	@include theme-property(stroke, $light, $dark);
 }

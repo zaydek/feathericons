@@ -46,7 +46,6 @@ Duomo.toggleDarkModeImmediate = function () {
 
 let Duomo_timeoutIDs = []
 Duomo.toggleDarkMode = function () {
-	// clearTimeout(Duomo_timeoutIDs)
 	Duomo_timeoutIDs
 		.reverse()
 		.forEach(timeoutID => clearTimeout(timeoutID))
