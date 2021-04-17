@@ -4,6 +4,7 @@
 		"duomo-dev": "sass duomo.config.scss tmp/duomo.css --no-source-map && esbuild tmp/duomo.css --log-level=warning --outfile=www/duomo.css && rm -rf tmp",
 		"duomo-build": "sass duomo.config.scss tmp/duomo.css --no-source-map && esbuild tmp/duomo.css --log-level=warning --minify --outfile=www/duomo.css && rm -rf tmp",
 		"dev": "retro dev",
+		"dev-hard": "npm run build-dataset && npm run duomo-dev && retro dev",
 		"prebuild": "npm run build-dataset && npm run duomo-build",
 		"build": "retro build",
 		"serve": "retro serve"

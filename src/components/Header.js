@@ -59,6 +59,7 @@ export default function Header() {
 		<header className="sass-ObscureElement relative">
 
 			<TopNav />
+
 			<ObscureBackground />
 
 			<div className="px-16 sm:px-24 py-96 flex-row justify-center">

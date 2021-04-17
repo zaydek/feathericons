@@ -1,0 +1,9 @@
+.foo {
+  background-color: #000;
+}
+:root[data-theme=dark] .foo {
+  background-color: #fff;
+}
+.foo:focus {
+  background-color: red;
+}

@@ -1,0 +1,13 @@
+@mixin background-color($light, $dark) {
+	background-color: $light;
+	:root[data-theme="dark"] & {
+		background-color: $dark;
+	}
+}
+
+.foo {
+	@include background-color(#000, #fff);
+	&:focus {
+		background-color: red;
+	}
+}

@@ -38,6 +38,12 @@ $text-color-dark:        tw(cool-gray-200);
 :root {
 	@include antialiased;
 	@include background-color(tw(cool-gray-100), tw(cool-gray-900));
+
+	&[data-theme-effect],
+	&[data-theme-effect] * {
+		// https://css-tricks.com/transitions-only-after-page-load
+		transition: none !important
+	}
 }
 
 .bg {

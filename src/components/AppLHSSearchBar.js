@@ -111,27 +111,23 @@ export default function AppLHSSearchBar() {
 						@include transition(200ms, (background-color), tw(ease-out)) {
 							background-color: color.scale(tw(blue-500), $alpha: -90%);
 						}
-
-						&:hover { background-color: red; }
-
-						// &:hover,
-						// &:focus {
-						// 	background-color: color.scale(tw(blue-500), $alpha: -80%);
-						// }
-
-						// // Use [data-checked] for :checked because buttons cannot use
-						// // type="checkbox"
-						// &[data-checked="true"] {
-						// 	background-color: tw(blue-500);
-						// }
-						// &SVG {
-						// 	color: tw(blue-500);
-						// 	@include transition(200ms, (color), tw(ease-out)) {
-						// 		.sass-SearchBarButton[data-checked="true"] & {
-						// 			color: tw(white);
-						// 		}
-						// 	}
-						// }
+						&:hover,
+						&:focus {
+							background-color: color.scale(tw(blue-500), $alpha: -80%);
+						}
+						// Use [data-checked] for :checked because buttons cannot use
+						// type="checkbox"
+						&[data-checked="true"] {
+							background-color: tw(blue-500);
+						}
+						&SVG {
+							color: tw(blue-500);
+							@include transition(200ms, (color), tw(ease-out)) {
+								.sass-SearchBarButton[data-checked="true"] & {
+									color: tw(white);
+								}
+							}
+						}
 					}
 				}
 			`}

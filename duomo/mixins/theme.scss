@@ -4,38 +4,48 @@
 
 @use "../tailwind";
 
-@mixin -transition-impl($dur, $props, $ease, $delay: null) {
-	$a: ();
-	@each $prop in $props {
-		@if not $delay {
-			$a: list.append($a, $dur $prop $ease, comma);
-		} @else {
-			$a: list.append($a, $dur $prop $ease $delay, comma);
-		}
-	}
-	@content;
-	transition: $a;
-}
+// @mixin -transition-impl($dur, $props, $ease, $delay: null) {
+// 	$arr: ();
+// 	@each $prop in $props {
+// 		@if not $delay {
+// 			$arr: list.append($arr, $dur $prop $ease, comma);
+// 		} @else {
+// 			$arr: list.append($arr, $dur $prop $ease $delay, comma);
+// 		}
+// 	}
+// 	@content;
+// 	transition: $arr;
+// }
 
 @mixin transition($dur, $props, $ease, $delay: null) {
-	@if selector.is-superselector(":root", &) or
-			selector.is-superselector(html, &) {
-		// Use @at-root to escape the & context
-		@at-root {
-			:root:not([data-theme-effect]) {
-				@include -transition-impl($dur, $props, $ease, $delay) {
-					@content;
-				}
-			}
-		}
-	} @else {
-		:root:not([data-theme-effect]) & {
-			@include -transition-impl($dur, $props, $ease, $delay) {
-				@content;
-			}
+	// @if selector.is-superselector(":root", &) or
+	// 		selector.is-superselector(html, &) {
+	// 	// Use @at-root to escape the & context
+	// 	@at-root {
+	// 		:root:not([data-theme-effect]) {
+	// 			@include -transition-impl($dur, $props, $ease, $delay) {
+	// 				@content;
+	// 			}
+	// 		}
+	// 	}
+	// } @else {
+	// 	:root:not([data-theme-effect]) & {
+	// 		@include -transition-impl($dur, $props, $ease, $delay) {
+	// 			@content;
+	// 		}
+	// 	}
+	// }
+
+	$arr: ();
+	@each $prop in $props {
+		@if not $delay {
+			$arr: list.append($arr, $dur $prop $ease, comma);
+		} @else {
+			$arr: list.append($arr, $dur $prop $ease $delay, comma);
 		}
 	}
 	@content;
+	transition: $arr;
 }
 
 @mixin theme-property($prop, $light, $dark) {
@@ -55,24 +65,10 @@
 	}
 }
 
-@mixin background-color($light, $dark) {
-	@include theme-property(background-color, $light, $dark);
-}
-@mixin border-color($light, $dark) {
-	@include theme-property(border-color, $light, $dark);
-}
-@mixin box-shadow($light, $dark) {
-	@include theme-property(box-shadow, $light, $dark);
-}
-@mixin color($light, $dark) {
-	@include theme-property(color, $light, $dark);
-}
-@mixin fill($light, $dark) {
-	@include theme-property(fill, $light, $dark);
-}
-@mixin opacity($light, $dark) {
-	@include theme-property(opacity, $light, $dark);
-}
-@mixin stroke($light, $dark) {
-	@include theme-property(stroke, $light, $dark);
-}
+@mixin background-color($light, $dark) { @include theme-property(background-color, $light, $dark); }
+@mixin border-color($light, $dark)     { @include theme-property(border-color, $light, $dark); }
+@mixin box-shadow($light, $dark)       { @include theme-property(box-shadow, $light, $dark); }
+@mixin color($light, $dark)            { @include theme-property(color, $light, $dark); }
+@mixin fill($light, $dark)             { @include theme-property(fill, $light, $dark); }
+@mixin opacity($light, $dark)          { @include theme-property(opacity, $light, $dark); }
+@mixin stroke($light, $dark)           { @include theme-property(stroke, $light, $dark); }
