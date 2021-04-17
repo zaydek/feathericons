@@ -1,7 +1,7 @@
 /**
  * @type { import("esbuild").Plugin }
  */
-const mdxPlugin = {
+module.exports = {
 	name: "mdx",
 	setup(build) {
 		const fs = require("fs")
@@ -61,5 +61,3 @@ const mdxPlugin = {
 		})
 	},
 }
-
-module.exports = mdxPlugin

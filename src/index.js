@@ -1,5 +1,7 @@
 import App from "./App"
 
+import "./index.scss"
+
 ReactDOM.render(
 	<React.StrictMode>
 		<App />

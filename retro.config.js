@@ -3,9 +3,5 @@
  */
 module.exports = {
 	target: ["es2017"],
-	plugins: [
-		require("./plugins/mdxPlugin"),
-		require("./plugins/sassPlugin"),
-		...require("./plugins/inlineSassPlugins"),
-	],
+	plugins: require("./plugins"),
 }

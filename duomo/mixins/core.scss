@@ -1,6 +1,16 @@
 @use "sass:math";
 @use "sass:meta";
 
+@mixin antialiased {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin unantialiased {
+	-webkit-font-smoothing: auto;
+	-moz-osx-font-smoothing: auto;
+}
+
 @function -untyped($args...) {
 	@each $arg in $args {
 		@if meta.type-of($arg) == number and

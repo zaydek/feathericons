@@ -1,7 +1,7 @@
 /**
  * @type { import("esbuild").Plugin }
  */
-const sassPlugin = {
+module.exports = {
 	name: "sass",
 	setup(build) {
 		const sass = require("sass")
@@ -15,5 +15,3 @@ const sassPlugin = {
 		})
 	},
 }
-
-module.exports = sassPlugin

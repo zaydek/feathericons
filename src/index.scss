@@ -1,38 +1,13 @@
-// @use "sass:list";
-// @use "sass:selector";
-//
-// @use "../duomo/mixins" as *;
-// @use "../duomo/tailwind" as *;
-//
-// // TODO: Deprecate
-// @mixin colors($prop, $shorthand, $colors) {
-// 	@each $k, $v in $colors {
-// 		.#{$shorthand}-transparent { #{$prop}: tw(transparent); }
-// 		.#{$shorthand}-current     { #{$prop}: tw(current); }
-// 		.#{$shorthand}-black       { #{$prop}: tw(black); }
-// 		.#{$shorthand}-white       { #{$prop}: tw(white); }
-//
-// 		@each $k2, $v2 in $v {
-// 			.#{$shorthand}-#{$k}-#{$k2} {
-// 				#{$prop}: $v2;
-// 			}
-// 		}
-// 	}
-// }
-//
-// @include colors(color, text, (cool-gray: tw(cool-gray)));
-// @include colors(background-color, bg, (cool-gray: tw(cool-gray)));
-// @include colors(border-color, border, (cool-gray: tw(cool-gray)));
+// https://stackoverflow.com/a/1975606
+input:focus
+meter:focus
+progress:focus
+select:focus
+textarea:focus { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
-// TODO: Extract to mixins?
-.tooltip {
-	position: absolute;
-	&--top          { bottom: 100%; left:   50%; transform: translateX(-50%); }
-	&--top-left     { bottom: 100%; left:    0%; }
-	&--top-right    { bottom: 100%; right:   0%; }
-	&--right        { top:     50%; left:  100%; transform: translateY(-50%); }
-	&--bottom       { top:    100%; left:   50%; transform: translateX(-50%); }
-	&--bottom-left  { top:    100%; left:    0%; }
-	&--bottom-right { top:    100%; right:   0%; }
-	&--left         { top:     50%; right: 100%; transform: translateY(-50%); }
-}
+// https://codepen.io/hakimel/pen/wvaXPeK
+input:focus,
+meter:focus,
+progress:focus,
+select:focus,
+textarea:focus { outline: none; }
