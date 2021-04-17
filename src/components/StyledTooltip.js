@@ -18,6 +18,7 @@ sass`
 export default function StyledTooltip({ children }) {
 	return (
 		<>
+
 			{sass`
 				$tooltip-shadow:      (tw(shadow-md), tw(shadow-lg));
 				$tooltip-shadow-dark: ($shadow-px-dark, tw(shadow-md), tw(shadow-lg));
@@ -49,9 +50,11 @@ export default function StyledTooltip({ children }) {
 					}
 				}
 			`}
+
 			<pre className="sass-TooltipBottomRight sass-StyledTooltip -mt-8 px-8 py-12 rounded-6">
 				{children}
 			</pre>
+
 		</>
 	)
 }

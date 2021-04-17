@@ -3,14 +3,14 @@ import sass from "esbuild:sass"
 import * as cases from "../lib/cases"
 import * as Feather from "react-feather"
 
+import AppLHSSearchBar from "./AppLHSSearchBar"
 import dataset from "../data/dataset.generated.json"
-import SearchBar from "./AppLHSSearchBar"
 
 export default function AppLHS() {
 	return (
 		<>
 
-			<SearchBar />
+			<AppLHSSearchBar />
 
 			{sass`
 				.sass-SearchResultsGrid {

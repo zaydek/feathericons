@@ -1,4 +1,5 @@
 // https://stackoverflow.com/a/1975606
+button:focus
 input:focus
 meter:focus
 progress:focus
@@ -6,6 +7,7 @@ select:focus
 textarea:focus { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 // https://codepen.io/hakimel/pen/wvaXPeK
+button:focus,
 input:focus,
 meter:focus,
 progress:focus,

@@ -71,7 +71,7 @@ function aliases(arr: string[]): string[] {
 		}
 		return kebabCase(v)
 	})
-	return out.filter(v => v !== undefined)
+	return out.filter(v => v !== undefined) as string[]
 }
 
 interface TransitionProps {
