@@ -50,8 +50,7 @@
 
 @mixin theme-property($prop, $light, $dark) {
 	#{$prop}: $light;
-	@if selector.is-superselector(":root", &) or
-			selector.is-superselector(html, &) {
+	@if selector.is-superselector(":root", &) or selector.is-superselector(html, &) {
 		// Use @at-root to escape the & context
 		@at-root {
 			:root[data-theme="dark"] {

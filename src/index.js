@@ -40,36 +40,59 @@ $prose-code-pre-rounded: rem(6);
 
 // Themes
 
-$prose-head-h1-color:     tw(black);
-$prose-head-h2-color:     tw(black);
-$prose-head-h3-color:     tw(black);
-$prose-text-color:        tw(cool-gray-800);
-$prose-text-anchor-color: tw(cool-gray-600);
-$prose-text-small-color:  tw(cool-gray-700);
-$prose-hr-border:         2px solid tw(cool-gray-200);
-$prose-code-color:        hsl(220, 83.33%, 50%);
-$prose-code-bg:           tw(white);
-$prose-code-border:       1px solid tw(cool-gray-300);
-$prose-code-pre-color:    tw(cool-gray-100);
-$prose-code-pre-bg:       tw(cool-gray-800);
-$prose-code-pre-border:   none;
-
 // FIXME: 1px solid transparent
 //
 // https://github.com/zaydek/duomo/issues/203
-$prose-head-h1-color-dark:     tw(cool-gray-100);
-$prose-head-h2-color-dark:     tw(cool-gray-100);
-$prose-head-h3-color-dark:     tw(cool-gray-100);
-$prose-text-color-dark:        tw(cool-gray-200);
-$prose-text-anchor-color-dark: tw(cool-gray-200);
-$prose-text-small-color-dark:  tw(cool-gray-300);
-$prose-hr-border-dark:         2px solid tw(cool-gray-600);
-$prose-code-color-dark:        tw(gray-100);
-$prose-code-bg-dark:           tw(cool-gray-700);
-$prose-code-border-dark:       1px solid transparent;
-$prose-code-pre-color-dark:    tw(cool-gray-100);
-$prose-code-pre-bg-dark:       tw(cool-gray-700);
-$prose-code-pre-border-dark:   none;
+$prose-head-h1-color-set: (
+	tw(black),
+	tw(cool-gray-100),
+);
+$prose-head-h2-color-set: (
+	tw(black),
+	tw(cool-gray-100),
+);
+$prose-head-h3-color-set: (
+	tw(black),
+	tw(cool-gray-100),
+);
+$prose-text-color-set: (
+	tw(cool-gray-800),
+	tw(cool-gray-200),
+);
+$prose-text-anchor-color-set: (
+	tw(cool-gray-600),
+	tw(cool-gray-200),
+);
+$prose-text-small-color-set: (
+	tw(cool-gray-700),
+	tw(cool-gray-300),
+);
+$prose-hr-border-set: (
+	2px solid tw(cool-gray-200),
+	2px solid tw(cool-gray-600),
+);
+$prose-code-color-set: (
+	hsl(220, 83.33%, 50%),
+	tw(gray-100),
+);
+$prose-code-bg-set: (
+	tw(white),
+	tw(cool-gray-700),
+);
+$prose-code-border-set: (
+	1px solid tw(cool-gray-300),
+	1px solid transparent,
+);
+$prose-code-pre-color-set: (
+	tw(cool-gray-100),
+	tw(cool-gray-100),
+);
+$prose-code-pre-bg-set: (
+	tw(cool-gray-800),
+	tw(cool-gray-700),
+);
+
+// $prose-code-pre-border-dark:   none;
 
 .prose > * + * {
 	margin-top: $prose-flow-margin;
@@ -83,23 +106,23 @@ $prose-code-pre-border-dark:   none;
 //
 .prose > :not(div) {
 	font: $prose-text;
-	@include color($prose-text-color, $prose-text-color-dark);
+	@include color($prose-text-color-set...);
 }
 
 .prose h1 {
 	font: $prose-head-h1;
-	@include color($prose-head-h1-color, $prose-head-h1-color-dark);
+	@include color($prose-head-h1-color-set...);
 }
 .prose h2 {
 	font: $prose-head-h2;
-	@include color($prose-head-h2-color, $prose-head-h2-color-dark);
+	@include color($prose-head-h2-color-set...);
 }
 .prose h3,
 .prose h4,
 .prose h5,
 .prose h6 {
 	font: $prose-head-h3;
-	@include color($prose-head-h3-color, $prose-head-h3-color-dark);
+	@include color($prose-head-h3-color-set...);
 }
 .prose h1 + p {
 	margin-top: $prose-head-h1-margin;
@@ -117,48 +140,46 @@ $prose-code-pre-border-dark:   none;
 	margin-top: $prose-text-margin;
 }
 .prose a {
-	@include color($prose-text-anchor-color, $prose-text-anchor-color-dark);
+	@include color($prose-text-anchor-color-set...);
 	text-decoration: underline;
 }
 .prose small {
 	font: $prose-text-small;
-	@include color($prose-text-small-color, $prose-text-small-color-dark);
+	@include color($prose-text-small-color-set...);
 }
 .prose hr {
-	border: $prose-hr-border;
+	// @include border: $prose-hr-border;
+	@include theme-property(border, $prose-hr-border-set...);
 }
 .prose *:not(pre) code {
 	@include unantialiased;
 	padding: $prose-code-padding;
 	font: $prose-code;
-	@include color($prose-code-color, $prose-code-color-dark);
-	@include background-color($prose-code-bg, $prose-code-bg-dark);
-	border: $prose-code-border;
+	@include color($prose-code-color-set...);
+	@include background-color($prose-code-bg-set...);
+	@include theme-property(border, $prose-code-border-set...);
 	border-radius: $prose-code-rounded;
 }
 .prose pre {
 	@include unantialiased;
 	padding: $prose-code-pre-padding;
 	font: $prose-code-pre;
-	@include color($prose-code-pre-color, $prose-code-pre-color-dark);
-	@include background-color($prose-code-pre-bg, $prose-code-pre-bg-dark);
-	border: $prose-code-pre-border;
+	@include color($prose-code-pre-color-set...);
+	@include background-color($prose-code-pre-bg-set...);
+	// @include theme-property(border, $prose-code-pre-border-set...);
+	border: none; // FIXME
 	border-radius: 0; // Reset
 
 	/*
 	 * Overrides
 	 */
 
-	margin-left: rem(-16);
-	padding-left: rem(16);
-
-	margin-right: rem(-16);
-	padding-right: rem(16);
+	@include margin-x(rem(-16));
+	@include padding-x(rem(16));
 }
 @media (min-width: breakpoint(sm)) {
 	.prose pre {
-		margin-left: 0; // Reset
-		margin-right: 0; // Reset
+		@include margin-x(0); // Reset
 		padding: $prose-code-pre-padding;
 		border-radius: $prose-code-pre-rounded;
 	}
@@ -166,8 +187,12 @@ $prose-code-pre-border-dark:   none;
 
 			`}
 
-			<div className="prose">
-				<Docs />
+			<div className="py-96 flex-row justify-center">
+				<div className="w-md">
+					<div className="prose">
+						<Docs />
+					</div>
+				</div>
 			</div>
 
 		</>

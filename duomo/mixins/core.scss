@@ -13,8 +13,7 @@
 
 @function -untyped($args...) {
 	@each $arg in $args {
-		@if meta.type-of($arg) == number and
-				math.is-unitless($arg) {
+		@if meta.type-of($arg) == number and $arg != 0 and math.is-unitless($arg) {
 			@return true;
 		}
 	}
