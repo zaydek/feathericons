@@ -88,7 +88,7 @@ export default function AppLHSSearchBar() {
 
 						// TODO: This fires on button focus so use inline styles instead?
 						.sass-SearchBar:focus-within & {
-							color: tw(blue-500);
+							@include color(tw(blue-500), tw(cool-gray-200));
 						}
 					}
 
