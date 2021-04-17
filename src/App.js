@@ -37,21 +37,9 @@ $placeholder-color-dark: tw(cool-gray-600);
 $text-color:             tw(cool-gray-800);
 $text-color-dark:        tw(cool-gray-200);
 
-.group      {}
-.hover-area {}
-.focus-area {}
-
-.obscure {
-	&Background {
-		// background-color: #0066ff;
-		background-color: tw(blue-600);
-	}
-	&Area {
-		// > svg { color: #0066ff; }
-		> svg { color: tw(blue-600); }
-		// > div { background-color: #0066ff; }
-		> div { background-color: tw(blue-600); }
-	}
+.sass-Obscure {
+	&SVG     { color: tw(blue-600); }
+	&Element { background-color: tw(blue-600); }
 }
 
 :root {
@@ -95,7 +83,7 @@ function SponsorButton() {
 function Header() {
 	return (
 		// Use pb-112 (64 + 48) to compensate for <TopNav className="h-48 ...">
-		<div className="obscureBackground px-16 sm:px-24 py-64 pb-112 relative flex-row justify-center">
+		<div className="sass-ObscureElement px-16 sm:px-24 py-64 pb-112 relative flex-row justify-center">
 
 			{/* Top nav */}
 			{/* <div className="hide sm:show flex-row justify-center">
@@ -116,16 +104,16 @@ function Header() {
 				</div>
 			</div> */}
 
-			{/* Obscure effect (absolute and fixed) */}
-			<div className="obscureArea hide xl:show absolute top-all -z-10" style={{ top: "100%" }}>
-				<div className="h-192"></div>
-				<svg fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
+			{/* Obscure effect */}
+			<div className="hide xl:show absolute top-all -z-10" style={{ top: "100%" }}>
+				<div className="sass-ObscureElement h-192"></div>
+				<svg className="sass-ObscureSVG" fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
 					<path d="M16 1C4 1 0 0 0 0H32C32 0 28 1 16 1Z"></path>
 				</svg>
 			</div>
-			<div className="obscureArea hide xl:show fixed top-all -z-10">
-				<div className="h-192"></div>
-				<svg fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
+			<div className="hide xl:show fixed top-all -z-10">
+				<div className="sass-ObscureElement h-192"></div>
+				<svg className="sass-ObscureSVG" fill="currentColor" viewBox="0 0 32 1" xmlns="http://www.w3.org/2000/svg">
 					<path d="M16 1C4 1 0 0 0 0H32C32 0 28 1 16 1Z"></path>
 				</svg>
 			</div>
@@ -383,8 +371,8 @@ function SearchBar() {
 					<div className="px-16 flex-row h-full">
 
 						{/* Button */}
-						<div className="hoverArea px-4 pl-0 relative flex-row align-center h-full pointer-events-auto">
-							<button className="sass-SearchBarButton focusArea p-8 rounded-full" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
+						<div className="hover-area px-4 pl-0 relative flex-row align-center h-full pointer-events-auto">
+							<button className="sass-SearchBarButton focus-area p-8 rounded-full" onClick={e => setCopyAsJSX(!copyAsJSX)} data-checked={copyAsJSX}>
 								<StyledTooltip>
 									{!copyAsJSX
 										? "Tap to Enable Copy as JSX"
@@ -395,8 +383,8 @@ function SearchBar() {
 						</div>
 
 						{/* Button */}
-						<div className="hoverArea px-4 pr-0 relative flex-row align-center h-full pointer-events-auto">
-							<button className="sass-SearchBarButton focusArea p-8 rounded-full" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
+						<div className="hover-area px-4 pr-0 relative flex-row align-center h-full pointer-events-auto">
+							<button className="sass-SearchBarButton focus-area p-8 rounded-full" onClick={e => setEnableDarkMode(!enableDarkMode)} data-checked={enableDarkMode}>
 								<StyledTooltip>
 									{!enableDarkMode
 										? "Tap to Enable Dark Mode"
@@ -453,13 +441,13 @@ export default function App() {
 
 					{/* Obscure effect */}
 					<div className="hide xl:show -mx-8 -mb-24 sticky top-all z-20 pointer-events-none">
-						<div className="obscureArea flex-row">
-							<div className="w-8 h-40"></div>
-							<svg className="w-24 h-40" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+						<div className="flex-row">
+							<div className="sass-ObscureElement w-8 h-40"></div>
+							<svg className="sass-ObscureSVG w-24 h-40" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
 								<path clipRule="evenodd" fillRule="evenodd" d="M24 0H0V40C0 26.7451 10.7451 16 24 16V0Z" />
 							</svg>
-							<div className="flex-grow h-16"></div>
-							<svg className="w-24 h-40" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+							<div className="sass-ObscureElement flex-grow h-16"></div>
+							<svg className="sass-ObscureSVG w-24 h-40" fill="currentColor" preserveAspectRatio="none" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
 								<path clipRule="evenodd" fillRule="evenodd" d="M0 0H24V40C24 26.7451 13.2549 16 0 16V0Z" />
 							</svg>
 							<div className="w-8 h-40"></div>
@@ -478,11 +466,10 @@ export default function App() {
 								.sass-SearchResultsGrid {
 									display: grid;
 									grid-template-columns: repeat(auto-fill, minmax(rem(128), 1fr));
-									grid-auto-rows: rem(128);
+									// Cannot use grid-auto-rows because aspect-ratio is not
+									// preserved; use aspect aspect-w-1 aspect-h-1
 
 									&Item {
-										position: relative;
-
 										&::before {
 											@include zero-out { content: ""; }
 											@include background-color(color.scale(tw(blue-500), $alpha: -90%), tw(blue-500));
@@ -494,7 +481,8 @@ export default function App() {
 											}
 										}
 
-										// Use &:hover::before { ... } (&::before:hover does not work)
+										// Use &:hover::before { ... } because &::before:hover does
+										// not work
 										&:hover::before,
 										&:focus::before {
 											@include transition($enter, (opacity, transform), tw(ease-out)) {
@@ -521,8 +509,8 @@ export default function App() {
 
 							<div className="sass-SearchResultsGrid px-16 pb-64 xl:p-64">
 								{Object.keys(dataset).map(k => (
-									<button key={k} className="sass-SearchResultsGridItem">
-										<div className="flex-row center h-full">
+									<button key={k} className="sass-SearchResultsGridItem relative aspect aspect-w-1 aspect-h-1">
+										<div className="flex-row center">
 											{React.createElement(Feather[cases.titleCase(k)], {
 												className: "sass-SearchResultsGridItemSVG w-32 h-32 z-10",
 											})}
@@ -535,8 +523,8 @@ export default function App() {
 													$svg-size:  14;
 													$m-gap:      6;
 
-													$enter: 50ms;
-													$leave: 10ms;
+													$enter:  50ms;
+													$leave: 100ms;
 
 													.sass-SearchResultsTextbox {
 														> * + * { margin-left: rem($m-gap); }
@@ -551,7 +539,7 @@ export default function App() {
 															}
 
 															.sass-SearchResultsTextbox:hover & {
-																@include transition($enter, (color, transform), tw(ease-out), 50ms) {
+																@include transition($enter, (color, transform), tw(ease-out), 100ms) {
 																	@include color(tw(blue-500), tw(white));
 																	transform: translateX(0);
 																}
@@ -567,7 +555,7 @@ export default function App() {
 															}
 
 															.sass-SearchResultsTextbox:hover & {
-																@include transition($enter, (color, transform), tw(ease-out), 50ms) {
+																@include transition($enter, (color, transform), tw(ease-out), 100ms) {
 																	@include color(tw(blue-500), tw(white));
 																	transform: translateX(0);
 																}

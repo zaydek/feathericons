@@ -28,19 +28,23 @@ export default function StyledTooltip({ children }) {
 					color: tw(white);
 					background-color: tw(cool-gray-800);
 					@include box-shadow($tooltip-shadow, $tooltip-shadow-dark);
+
 					@include transition(200ms, (opacity, transform), tw(ease-out)) {
 						opacity: 0;
 						transform: scale(0.9);
 						transform-origin: center;
 					}
+
 					pointer-events: none;
-					.hoverArea:hover &,
-					.focusArea:focus & {
+
+					.hover-area:hover &,
+					.focus-area:focus & {
 						@include transition(100ms, (opacity, transform), tw(ease-out)) {
 							opacity: 1;
 							transform: scale(1);
 							transform-origin: center;
 						}
+
 						pointer-events: auto;
 					}
 				}

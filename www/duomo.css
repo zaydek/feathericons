@@ -3618,6 +3618,21 @@ video {
 .z-50 {
   z-index: 50;
 }
+.z-60 {
+  z-index: 60;
+}
+.z-70 {
+  z-index: 70;
+}
+.z-80 {
+  z-index: 80;
+}
+.z-90 {
+  z-index: 90;
+}
+.z-100 {
+  z-index: 100;
+}
 .pointer-events-none {
   pointer-events: none;
 }
@@ -6907,6 +6922,21 @@ video {
   }
   .sm\:z-50 {
     z-index: 50;
+  }
+  .sm\:z-60 {
+    z-index: 60;
+  }
+  .sm\:z-70 {
+    z-index: 70;
+  }
+  .sm\:z-80 {
+    z-index: 80;
+  }
+  .sm\:z-90 {
+    z-index: 90;
+  }
+  .sm\:z-100 {
+    z-index: 100;
   }
   .sm\:pointer-events-none {
     pointer-events: none;
@@ -10199,6 +10229,21 @@ video {
   .md\:z-50 {
     z-index: 50;
   }
+  .md\:z-60 {
+    z-index: 60;
+  }
+  .md\:z-70 {
+    z-index: 70;
+  }
+  .md\:z-80 {
+    z-index: 80;
+  }
+  .md\:z-90 {
+    z-index: 90;
+  }
+  .md\:z-100 {
+    z-index: 100;
+  }
   .md\:pointer-events-none {
     pointer-events: none;
   }
@@ -13490,6 +13535,21 @@ video {
   .lg\:z-50 {
     z-index: 50;
   }
+  .lg\:z-60 {
+    z-index: 60;
+  }
+  .lg\:z-70 {
+    z-index: 70;
+  }
+  .lg\:z-80 {
+    z-index: 80;
+  }
+  .lg\:z-90 {
+    z-index: 90;
+  }
+  .lg\:z-100 {
+    z-index: 100;
+  }
   .lg\:pointer-events-none {
     pointer-events: none;
   }
@@ -16780,6 +16840,21 @@ video {
   }
   .xl\:z-50 {
     z-index: 50;
+  }
+  .xl\:z-60 {
+    z-index: 60;
+  }
+  .xl\:z-70 {
+    z-index: 70;
+  }
+  .xl\:z-80 {
+    z-index: 80;
+  }
+  .xl\:z-90 {
+    z-index: 90;
+  }
+  .xl\:z-100 {
+    z-index: 100;
   }
   .xl\:pointer-events-none {
     pointer-events: none;
